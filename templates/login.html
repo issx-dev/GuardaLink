@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+
+    <header></header>
+
+    <main>
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form action="/acceso" method="POST">
+                    <h1>Crea una cuenta</h1>
+                    <input type="text" placeholder="Introduzca su Nombre Completo" name="nombre-completo" required/>
+                    <input type="email" placeholder="Email" name="email" required/>
+                    <input type="password" placeholder="Contraseña" name="contraseña" required/>
+                    <button type="submit" name="registrarse">Registrarse</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form action="/acceso" method="POST">
+                    <h1>Inicia Sesión</h1>
+                    <input type="email" placeholder="Email" name="email" required/>
+                    <input type="password" placeholder="Password" name="contraseña" required/>
+                    <button type="submit" name="iniciar-sesion">Iniciar Sesión</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Bienvenido de Vuelta!</h1>
+                        <p>Para mantenerse conectado con nosotros, inicie sesión con su información personal.</p>
+                        <button class="ghost" id="signIn">Inicia Sesión</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Bienvenido a GuardaLink!</h1>
+                        <p>Introduce tus datos personales y comienza tu viaje con nosotros.</p>
+                        <button class="ghost" id="signUp">Registrate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+    
+</body>
+</html>
+
