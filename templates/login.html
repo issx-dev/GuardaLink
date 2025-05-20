@@ -8,13 +8,13 @@
     <title>Iniciar Sesión</title>
 </head>
 <body>
-    
+
     <header></header>
 
     <main>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form action="#">
+                <form action="/acceso" method="POST">
                     <h1>Crea una cuenta</h1>
                     <input type="text" placeholder="Introduzca su Nombre Completo" name="nombre-completo" required/>
                     <input type="email" placeholder="Email" name="email" required/>
@@ -23,7 +23,7 @@
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <form action="/acceso" method="POST">
                     <h1>Inicia Sesión</h1>
                     <input type="email" placeholder="Email" name="email" required/>
                     <input type="password" placeholder="Password" name="contraseña" required/>
