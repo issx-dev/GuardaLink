@@ -1,40 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <!-- LIBRERÍA ICONOS SVG -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <!-- METADATOS -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="keywords" content="" />
         <meta name="description" content="" />
-        <!-- Título Página -->
-        <title>{% block title %}Base{% endblock %}</title>
-        <link
-            rel="stylesheet"
-            href="url_for('static', filename='css/style.css')"
-        />
-        <link
-            rel="stylesheet"
-            href="url_for('static', filename='css/{% block css %}style.css{% endblock %}')"
-        />
+        <!-- TÍTULO PÁGINA -->
+        <title>{% block title %} Dashboard con Vistas {% endblock %}</title>
+        <!-- ENLACE CSS -->
+        <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
         <header>
-            {% block header %}
-
-            <h1>GuardaLink</h1>
-
-            <nav>
-                <a href="">Inicio</a>
-                <a href="">Añadir Marcador</a>
-                <a href="">Imagen - Perfil</a>
-            </nav>
-
-            {% endblock %}
+            <h1 id="view-title">{% block header %}Inicio{% endblock %}</h1>
         </header>
 
-        <main>{% block main %} {% endblock %}</main>
+        <div class="dashboard">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2>Menú</h2>
+                    <button id="toggle-sidebar">☰</button>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="{{ url_for('index') }}">
+                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
+                            <i data-lucide="home"></i><span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('') }}">
+                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
+                            <i data-lucide="bookmark-plus"></i
+                            ><span>Añadir marcador</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('') }}">
+                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
+                            <i data-lucide="user"></i><span>Perfil</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
 
-        <footer>
-            <p>&copy; Todos los derechos reservados.</p>
-        </footer>
+            <!-- Contenido principal -->
+            <main class="main-content">{% block main %}{% endblock %}</main>
+        </div>
+
+        <!-- PERFIL DE USUARIO -->
+        <div class="avatar-container">
+            <img
+                src="https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg"
+                alt="Usuario"
+                class="user-avatar"
+                onclick="toggleAvatarMenu()"
+            />
+            <div class="avatar-menu" id="avatarMenu">
+                <ul>
+                    <li><a href="{{ url_for('') }}">Perfil</a></li>
+                    <li><a href="{{ url_for('cerrar_sesion') }}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

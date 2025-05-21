@@ -21,7 +21,7 @@
                         <h1>Crea una cuenta</h1>
                         <input
                             type="text"
-                            placeholder="Introduzca su Nombre Completo"
+                            placeholder="Nombre Completo"
                             name="nombre-completo"
                             required
                         />
@@ -60,6 +60,15 @@
                         <button type="submit" name="iniciar-sesion">
                             Iniciar Sesión
                         </button>
+                        {% with mensajes =
+                        get_flashed_messages(with_categories=true) %} {% if
+                        mensajes %}
+                        <div class="mensajes-flash">
+                            {% for categoria, mensaje in mensajes %}
+                            <p class="{{ categoria }}">{{ mensaje }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %} {% endwith %}
                     </form>
                 </div>
                 <div class="overlay-container">
