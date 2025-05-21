@@ -7,7 +7,8 @@ app = Flask(__name__)
 app.secret_key = "clave_secreta"
 
 # Diccionario temporal para almacenar usuarios
-usuarios = [] # TODO BD
+usuarios = []  # TODO BD
+
 
 ##
 @app.route("/")
@@ -34,26 +35,32 @@ def acceso():
         # Registro
         if "registrarse" in request.form:
             for usuario in usuarios:
-                if usuario["email"] == email: # TODO BD
+                if usuario["email"] == email:  # TODO BD
                     return "Este email ya esta registrado"
-                
+
             else:
-                usuarios.append({ # TODO BD
-                    "nombre_completo": nombre_completo,
-                    "email": email,
-                    "contraseña": pbkdf2_sha256.hash(contraseña) # Encripta la pass al subirla
-                })
+                usuarios.append(
+                    {  # TODO BD
+                        "nombre_completo": nombre_completo,
+                        "email": email,
+                        "contraseña": pbkdf2_sha256.hash(
+                            contraseña
+                        ),  # Encripta la pass al subirla
+                    }
+                )
 
                 session["usuario"] = email
                 return redirect(url_for("index"))
 
-        #Inicio de sesión
+        # Inicio de sesión
         elif "iniciar-sesion" in request.form:
             for usuario in usuarios:
-                if usuario["email"] == email and pbkdf2_sha256.verify(contraseña, usuario["contraseña"]): # TODO BD
+                if usuario["email"] == email and pbkdf2_sha256.verify(
+                    contraseña, usuario["contraseña"]
+                ):  # TODO BD
                     session["usuario"] = email
                     return redirect(url_for("index"))
-                
+
             else:
                 return "Email o contraseña incorrecta"
 
@@ -65,8 +72,6 @@ def acceso():
 def cerrar_sesion():
     session.pop("usuario", None)
     return redirect(url_for("index"))
-
-
 
 
 ####

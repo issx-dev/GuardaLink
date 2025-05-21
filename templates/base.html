@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <!-- Título Página -->
-    <title>{% block title %}Base{% endblock %}</title>
-    <link rel="stylesheet" href="url_for('static', filename='css/style.css')">
-    <link rel="stylesheet" href="url_for('static', filename='css/{% block css %}style.css{% endblock %}')">
-    
-    
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <!-- Título Página -->
+        <title>{% block title %}Base{% endblock %}</title>
+        <link
+            rel="stylesheet"
+            href="url_for('static', filename='css/style.css')"
+        />
+        <link
+            rel="stylesheet"
+            href="url_for('static', filename='css/{% block css %}style.css{% endblock %}')"
+        />
+    </head>
+    <body>
+        <header>
+            {% block header %}
 
-    <header>
-        {% block header %}
-        
             <h1>GuardaLink</h1>
 
             <nav>
@@ -25,18 +28,13 @@
                 <a href="">Imagen - Perfil</a>
             </nav>
 
-        {% endblock %}
-    </header>
-    
-    <main>
-        {% block main %}
-    
-        {% endblock %}
-    </main>
+            {% endblock %}
+        </header>
 
-    <footer>
-        <p>&copy; Todos los derechos reservados.</p>
-    </footer>
-    
-</body>
+        <main>{% block main %} {% endblock %}</main>
+
+        <footer>
+            <p>&copy; Todos los derechos reservados.</p>
+        </footer>
+    </body>
 </html>
