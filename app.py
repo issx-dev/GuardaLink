@@ -1,10 +1,11 @@
 ##
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from passlib.hash import pbkdf2_sha256
+from settings import SECRET_KEY
 
 
 app = Flask(__name__)
-app.secret_key = "clave_secreta"
+app.secret_key = SECRET_KEY
 
 # Diccionario temporal para almacenar usuarios
 usuarios = []  # TODO BD

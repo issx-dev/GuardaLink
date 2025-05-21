@@ -6,6 +6,7 @@ from passlib.hash import pbkdf2_sha256
 # VARIABLES DE ENTORNO
 try:
     DATABASE_NAME = str(config("DB_NAME"))
+    SECRET_KEY = str(config("SECRET_KEY"))
     ROOT_NAME = str(config("ROOT_NAME"))
     ROOT_PASSWORD = str(config("ROOT_PASSWORD"))
     ROOT_EMAIL = str(config("ROOT_EMAIL"))
