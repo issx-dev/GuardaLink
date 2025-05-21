@@ -1,17 +1,17 @@
 #   MÓDULOS Y LIBRERÍAS
 import sqlite3 as sq
 from modules.utils import info_logs, error_logs
-import settings
+from settings import DATABASE_NAME, CREAR_TABLAS, CREAR_ROOT, INFO_ROOT
 
 
 class BaseDeDatos:
     def __init__(self):
         try:
-            self.__conexion = sq.connect(settings.DATABASE_NAME)  # type: ignore
+            self.__conexion = sq.connect(DATABASE_NAME)
             self.__cursor = self.__conexion.cursor()
             self.__cursor.execute("PRAGMA foreign_keys = ON")
-            self.__cursor.execute(settings.CREAR_TABLAS)
-            # self.__cursor.execute(settings.CREAR_ROOT) TODO CARGAR VARIABLE DE ENTORNO
+            self.__cursor.execute(CREAR_TABLAS)
+            self.__cursor.execute(CREAR_ROOT, INFO_ROOT)
             info_logs(" -> Conexión establecida correctamente")
         except sq.Error as e:
             error_logs(f" !-> Error al conectar con la base de datos: {e}")
