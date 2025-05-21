@@ -47,4 +47,4 @@ INSERTAR_USUARIO = (
 
 
 CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
-CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios "
+CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
