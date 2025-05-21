@@ -10,10 +10,10 @@ try:
     ROOT_EMAIL = config("ROOT_EMAIL", cast=str)
 except UndefinedValueError as e:
     raise UndefinedValueError(
-        f"No se ha definido la variable de entorno DB_NAME Detalles: {e} "
+        f"Error al cargar las variables de entorno. Detalles: {e} "
     )
 
-info_logs("La variable de entorno DB_NAME se ha definido correctamente.")
+info_logs("La variables de entorno se han cargado correctamente.")
 
 
 CREAR_TABLAS = """ 
