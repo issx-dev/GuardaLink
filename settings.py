@@ -1,6 +1,7 @@
 # LIBRERÍAS
 from decouple import config, UndefinedValueError
 from modules.utils import info_logs
+from passlib.hash import pbkdf2_sha256
 
 # VARIABLES DE ENTORNO
 try:
@@ -15,7 +16,7 @@ except UndefinedValueError as e:
     )
 
 info_logs("La variables de entorno se han cargado correctamente.")
-INFO_ROOT = (ROOT_NAME, ROOT_PASSWORD, "admin", ROOT_EMAIL)
+
 
 CREAR_TABLAS = """ 
 CREATE TABLE IF NOT EXISTS usuarios (
@@ -29,9 +30,18 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_registro DATE DEFAULT CURRENT_DATE
 );
 """
-CREAR_ROOT = "INSERT INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?);"
+CREAR_ROOT = "INSERT INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?, ?);"
+# Carga de la información del root y cifrado de la contraseña
+INFO_ROOT = (
+    ROOT_NAME,
+    pbkdf2_sha256.hash(ROOT_PASSWORD),
+    "admin",
+    ROOT_EMAIL,
+    ROOT_FOTO,
+)
+
 INSERTAR_USUARIO = (
-    "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"  # noqa
+    "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"
 )
 
 
