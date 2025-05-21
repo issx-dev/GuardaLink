@@ -8,27 +8,27 @@ class BaseDeDatos:
     def __init__(self):
         try:
             self.__conexion = sq.connect(settings.DATABASE_NAME)  # type: ignore
-            self.__conexion.row_factory = sq.Row  # Para acceder a columnas por nombre
             self.__cursor = self.__conexion.cursor()
             self.__cursor.execute("PRAGMA foreign_keys = ON")
-
+            self.__cursor.execute(settings.CREAR_TABLAS)
+            # self.__cursor.execute(settings.CREAR_ROOT) TODO CARGAR VARIABLE DE ENTORNO
             info_logs(" -> Conexión establecida correctamente")
         except sq.Error as e:
             error_logs(f" !-> Error al conectar con la base de datos: {e}")
             raise
 
-    def ejecutar_consulta(self, consulta, parametros=None, muchos=False):
+    def ejecutar_consulta(self, consulta, parametros=None, many=False):
         if parametros is None:
             parametros = []
 
         try:
-            if muchos:
+            if many:
                 self.__cursor.executemany(consulta, parametros)
             else:
                 self.__cursor.execute(consulta, parametros)
 
             self.__conexion.commit()
-            return self.__cursor
+            return self.__cursor.fetchall()
 
         except sq.Error as e:
             error_logs(
@@ -60,5 +60,5 @@ class BaseDeDatos:
             error_logs(f" !-> Error al cerrar la conexión: {e}")
 
 
-# Instancia global (opcional según uso)
+# Instancia global
 gestor_bd = BaseDeDatos()

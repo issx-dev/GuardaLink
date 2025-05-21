@@ -1,5 +1,7 @@
+*.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
+**/__pycache__/
 
 # Installer logs
 pip-log.txt
