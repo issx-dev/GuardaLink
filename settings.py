@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_registro DATE DEFAULT CURRENT_DATE
 );
 """
-CREAR_ROOT = "INSERT INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?, ?);"
+CREAR_ROOT = "INSERT OR IGNORE INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?, ?);"
 # Carga de la información del root y cifrado de la contraseña
 INFO_ROOT = (
     ROOT_NAME,
