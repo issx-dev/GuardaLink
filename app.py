@@ -1,5 +1,5 @@
 ##
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 from passlib.hash import pbkdf2_sha256
 
 
@@ -36,7 +36,8 @@ def acceso():
         if "registrarse" in request.form:
             for usuario in usuarios:
                 if usuario["email"] == email:  # TODO BD
-                    return "Este email ya esta registrado"
+                    flash("Este email ya está registrado, inicie sesión", "error")
+                    return redirect(url_for("acceso"))
 
             else:
                 usuarios.append(
@@ -62,7 +63,8 @@ def acceso():
                     return redirect(url_for("index"))
 
             else:
-                return "Email o contraseña incorrecta"
+                flash("Email o contraseña incorrecta", "error")
+                return redirect(url_for("acceso"))
 
     return render_template("login.html")
 
