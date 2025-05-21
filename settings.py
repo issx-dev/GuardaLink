@@ -1,10 +1,13 @@
-# LIBRARIES
+# LIBRERÍAS
 from decouple import config, UndefinedValueError
 from modules.utils import info_logs
 
-# ENV VARIABLES
+# VARIABLES DE ENTORNO
 try:
     DATABASE_NAME = config("DB_NAME", cast=str)
+    ROOT_NAME = config("ROOT_NAME", cast=str)
+    ROOT_PASSWORD = config("ROOT_PASSWORD", cast=str)
+    ROOT_EMAIL = config("ROOT_EMAIL", cast=str)
 except UndefinedValueError as e:
     raise UndefinedValueError(
         f"No se ha definido la variable de entorno DB_NAME Detalles: {e} "
@@ -25,7 +28,9 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_registro DATE DEFAULT CURRENT_DATE
 );
 """
-INSERTAR_USUARIO = "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"  # noqa
+INSERTAR_USUARIO = (
+    "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"  # noqa
+)
 
 
 CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
