@@ -3,10 +3,11 @@ import sqlite3 as sq
 from modules.utils import info_logs, error_logs
 import settings
 
+
 class BaseDeDatos:
     def __init__(self):
         try:
-            self.__conexion = sq.connect(settings.DATABASE_NAME) # type: ignore
+            self.__conexion = sq.connect(settings.DATABASE_NAME)  # type: ignore
             self.__conexion.row_factory = sq.Row  # Para acceder a columnas por nombre
             self.__cursor = self.__conexion.cursor()
             self.__cursor.execute("PRAGMA foreign_keys = ON")
