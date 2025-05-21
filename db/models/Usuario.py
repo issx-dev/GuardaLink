@@ -91,6 +91,17 @@ class Usuario:
             self.foto_perfil,
         ]
 
+    def convertir_a_diccionario(self):
+        return {
+            "id": self.id,
+            "nombre_completo": self.nombre_completo,
+            "rol": self.rol,
+            "email": self.email,
+            "estado": self.estado,
+            "foto_perfil": self.foto_perfil,
+            "fecha_registro": self.fecha_registro,
+        }
+
     def __str__(self):
         return f" ~ Nombre Completo: {self.nombre_completo} ~ Email: {self.email} ~ Rol: {self.rol} ~ Estado: {self.estado} ~ Foto de Perfil: {self.foto_perfil}"
 
@@ -127,6 +138,11 @@ class UsuarioBD(Usuario):
 
     def obtener_info_usuario(self):
         return super().obtener_info_usuario() + [self.contraseña]
+
+    def convertir_a_diccionario(self):
+        diccionario = super().convertir_a_diccionario()
+        diccionario["contraseña"] = self.contraseña
+        return diccionario
 
 
 #   Modelo de usuario que se va a añadir a la base de datos
