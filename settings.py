@@ -4,17 +4,18 @@ from modules.utils import info_logs
 
 # VARIABLES DE ENTORNO
 try:
-    DATABASE_NAME = config("DB_NAME", cast=str)
-    ROOT_NAME = config("ROOT_NAME", cast=str)
-    ROOT_PASSWORD = config("ROOT_PASSWORD", cast=str)
-    ROOT_EMAIL = config("ROOT_EMAIL", cast=str)
+    DATABASE_NAME = str(config("DB_NAME"))
+    ROOT_NAME = str(config("ROOT_NAME"))
+    ROOT_PASSWORD = str(config("ROOT_PASSWORD"))
+    ROOT_EMAIL = str(config("ROOT_EMAIL"))
+    ROOT_FOTO = str(config("ROOT_FOTO"))
 except UndefinedValueError as e:
     raise UndefinedValueError(
         f"Error al cargar las variables de entorno. Detalles: {e} "
     )
 
 info_logs("La variables de entorno se han cargado correctamente.")
-
+INFO_ROOT = (ROOT_NAME, ROOT_PASSWORD, "admin", ROOT_EMAIL)
 
 CREAR_TABLAS = """ 
 CREATE TABLE IF NOT EXISTS usuarios (
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     fecha_registro DATE DEFAULT CURRENT_DATE
 );
 """
+CREAR_ROOT = "INSERT INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?);"
 INSERTAR_USUARIO = (
     "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"  # noqa
 )
