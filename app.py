@@ -16,17 +16,17 @@ app.secret_key = SECRET_KEY
 @app.route("/")
 def index():
     # Obtiene el usuario logueado y su rol
-    user = session.get("usuario")
-    rol_usuario = obtener_usuario_completo(user).rol if user else None
+    email_sesion = session.get("email")
+    rol_usuario = obtener_usuario_completo(email_sesion).rol if email_sesion else None
 
     # Si NO hay un usuario logueado
     if rol_usuario is None:
         return redirect(url_for("acceso"))
-    
+
     # Si el usuario logueado es ADMIN
     elif rol_usuario == "admin":
         return "Eres admin"
-    
+
     # Si el usuario logueado es NORMAL
     else:
         return render_template("index.html")
@@ -43,14 +43,15 @@ def acceso():
 
         # Obtiene la instancia usuario de la sesión actual
         usuario_actual = obtener_usuario_completo(email)
-        
 
         # Registro
         if "registrarse" in request.form:
             if usuario_actual:
-                flash("Este email ya está registrado, por favor Inicie Sesión.", "error")
+                flash(
+                    "Este email ya está registrado, por favor Inicie Sesión.", "error"
+                )
                 return redirect(url_for("acceso"))
-     
+
             # Inserción de usuario en la BD
             usr = UsuarioInsert(nombre_completo, pbkdf2_sha256.hash(contraseña), email)
             gestor_bd.ejecutar_consulta(
@@ -58,16 +59,17 @@ def acceso():
                 usr.obtener_datos,
             )
 
-            session["usuario"] = email
+            session["email"] = email
             return redirect(url_for("index"))
 
         # Inicio de sesión
         elif "iniciar-sesion" in request.form:
-            if usuario_actual and pbkdf2_sha256.verify(contraseña, usuario_actual.contraseña):
-                session["usuario"] = email
+            if usuario_actual and pbkdf2_sha256.verify(
+                contraseña, usuario_actual.contraseña
+            ):
+                session["email"] = email
                 return redirect(url_for("index"))
 
-     
             flash("Email o contraseña incorrecta.", "error")
             return redirect(url_for("acceso"))
 
@@ -77,7 +79,7 @@ def acceso():
 ##
 @app.route("/cerrar-sesion")
 def cerrar_sesion():
-    session.pop("usuario", None)
+    session.pop("email", None)
     return redirect(url_for("index"))
 
 
