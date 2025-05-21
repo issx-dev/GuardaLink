@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from passlib.hash import pbkdf2_sha256
 from settings import SECRET_KEY
+from db.utils.consultas import obtener_rol
 
 
 app = Flask(__name__)
@@ -16,12 +17,15 @@ usuarios = []  # TODO BD
 def index():
     user = session.get("usuario")
 
-    # Si hay un usuario logueado
-    if user:
-        return render_template("index.html")
+    rol_usuario = obtener_rol(user) if user else None
 
-    # Si NO hay un usuario logueado
-    return redirect(url_for("acceso"))
+    # Si hay un usuario logueado
+    if rol_usuario is None:
+        return redirect(url_for("acceso"))
+    elif rol_usuario == "admin":
+        return "Eres admin"
+    else:
+        return render_template("index.html")
 
 
 ##
