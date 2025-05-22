@@ -79,7 +79,22 @@
                         mensajes %}
                         <div class="mensajes-flash">
                             {% for categoria, mensaje in mensajes %}
-                            <p class="{{ categoria }}">{{ mensaje }}</p>
+                            <div class="{{ categoria }}">
+                                <!-- Icono de alerta -->
+                                <!-- Se utiliza un icono diferente según la categoría -->
+                                <i
+                                    data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"
+                                ></i>
+                                {{ mensaje }}
+                                <!-- Barra de progreso -->
+                                <div class="progress-bar"></div>
+                                <!-- Botón para cerrar el mensaje -->
+                                <i
+                                    class="close-flash"
+                                    data-lucide="x"
+                                    onclick="this.parentElement.remove()"
+                                ></i>
+                            </div>
                             {% endfor %}
                         </div>
                         {% endif %} {% endwith %}
