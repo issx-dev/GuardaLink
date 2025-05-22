@@ -1,6 +1,6 @@
 # LIBRERÍAS
 from decouple import config, UndefinedValueError
-from modules.utils import info_logs
+from modules.utils import info_logs, error_logs
 from passlib.hash import pbkdf2_sha256
 
 # VARIABLES DE ENTORNO
@@ -12,9 +12,8 @@ try:
     ROOT_EMAIL = str(config("ROOT_EMAIL"))
     ROOT_FOTO = str(config("ROOT_FOTO"))
 except UndefinedValueError as e:
-    raise UndefinedValueError(
-        f"Error al cargar las variables de entorno. Detalles: {e} "
-    )
+    error_logs(f"Error al cargar las variables de entorno. Detalles: {e} ")
+    raise UndefinedValueError
 
 info_logs("La variables de entorno se han cargado correctamente.")
 
