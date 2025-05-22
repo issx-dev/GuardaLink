@@ -1,55 +1,69 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
+/* Reset */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background: #f6f5f7;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: "Montserrat", sans-serif;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: "Montserrat", sans-serif;
-    height: 100vh;
-    margin: -20px 0 50px;
+    overflow: hidden;
+    color: #ffffff;
 }
 
+/* Typography */
 h1 {
     font-weight: bold;
-    margin: 0;
+    color: #ffffff;
 }
 
 p {
     font-size: 14px;
-    font-weight: 100;
+    font-weight: 400;
     line-height: 20px;
     letter-spacing: 0.5px;
     margin: 20px 0 30px;
+    color: #cccccc;
 }
 
 span {
     font-size: 12px;
+    color: #cccccc;
 }
 
 a {
-    color: #333;
     font-size: 14px;
+    color: #00bcd4;
     text-decoration: none;
     margin: 15px 0;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
 button {
     border-radius: 20px;
-    border: 1px solid #ff4b2b;
-    background-color: #ff4b2b;
+    border: none;
+    background-color: #00bcd4;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     padding: 12px 45px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    cursor: pointer;
     transition: transform 80ms ease-in;
+    box-shadow: 0 8px 32px rgba(0, 188, 212, 0.3);
 }
 
 button:active {
@@ -62,32 +76,47 @@ button:focus {
 
 button.ghost {
     background-color: transparent;
-    border-color: #ffffff;
+    border: 2px solid #ffffff;
+    color: #ffffff;
 }
 
+/* Forms */
 form {
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     padding: 0 50px;
     height: 100%;
     text-align: center;
 }
 
 input {
-    background-color: #eee;
+    background: rgba(255, 255, 255, 0.2);
     border: none;
+    border-radius: 20px;
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
+    font-size: 14px;
+    color: #ffffff;
+    outline: none;
 }
 
+input::placeholder {
+    color: #dddddd;
+}
+
+/* Container Layout */
 .container {
-    background-color: #fff;
+    background-color: transparent;
     border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -95,51 +124,43 @@ input {
     min-height: 480px;
 }
 
+/* Form Containers */
 .form-container {
     position: absolute;
     top: 0;
     height: 100%;
-    transition: all 0.6s ease-in-out;
+    width: 50%;
+    transition: all 0.4s ease-in-out;
 }
 
 .sign-in-container {
     left: 0;
-    width: 50%;
-    z-index: 2;
-}
-
-.container.right-panel-active .sign-in-container {
-    transform: translateX(100%);
+    z-index: 10;
 }
 
 .sign-up-container {
     left: 0;
-    width: 50%;
     opacity: 0;
-    z-index: 1;
+    z-index: 5;
+    pointer-events: none;
+    transform: translateX(0);
+}
+
+/* Active Panel Transitions */
+.container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
-    z-index: 5;
-    animation: show 0.6s;
+    z-index: 15;
+    pointer-events: auto;
 }
 
-@keyframes show {
-    0%,
-    49.99% {
-        opacity: 0;
-        z-index: 1;
-    }
-
-    50%,
-    100% {
-        opacity: 1;
-        z-index: 5;
-    }
-}
-
+/* Overlay */
 .overlay-container {
     position: absolute;
     top: 0;
@@ -147,8 +168,8 @@ input {
     width: 50%;
     height: 100%;
     overflow: hidden;
-    transition: transform 0.6s ease-in-out;
-    z-index: 100;
+    transition: transform 0.4s ease-in-out;
+    z-index: 20;
 }
 
 .container.right-panel-active .overlay-container {
@@ -156,19 +177,16 @@ input {
 }
 
 .overlay {
-    background: #ff416c;
-    background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-    background: linear-gradient(to right, #ff4b2b, #ff416c);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0 0;
+    background: rgba(255, 255, 255, 0.05);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
     color: #ffffff;
     position: relative;
     left: -100%;
-    height: 100%;
     width: 200%;
+    height: 100%;
     transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.4s ease-in-out;
 }
 
 .container.right-panel-active .overlay {
@@ -178,16 +196,15 @@ input {
 .overlay-panel {
     position: absolute;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     padding: 0 40px;
     text-align: center;
-    top: 0;
     height: 100%;
     width: 50%;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+    top: 0;
+    transition: transform 0.4s ease-in-out;
 }
 
 .overlay-left {
@@ -207,15 +224,17 @@ input {
     transform: translateX(20%);
 }
 
+/* Footer */
 footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
     position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
+    padding: 10px;
     text-align: center;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 14px;
     z-index: 999;
 }
 
@@ -228,6 +247,10 @@ footer i {
 }
 
 footer a {
-    color: #3c97bf;
+    color: #58a6ff;
     text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
