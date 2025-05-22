@@ -31,12 +31,19 @@
                             name="email"
                             required
                         />
-                        <input
-                            type="password"
-                            placeholder="Contraseña"
-                            name="contraseña"
-                            required
-                        />
+                        <div class="password-field">
+                            <input
+                                type="password"
+                                placeholder="Contraseña"
+                                name="contraseña"
+                                required
+                            />
+                            <span
+                                class="toggle-password"
+                                data-lucide="eye"
+                            ></span>
+                        </div>
+
                         <button type="submit" name="registrarse">
                             Registrarse
                         </button>
@@ -51,12 +58,19 @@
                             name="email"
                             required
                         />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            name="contraseña"
-                            required
-                        />
+                        <div class="password-field">
+                            <input
+                                type="password"
+                                placeholder="Contraseña"
+                                name="contraseña"
+                                required
+                            />
+                            <span
+                                class="toggle-password"
+                                data-lucide="eye"
+                            ></span>
+                        </div>
+
                         <button type="submit" name="iniciar-sesion">
                             Iniciar Sesión
                         </button>
@@ -100,6 +114,8 @@
 
         <footer></footer>
 
+        <!-- LIBRERÍA ICONOS SVG -->
+        <script src="https://unpkg.com/lucide@latest"></script>
         <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     </body>
 </html>

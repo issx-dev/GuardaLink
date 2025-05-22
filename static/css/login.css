@@ -19,7 +19,6 @@ body {
     color: #ffffff;
 }
 
-/* Typography */
 h1 {
     font-weight: bold;
     color: #ffffff;
@@ -50,7 +49,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Buttons */
+/* Botones */
 button {
     border-radius: 20px;
     border: none;
@@ -80,7 +79,7 @@ button.ghost {
     color: #ffffff;
 }
 
-/* Forms */
+/* Formularios */
 form {
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
@@ -113,7 +112,7 @@ input::placeholder {
     color: #dddddd;
 }
 
-/* Container Layout */
+/* Disposición de los contenedores */
 .container {
     background-color: transparent;
     border-radius: 10px;
@@ -124,7 +123,7 @@ input::placeholder {
     min-height: 480px;
 }
 
-/* Form Containers */
+/* Contenedores de formulario */
 .form-container {
     position: absolute;
     top: 0;
@@ -146,7 +145,49 @@ input::placeholder {
     transform: translateX(0);
 }
 
-/* Active Panel Transitions */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    padding-right: 40px; /* espacio para el ícono */
+}
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #cccccc;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: #ffffff;
+}
+
+/* Asegurar que el SVG herede el color */
+.toggle-password svg {
+    stroke: currentColor;
+    width: 20px;
+    height: 20px;
+}
+.password-field .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #cccccc;
+}
+
+/* Transiciones activas de paneles */
 .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
     opacity: 0;
@@ -160,7 +201,7 @@ input::placeholder {
     pointer-events: auto;
 }
 
-/* Overlay */
+/* Superposición */
 .overlay-container {
     position: absolute;
     top: 0;
@@ -178,7 +219,11 @@ input::placeholder {
 
 .overlay {
     background: rgba(255, 255, 255, 0.05);
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.1) 1px,
+        transparent 1px
+    );
     background-size: 20px 20px;
     color: #ffffff;
     position: relative;
