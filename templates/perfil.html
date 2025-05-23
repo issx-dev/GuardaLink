@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Perfil{% endblock %} {% block
+extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/perfil.css') }}"
+/>
 
-{% block title %} Perfil {% endblock %}
+{% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
 
-{% block h1 %} Perfil {% endblock %}
+<div class="contenedor-perfil">
+    
+    <div class="tarjeta-perfil js-tarjeta-perfil">
+        
 
-{% block main %}
-<p>Página perfil</p>
+        <div id="contenedor-izq">
+            <div class="contenedor-imagen">
+                <!-- foto_perfil -->
+                <img
+                    src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/e40b6ea6361a1abe28f32e7910f63b66/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+                    alt="profile"
+                />
+            </div>
+
+            
+        </div>
+
+        <div id="contenedor-der">
+            <div id="caja-textos">
+                <div class="texto-nombre">Francisco Cortés Carmona</div>
+                <!-- nombre_completo -->
+                <div class="texto-email"><b>Correo electrónico:</b> francortes@gmail.com</div>
+                <!-- email -->
+                <div class="texto-registro"><b>Alta de cuenta:</b> 23/05/2025</div>
+                <!-- registro -->
+                <div class="texto-marcadores"><b>Número de marcadores:</b> 56</div>
+            </div>
+
+            <div class="contenedor-config">
+                <button class="boton-config">
+                    <i data-lucide="square-pen"></i>Editar Perfil
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+
 {% endblock %}

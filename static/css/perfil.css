@@ -1,0 +1,92 @@
+.contenedor-perfil {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 2px #34495e46;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjeta-perfil {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+    height: 100%;
+}
+
+#contenedor-izq {
+    background-color: #3a4b61;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    justify-content: space-between;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+#caja-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#contenedor-der {
+    background-color: rgb(233, 233, 233);
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+.contenedor-imagen {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 8px solid rgb(220, 220, 220);
+}
+
+.contenedor-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.texto-nombre {
+    font-size: 49px;
+    font-weight: 700;
+    color: #2e3e51;
+    margin-bottom: 1.2rem;
+}
+
+.texto-email, .texto-registro, .texto-marcadores {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+
+
+
+.contenedor-config {
+    display: flex;
+    margin-top: 30px;
+}
+
+.boton-config {
+    background-color: #2e3e51;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0.5rem 1.5rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
