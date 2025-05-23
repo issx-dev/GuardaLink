@@ -9,7 +9,7 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <!-- TÍTULO PÁGINA -->
-    <title>{% block title %} Dashboard con Vistas {% endblock %}</title>
+    <title>{% block title %} title {% endblock %}</title>
     <!-- ENLACE CSS -->
     <link rel="stylesheet" href="../static/css/style.css" />
     {% block extra_css %}{% endblock %}
@@ -47,7 +47,7 @@
       <!-- Contenido principal -->
       <main class="main-content">
         <header>
-          <h1 id="view-title">Inicio</h1>
+          <h1 id="view-title">{% block h1 %}{% endblock %}</h1>
         </header>
         {% block main %}{% endblock %}
       </main>
