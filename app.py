@@ -76,6 +76,24 @@ def acceso():
     return render_template("login.html")
 
 
+@app.route("/perfil")
+def perfil():
+    # Obtiene el usuario logueado y su rol
+    email_sesion = session.get("email")
+    rol_usuario = obtener_usuario_completo(email_sesion).rol if email_sesion else None
+
+    # Si NO hay un usuario logueado
+    if rol_usuario is None:
+        return redirect(url_for("acceso"))
+
+    # Si el usuario logueado es ADMIN
+    elif rol_usuario == "admin":
+        return "Eres admin"
+
+    # Si el usuario logueado es NORMAL
+    else:
+        return render_template("perfil.html")
+
 ##
 @app.route("/cerrar-sesion")
 def cerrar_sesion():
