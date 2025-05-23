@@ -11,7 +11,7 @@
     <!-- TÍTULO PÁGINA -->
     <title>{% block title %} title {% endblock %}</title>
     <!-- ENLACE CSS -->
-    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
     {% block extra_css %}{% endblock %}
   </head>
   <body>
@@ -86,6 +86,6 @@
     </div>
 
     <!-- ENLACE JAVASCRIPT -->
-    <script src="../static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
   </body>
 </html>
