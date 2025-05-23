@@ -86,17 +86,25 @@ body {
   color: #2980b9;
 }
 
-.main-content {
+.main-content{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 2rem; /* no tocar altera calc #contendor-global-base */
   flex: 1;
-  padding: 2rem;
+  padding: 2rem; /* no tocar altera calc #contendor-global-base */
 }
 
 .main-content header {
   background-color: white;
-  padding: 1rem;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 1rem; /* no tocar altera calc #contendor-global-base */
 }
+
+.main-content #contendor-global-base {
+  min-height: calc(100vh - 10.3rem);
+}
+
 
 .main-content .content {
   background-color: white;
@@ -104,6 +112,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 /* Responsive para móviles */
 @media (max-width: 768px) {
