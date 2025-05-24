@@ -4,6 +4,7 @@ from passlib.hash import pbkdf2_sha256
 from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
+    obtener_numero_marcadores,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD, Usuario  # noqa: F401
@@ -111,7 +112,7 @@ def perfil():
             "nombre_completo": usuario.nombre_completo,  # type: ignore
             "email": usuario.email,  # type: ignore
             "fecha_registro": usuario.fecha_registro,  # type: ignore
-            "num_marcadores": 99,
+            "num_marcadores": obtener_numero_marcadores(usuario.id),  # type: ignore
             "foto_perfil": usuario.foto_perfil,  # type: ignore
         }
 
