@@ -8,7 +8,7 @@ from settings import (
     INSERTAR_ETIQUETA,
     INSERTAR_MARCADOR,
     MARCADORES_PREDETERMINADOS,
-    CONSULTA_NUMERO_MARCADORES
+    CONSULTA_NUMERO_MARCADORES,
 )
 
 
@@ -23,7 +23,8 @@ def obtener_usuario_completo(email):
 
 def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
     marcadores_predeterminados = [
-        MarcadorInsert(**marcador) for marcador in MARCADORES_PREDETERMINADOS
+        MarcadorInsert(usuario_id, **marcador)
+        for marcador in MARCADORES_PREDETERMINADOS
     ]
 
     """Inserta marcadores y etiquetas predeterminadas al registrarse."""
@@ -44,6 +45,7 @@ def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
             INSERTAR_ETIQUETA,
             (etiqueta["nombre"], marcador.id),
         )
+
 
 def obtener_numero_marcadores(usuario_id):
     """Obtiene el número de marcadores de un usuario."""
