@@ -8,6 +8,7 @@ from settings import (
     INSERTAR_ETIQUETA,
     INSERTAR_MARCADOR,
     MARCADORES_PREDETERMINADOS,
+    CONSULTA_NUMERO_MARCADORES
 )
 
 
@@ -43,3 +44,11 @@ def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
             INSERTAR_ETIQUETA,
             (etiqueta["nombre"], marcador.id),
         )
+
+def obtener_numero_marcadores(usuario_id):
+    """Obtiene el número de marcadores de un usuario."""
+    resultado = gestor_bd.ejecutar_consulta(CONSULTA_NUMERO_MARCADORES, (usuario_id,))
+    if resultado and isinstance(resultado, list):
+        return resultado[0][0]  # Retorna el conteo de marcadores
+    else:
+        return 0
