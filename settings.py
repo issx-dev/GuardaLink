@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 CREATE TABLE IF NOT EXISTS marcadores (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_usuario INTEGER NOT NULL,
     nombre TEXT NOT NULL,
     enlace TEXT NOT NULL,
     descripcion TEXT DEFAULT "Descripción del marcador",
-    id_usuario INTEGER NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
