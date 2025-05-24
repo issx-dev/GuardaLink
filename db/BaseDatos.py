@@ -13,7 +13,7 @@ class BaseDeDatos:
             with sq.connect(DATABASE_NAME) as conexion:
                 cursor = conexion.cursor()
                 cursor.execute("PRAGMA foreign_keys = ON")
-                cursor.execute(CREAR_TABLAS)
+                cursor.executescript(CREAR_TABLAS)
                 cursor.execute(CREAR_ROOT, INFO_ROOT)
                 conexion.commit()
                 info_logs(" -> Conexión establecida correctamente")
