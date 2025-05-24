@@ -108,11 +108,11 @@ def perfil():
     # Si el usuario logueado es NORMAL
     else:
         datos = {  # TODO Estableces los datos del usuario logueado
-            "nombre_completo": "Mercedes Cortés Perez",
-            "email": "mercedescortesperez12@gmail.com",
-            "fecha_registro": "29/05/2025",
+            "nombre_completo": usuario.nombre_completo,  # type: ignore
+            "email": usuario.email,  # type: ignore
+            "fecha_registro": usuario.fecha_registro,  # type: ignore
             "num_marcadores": 99,
-            "foto_perfil": "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg",
+            "foto_perfil": usuario.foto_perfil,  # type: ignore
         }
 
         return render_template("perfil.html", **datos)
