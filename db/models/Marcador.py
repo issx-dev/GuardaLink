@@ -44,7 +44,7 @@ class MarcadorInsert:
         ]
 
     def __str__(self):
-        return f" Nombre:{self.__nombre}, Enlace:{self.__enlace}, Descripcion:{self.__descripcion}), ID usuario:{self.__id_usuario}"
+        return f" Nombre:{self.__nombre}, Enlace:{self.__enlace}, Descripcion:{self.__descripcion}, ID usuario:{self.__id_usuario}"
 
 
 #   Modelo de marcador que se va a recuperar de la base de datos
