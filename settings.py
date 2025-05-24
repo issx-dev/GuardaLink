@@ -69,6 +69,7 @@ CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
 # Script Insertar Marcador y Consulta
 INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
 CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
+CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
 
 # Script Insertar Etiqueta y Consulta
 INSERTAR_ETIQUETA = "INSERT INTO etiquetas (nombre, id_marcador) VALUES (?, ?)"
