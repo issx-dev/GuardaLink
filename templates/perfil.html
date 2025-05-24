@@ -8,10 +8,7 @@ extra_css %}
 {% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
 
 <div class="contenedor-perfil">
-    
     <div class="tarjeta-perfil js-tarjeta-perfil">
-        
-
         <div id="contenedor-izq">
             <div class="contenedor-imagen">
                 <!-- foto_perfil -->
@@ -20,8 +17,6 @@ extra_css %}
                     alt="profile"
                 />
             </div>
-
-            
         </div>
 
         <div id="contenedor-der">
@@ -33,15 +28,44 @@ extra_css %}
                 <div class="texto-registro"><b>Alta de cuenta:</b> 23/05/2025</div>
                 <!-- registro -->
                 <div class="texto-marcadores"><b>Número de marcadores:</b> 56</div>
+                <!-- num_marcadores -->
             </div>
 
             <div class="contenedor-config">
-                <button class="boton-config">
+                <button class="boton-config" id="abrirPopup">
                     <i data-lucide="square-pen"></i>Editar Perfil
                 </button>
             </div>
         </div>
+    </div>
+</div>
 
+<!-- Ventana emergente -->
+<div id="popupContrasena" class="fondo-popup">
+    <div class="contenido-popup">
+        <h2>Editar Perfil</h2>
+        <form method="POST" action="" id="formEditarPerfil">
+            <div class="campo-formulario">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" value="" placeholder="Juan Pérez"> <!-- nombre_completo -->
+            </div>
+            <div class="campo-formulario">
+                <label for="imagen">Imagen url</label>
+                <input type="text" id="imagen" name="imagen" value="" placeholder="https://example.png"> <!-- imagen -->
+            </div>
+            <div class="campo-formulario">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" name="correo" value="" placeholder="juan@example.com"> <!-- email -->
+            </div>
+            <div class="campo-formulario">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" value="" placeholder="********"> <!-- contraseña -->
+            </div>
+            <div class="botones-popup">
+                <button type="submit" id="btnAceptar">Aceptar</button>
+                <button type="button" id="btnCancelar">Cancelar</button>
+            </div>
+        </form>
     </div>
 </div>
 
