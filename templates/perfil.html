@@ -13,7 +13,7 @@ extra_css %}
             <div class="contenedor-imagen">
                 <!-- foto_perfil -->
                 <img
-                    src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/e40b6ea6361a1abe28f32e7910f63b66/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+                    src="{{ foto_perfil }}"
                     alt="profile"
                 />
             </div>
@@ -21,13 +21,13 @@ extra_css %}
 
         <div id="contenedor-der">
             <div id="caja-textos">
-                <div class="texto-nombre">Francisco Cortés Carmona</div>
+                <div class="texto-nombre">{{ nombre_completo }}</div>
                 <!-- nombre_completo -->
-                <div class="texto-email"><b>Correo electrónico:</b> francortes@gmail.com</div>
+                <div class="texto-email"><b>Correo electrónico:</b> {{ email }}</div>
                 <!-- email -->
-                <div class="texto-registro"><b>Alta de cuenta:</b> 23/05/2025</div>
+                <div class="texto-registro"><b>Alta de cuenta:</b> {{ fecha_registro }}</div>
                 <!-- registro -->
-                <div class="texto-marcadores"><b>Número de marcadores:</b> 56</div>
+                <div class="texto-marcadores"><b>Número de marcadores:</b> {{ num_marcadores }}</div>
                 <!-- num_marcadores -->
             </div>
 
@@ -47,19 +47,19 @@ extra_css %}
         <form method="POST" action="" id="formEditarPerfil">
             <div class="campo-formulario">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" value="" placeholder="Juan Pérez"> <!-- nombre_completo -->
+                <input type="text" id="nombre" name="nombre" value="" placeholder="{{ nombre_completo }}"> <!-- nombre_completo -->
             </div>
             <div class="campo-formulario">
                 <label for="imagen">Imagen url</label>
-                <input type="text" id="imagen" name="imagen" value="" placeholder="https://example.png"> <!-- imagen -->
+                <input type="text" id="imagen" name="imagen" value="" placeholder="{{ foto_perfil }}"> <!-- imagen -->
             </div>
             <div class="campo-formulario">
                 <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo" name="correo" value="" placeholder="juan@example.com"> <!-- email -->
+                <input type="email" id="correo" name="correo" value="" placeholder="{{ email }}"> <!-- email -->
             </div>
             <div class="campo-formulario">
                 <label for="contrasena">Contraseña</label>
-                <input type="password" id="contrasena" name="contrasena" value="" placeholder="********"> <!-- contraseña -->
+                <input type="password" id="contrasena" name="contrasena" value="" placeholder="********">
             </div>
             <div class="botones-popup">
                 <button type="submit" id="btnAceptar">Aceptar</button>

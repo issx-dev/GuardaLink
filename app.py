@@ -92,7 +92,15 @@ def perfil():
 
     # Si el usuario logueado es NORMAL
     else:
-        return render_template("perfil.html")
+        datos = { # TODO Estableces los datos del usuario logueado
+            "nombre_completo": "Mercedes Cortés Perez",
+            "email": "mercedescortesperez12@gmail.com",
+            "fecha_registro": "29/05/2025",
+            "num_marcadores": 99,
+            "foto_perfil": "https://www.dzoom.org.es/wp-content/uploads/2020/02/portada-foto-perfil-redes-sociales-consejos.jpg"
+        }
+
+        return render_template("perfil.html", **datos)
 
 ##
 @app.route("/cerrar-sesion")
