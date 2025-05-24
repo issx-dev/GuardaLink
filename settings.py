@@ -29,7 +29,24 @@ CREATE TABLE IF NOT EXISTS usuarios (
     foto_perfil TEXT DEFAULT "https://thumb.ac-illust.com/51/51e1c1fc6f50743937e62fca9b942694_t.jpeg",
     fecha_registro DATE DEFAULT CURRENT_DATE
 );
+
+CREATE TABLE IF NOT EXISTS marcadores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    enlace TEXT NOT NULL,
+    descripcion TEXT DEFAULT "Descripción del marcador",
+    id_usuario INTEGER NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS etiquetas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    id_marcador INTEGER NOT NULL,
+    FOREIGN KEY (id_marcador) REFERENCES marcadores(id) ON DELETE CASCADE
+);
 """
+
 CREAR_ROOT = "INSERT OR IGNORE INTO usuarios (nombre_completo, contraseña, rol, email, foto_perfil) VALUES (?, ?, ?, ?, ?);"
 # Carga de la información del root y cifrado de la contraseña
 INFO_ROOT = (
@@ -40,10 +57,11 @@ INFO_ROOT = (
     ROOT_FOTO,
 )
 
+# Script Insertar Usuario
 INSERTAR_USUARIO = (
     "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"
 )
 
-
+# Consultas de Usuario
 CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
 CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
