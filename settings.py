@@ -65,3 +65,36 @@ INSERTAR_USUARIO = (
 # Consultas de Usuario
 CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
 CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
+
+# Script Insertar Marcador y Consulta
+INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
+CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
+
+# Script Insertar Etiqueta y Consulta
+INSERTAR_ETIQUETA = "INSERT INTO etiquetas (nombre, id_marcador) VALUES (?, ?)"
+CONSULTA_ETIQUETAS = "SELECT * FROM etiquetas WHERE id_marcador = ?"
+
+# MARCADORES PREDETERMINADOS
+MARCADORES_PREDETERMINADOS = [
+    {
+        "nombre": "Google",
+        "enlace": "https://www.google.com",
+        "descripcion": "El buscador más utilizado del mundo.",
+    },
+    {
+        "nombre": "Wikipedia",
+        "enlace": "https://www.wikipedia.org",
+        "descripcion": "La enciclopedia libre y colaborativa.",
+    },
+    {
+        "nombre": "GitHub",
+        "enlace": "https://github.com",
+        "descripcion": "Plataforma de desarrollo colaborativo de software.",
+    },
+]
+# Etiquetas predefinidas para los marcadores
+ETIQUETAS_PREDEFINIDAS = [
+    {"nombre": "Tecnología"},
+    {"nombre": "Educación"},
+    {"nombre": "Desarrollo"},
+]
