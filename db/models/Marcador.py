@@ -34,6 +34,7 @@ class MarcadorInsert:
     def descripcion(self, value):
         self.__descripcion = value
 
+    @property
     def obtener_info_marcador(self):
         return [
             self.__id_usuario,
