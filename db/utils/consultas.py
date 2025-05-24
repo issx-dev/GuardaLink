@@ -8,12 +8,12 @@ from settings import (
     INSERTAR_ETIQUETA,
     INSERTAR_MARCADOR,
     MARCADORES_PREDETERMINADOS,
-    CONSULTA_NUMERO_MARCADORES
+    CONSULTA_NUMERO_MARCADORES,
 )
 
 
 def obtener_usuario_completo(email):
-    # RecuperciÃ³n de los usuarios como instancias de la clase UsuarioBD
+    # Recupercion de los usuarios como instancias de la clase UsuarioBD
     usuario_completo = gestor_bd.ejecutar_consulta(CONSULTA_USUARIO_COMPLETO, (email,))
     if usuario_completo and isinstance(usuario_completo, list):
         return UsuarioBD(*usuario_completo[0])
@@ -23,7 +23,8 @@ def obtener_usuario_completo(email):
 
 def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
     marcadores_predeterminados = [
-        MarcadorInsert(**marcador) for marcador in MARCADORES_PREDETERMINADOS
+        MarcadorInsert(usuario_id, **marcador)
+        for marcador in MARCADORES_PREDETERMINADOS
     ]
 
     """Inserta marcadores y etiquetas predeterminadas al registrarse."""
@@ -44,6 +45,16 @@ def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
             INSERTAR_ETIQUETA,
             (etiqueta["nombre"], marcador.id),
         )
+
+
+def obtener_marcadores(usuario_id):
+    """Obtiene los marcadores de un usuario."""
+    resultado = gestor_bd.ejecutar_consulta(CONSULTA_MARCADORES, (usuario_id,))
+    if resultado and isinstance(resultado, list):
+        return [MarcadorBD(*marcador) for marcador in resultado]
+    else:
+        return []
+
 
 def obtener_numero_marcadores(usuario_id):
     """Obtiene el número de marcadores de un usuario."""
