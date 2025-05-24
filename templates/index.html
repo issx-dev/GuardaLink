@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %} Inicio {% endblock %} {% block h1 %}
+Inicio {% endblock %} {% block main %}
+<div class="page-header">
+    <h2>Bienvenido, {{ username }}</h2>
+    <p>Gestiona tu colección de marcadores.</p>
+</div>
 
-{% block title %} Inicio {% endblock %}
+<div class="bookmarks">
+    {% if marcadores %} {% for marcador in marcadores %}
+    <div class="bookmark-card">
+        <div class="bookmark-header">
+            <h3 class="bookmark-title">{{ marcador.nombre }}</h3>
+        </div>
 
-{% block h1 %} Inicio {% endblock %}
+        <p class="bookmark-description">{{ marcador.descripcion }}</p>
+        <p class="bookmark-url">{{ marcador.enlace }}</p>
 
-{% block main %}
-<p>Página index</p>
-{% endblock %}
+
+        <div class="bookmark-footer">
+            <a href="{{ marcador.enlace }}" target="_blank" class="visit-button"
+                >Visit</a
+            >
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No hay marcadores. Añade alguno!</p>
+{% endif %} {% endblock %}
