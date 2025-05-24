@@ -108,7 +108,7 @@ def perfil():
 
     # Si el usuario logueado es NORMAL
     else:
-        datos = {  # TODO Estableces los datos del usuario logueado
+        datos = {
             "nombre_completo": usuario.nombre_completo,  # type: ignore
             "email": usuario.email,  # type: ignore
             "fecha_registro": usuario.fecha_registro,  # type: ignore
