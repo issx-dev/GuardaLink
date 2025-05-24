@@ -2,7 +2,7 @@
 class Usuario:
     def __init__(
         self,
-        id: str,
+        id: int,
         nombre_completo: str,
         rol: str,
         email: str,
@@ -99,7 +99,7 @@ class Usuario:
 class UsuarioBD(Usuario):
     def __init__(
         self,
-        id: str,
+        id: int,
         nombre_completo: str,
         contraseña: str,
         rol: str,
@@ -140,6 +140,7 @@ class UsuarioInsert:
         self.__nombre_completo = nombre_completo
         self.__contraseña = contraseña
         self.__email = email
+        
 
     @property
     def nombre_completo(self):
