@@ -5,6 +5,7 @@ from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
+    obtener_marcadores,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD, Usuario  # noqa: F401
@@ -37,7 +38,8 @@ def index():
 
     # Si el usuario logueado es NORMAL
     else:
-        return render_template("index.html")
+        marcadores = obtener_marcadores(usuario.id)  # type: ignore
+        return render_template("index.html", marcadores=marcadores)
 
 
 ##
