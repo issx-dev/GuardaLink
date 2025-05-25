@@ -26,7 +26,7 @@ app.secret_key = SECRET_KEY
 def index():
     # Obtiene el usuario logueado y su rol
     email_sesion = session.get("email")
-    usuario = obtener_usuario_completo(email_sesion) if email_sesion else None
+    usuario = obtener_usuario_completo(email_sesion)
 
     # Si NO hay un usuario logueado
     if not usuario:
@@ -39,10 +39,15 @@ def index():
     # Si el usuario logueado es NORMAL
     else:
         marcadores = obtener_marcadores(usuario.id)  # type: ignore
-        return render_template("index.html", marcadores=marcadores)
+        return render_template(
+            "index.html",
+            foto_perfil=usuario.foto_perfil,  # type: ignore
+            marcadores=marcadores,
+        )
 
 
-##
+# CRUD DE USUARIOS
+# Inicio de sesión y registro de nuevos usuarios
 @app.route("/acceso", methods=["GET", "POST"])
 def acceso():
     if request.method == "POST":
@@ -94,18 +99,19 @@ def acceso():
     return render_template("login.html")
 
 
+# Obtenemos el usuario logueado y su rol
 @app.route("/perfil")
 def perfil():
     # Obtiene el usuario logueado y su rol
     email_sesion = session.get("email")
-    usuario = obtener_usuario_completo(email_sesion) if email_sesion else None
+    usuario = obtener_usuario_completo(email_sesion)
 
     # Si NO hay un usuario logueado
     if not usuario:
         return redirect(url_for("acceso"))
 
     # Si el usuario logueado es ADMIN
-    elif usuario == "admin":
+    elif usuario.rol == "admin":  # type: ignore
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
@@ -119,6 +125,64 @@ def perfil():
         }
 
         return render_template("perfil.html", **datos)
+
+# Actualización del perfil de usuario
+@app.route("/editar-perfil", methods=["POST"])
+def editar_perfil():
+    # Obtiene el usuario logueado y su rol
+    email_sesion = session.get("email")
+    usuario = obtener_usuario_completo(email_sesion)
+
+    # Si NO hay un usuario logueado
+    if not usuario:
+        return redirect(url_for("acceso"))
+
+    # Si el usuario logueado es ADMIN
+    elif usuario.rol == "admin":  # type: ignore
+        return "Eres admin"
+
+    # Si el usuario logueado es NORMAL obtenemos los datos del formulario
+    nombre_completo = request.form.get("nombre-completo", "").strip()
+    foto_perfil = request.form.get("foto-perfil", "").strip()
+    email = request.form.get("email", "").strip().lower()
+    contraseña = request.form.get("contraseña", "").strip()
+
+    # Si no se han realizado cambios en el perfil mandamos un mensaje
+    # y redirigimos al perfil
+    if not nombre_completo and not foto_perfil and not email and not contraseña:
+        flash("No se han realizado cambios en el perfil.", "info")
+        return redirect(url_for("perfil"))
+
+    # Validación de los campos para actualizar solo los que se han modificado
+    nuevo_nombre = nombre_completo or usuario.nombre_completo  # type: ignore
+    nueva_foto = foto_perfil or usuario.foto_perfil  # type: ignore
+    nuevo_email = email or usuario.email  # type: ignore
+    nueva_contraseña = (
+        pbkdf2_sha256.hash(contraseña) if contraseña else usuario.contraseña  # type: ignore
+    )
+
+    gestor_bd.ejecutar_consulta(
+        """
+        UPDATE usuarios
+        SET nombre_completo = ?, foto_perfil = ?, email = ?, contraseña = ?
+        WHERE id = ?
+        """,
+        (
+            nuevo_nombre,
+            nueva_foto,
+            nuevo_email,
+            nueva_contraseña,
+            usuario.id,  # type: ignore
+        ),
+    )
+    flash("Perfil actualizado correctamente.", "success")
+
+    if contraseña or email:
+        session.pop(
+            "email", None
+        )  # Cerrar sesión si se cambia la contraseña o el email
+
+    return redirect(url_for("perfil"))
 
 
 ##

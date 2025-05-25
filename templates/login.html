@@ -7,6 +7,10 @@
         <meta name="description" content="" />
         <link
             rel="stylesheet"
+            href="{{ url_for('static', filename='css/base.css') }}"
+        />
+        <link
+            rel="stylesheet"
             href="{{ url_for('static', filename='css/login.css') }}"
         />
         <title>Iniciar Sesión</title>
@@ -132,5 +136,6 @@
         <!-- LIBRERÍA ICONOS SVG -->
         <script src="https://unpkg.com/lucide@latest"></script>
         <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     </body>
 </html>

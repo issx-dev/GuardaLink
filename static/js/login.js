@@ -46,13 +46,3 @@ signUpButton.addEventListener("click", () => {
 signInButton.addEventListener("click", () => {
     container.classList.remove("right-panel-active");
 });
-
-// Auto-eliminación con barra de progreso
-// Selecciona todos los mensajes de flash y les aplica un efecto de desvanecimiento
-document.querySelectorAll(".mensajes-flash > div").forEach((message) => {
-    // Crear un tiempo de animación para la barra de progreso
-    setTimeout(() => {
-        message.style.opacity = "0";
-        setTimeout(() => message.remove(), 300);
-    }, 3000); // 3 segundos = duración de la animación
-});

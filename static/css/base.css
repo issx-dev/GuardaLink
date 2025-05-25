@@ -239,73 +239,80 @@ body {
     background: #f0f0f0;
 }
 
-.page-header {
-    text-align: center;
-    margin: 2rem 0;
-    color: #333;
+/* Mensajes Flash */
+@keyframes progress {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+.mensajes-flash {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.mensajes-flash > div {
+    position: relative;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.5s ease-out;
 }
 
-.bookmarks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
+.mensajes-flash .error {
+    background: rgba(255, 76, 76, 0.9);
 }
 
-.bookmark-card {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    color: #222;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.mensajes-flash .error .progress-bar {
+    background: rgba(255, 255, 255, 0.7);
 }
 
-.bookmark-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.mensajes-flash .success {
+    background-color: #28a745;
 }
 
-.bookmark-header {
-    margin-bottom: 0.5rem;
+.mensajes-flash .info {
+    background-color: #17a2b8;
 }
 
-.bookmark-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #111;
+.close-flash {
+    margin-left: auto;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    opacity: 0.8;
+    z-index: 1;
 }
 
-.bookmark-url {
-    font-size: 0.9rem;
-    color: #555;
-    word-break: break-all;
-    margin-bottom: 0.5rem;
+.close-flash:hover {
+    opacity: 1;
 }
 
-.bookmark-description {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.bookmark-footer {
-    text-align: right;
-}
-
-.visit-button {
-    background-color: #4f46e5;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.visit-button:hover {
-    background-color: #3730a3;
+/* Creamos la bara de progreso */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transform-origin: left;
+    animation: progress 3s linear forwards;
 }

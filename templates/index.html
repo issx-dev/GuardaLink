@@ -1,6 +1,10 @@
-<!DOCTYPE html>
-{% extends "base.html" %} {% block title %} Inicio {% endblock %} {% block h1 %}
-Inicio {% endblock %} {% block main %}
+<!DOCTYPE html> {% extends "base.html" %} {% block title %} Inicio {% endblock
+%} {% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/index.css') }}"
+/>
+{%endblock%} {% block h1 %} Inicio {% endblock %} {% block main %}
 <div class="page-header">
     <h2>Bienvenido,</h2>
     <p>Gestiona tu colección de marcadores.</p>
@@ -15,7 +19,6 @@ Inicio {% endblock %} {% block main %}
 
         <p class="bookmark-description">{{ marcador.descripcion }}</p>
         <p class="bookmark-url">{{ marcador.enlace }}</p>
-
 
         <div class="bookmark-footer">
             <a href="{{ marcador.enlace }}" target="_blank" class="visit-button"

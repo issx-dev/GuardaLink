@@ -12,15 +12,6 @@
     }
 }
 
-@keyframes progress {
-    from {
-        transform: scaleX(1);
-    }
-    to {
-        transform: scaleX(0);
-    }
-}
-
 /* Reset */
 * {
     box-sizing: border-box;
@@ -145,7 +136,7 @@ input::placeholder {
 }
 
 /* Contenedores de formulario */
-.titulo-sesion-registro{
+.titulo-sesion-registro {
     margin-bottom: 20px;
 }
 .form-container {
@@ -323,66 +314,4 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
-}
-
-/* Mensajes Flash */
-.mensajes-flash {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 90%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.mensajes-flash > div {
-    position: relative;
-    padding: 15px 20px;
-    border-radius: 8px;
-    color: white;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.5s ease-out;
-}
-
-.mensajes-flash .error {
-    background: rgba(255, 76, 76, 0.9);
-}
-
-.mensajes-flash .error .progress-bar {
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.close-flash {
-    margin-left: auto;
-    cursor: pointer;
-    padding: 2px;
-    display: flex;
-    opacity: 0.8;
-    z-index: 1;
-}
-
-.close-flash:hover {
-    opacity: 1;
-}
-
-/* Creamos la bara de progreso */
-.progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.3);
-    transform-origin: left;
-    animation: progress 3s linear forwards;
 }

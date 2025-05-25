@@ -6,16 +6,37 @@ extra_css %}
 />
 
 {% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
-
+<!-- BLOQUE FLASH -->
+{% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes
+%}
+<div class="mensajes-flash">
+    {% for categoria, mensaje in mensajes %}
+    <div class="{{ categoria }}">
+        <!-- Icono de alerta -->
+        <!-- Se utiliza un icono diferente según la categoría -->
+        <i
+            data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"
+        ></i>
+        {{ mensaje }}
+        <!-- Barra de progreso -->
+        <div class="progress-bar"></div>
+        <!-- Botón para cerrar el mensaje -->
+        <i
+            class="close-flash"
+            data-lucide="x"
+            onclick="this.parentElement.remove()"
+        ></i>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% endwith %}
+<!-- BLOQUE PERFIL -->
 <div class="contenedor-perfil">
     <div class="tarjeta-perfil js-tarjeta-perfil">
         <div id="contenedor-izq">
             <div class="contenedor-imagen">
                 <!-- foto_perfil -->
-                <img
-                    src="{{ foto_perfil }}"
-                    alt="profile"
-                />
+                <img src="{{ foto_perfil }}" alt="profile" />
             </div>
         </div>
 
@@ -23,11 +44,17 @@ extra_css %}
             <div id="caja-textos">
                 <div class="texto-nombre">{{ nombre_completo }}</div>
                 <!-- nombre_completo -->
-                <div class="texto-email"><b>Correo electrónico:</b> {{ email }}</div>
+                <div class="texto-email">
+                    <b>Correo electrónico:</b> {{ email }}
+                </div>
                 <!-- email -->
-                <div class="texto-registro"><b>Alta de cuenta:</b> {{ fecha_registro }}</div>
+                <div class="texto-registro">
+                    <b>Alta de cuenta:</b> {{ fecha_registro }}
+                </div>
                 <!-- registro -->
-                <div class="texto-marcadores"><b>Número de marcadores:</b> {{ num_marcadores }}</div>
+                <div class="texto-marcadores">
+                    <b>Número de marcadores:</b> {{ num_marcadores }}
+                </div>
                 <!-- num_marcadores -->
             </div>
 
@@ -44,22 +71,53 @@ extra_css %}
 <div id="popupContrasena" class="fondo-popup">
     <div class="contenido-popup">
         <h2>Editar Perfil</h2>
-        <form method="POST" action="" id="formEditarPerfil">
+        <form
+            method="POST"
+            action="{{url_for('editar_perfil')}}"
+            id="formEditarPerfil"
+        >
             <div class="campo-formulario">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" value="" placeholder="{{ nombre_completo }}"> <!-- nombre_completo -->
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre-completo"
+                    value=""
+                    placeholder="{{ nombre_completo }}"
+                />
+                <!-- nombre_completo -->
             </div>
             <div class="campo-formulario">
                 <label for="imagen">Imagen url</label>
-                <input type="text" id="imagen" name="imagen" value="" placeholder="{{ foto_perfil }}"> <!-- imagen -->
+                <input
+                    type="text"
+                    id="imagen"
+                    name="foto-perfil"
+                    value=""
+                    placeholder="{{ foto_perfil }}"
+                />
+                <!-- imagen -->
             </div>
             <div class="campo-formulario">
                 <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo" name="correo" value="" placeholder="{{ email }}"> <!-- email -->
+                <input
+                    type="email"
+                    id="correo"
+                    name="email"
+                    value=""
+                    placeholder="{{ email }}"
+                />
+                <!-- email -->
             </div>
             <div class="campo-formulario">
                 <label for="contrasena">Contraseña</label>
-                <input type="password" id="contrasena" name="contrasena" value="" placeholder="********">
+                <input
+                    type="password"
+                    id="contrasena"
+                    name="contraseña"
+                    value=""
+                    placeholder="********"
+                />
             </div>
             <div class="botones-popup">
                 <button type="submit" id="btnAceptar">Aceptar</button>
@@ -68,7 +126,8 @@ extra_css %}
         </form>
     </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
-
+{% endblock %} {% block extra_js %}
+<script src="https://unpkg.com/lucide@latest" defer></script>
+<script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/perfil.js') }}" defer></script>
 {% endblock %}
