@@ -53,9 +53,9 @@ def obtener_marcadores_y_etiquetas(usuario_id):
     resultado = gestor_bd.ejecutar_consulta(
         CONSULTAR_MARCADORES_ETIQUETAS, (usuario_id,)
     )
-    if resultado and isinstance(resultado, list):
+    if isinstance(resultado, list):
         return [
-            (MarcadorBD(*marcador[:-3]), EtiquetaBD(marcador[-1], marcador[-2], marcador[-3]))
+            (MarcadorBD(*marcador[:-1]), marcador[-1].split(","))
             for marcador in resultado
         ]
     else:

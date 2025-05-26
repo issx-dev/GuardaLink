@@ -68,3 +68,18 @@
 .visit-button:hover {
     background-color: #3730a3;
 }
+
+.bookmark-tags {
+    margin: 10px 0;
+}
+
+.bookmark-tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    margin: 2px;
+    text-decoration: none;
+}

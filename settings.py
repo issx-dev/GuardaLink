@@ -75,10 +75,13 @@ CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
 CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
 
 CONSULTAR_MARCADORES_ETIQUETAS = """
-            SELECT * 
+            SELECT  
+                m.id, m.id_usuario, m.nombre, m.descripcion, m.enlace,
+                GROUP_CONCAT(e.nombre, ',') AS etiquetas
             FROM marcadores m 
             JOIN etiquetas e ON m.id = e.id_marcador 
             WHERE m.id_usuario = ?
+            GROUP BY m.id
 """
 
 # Script Insertar Etiqueta y Consulta
