@@ -5,7 +5,7 @@ from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
-    obtener_marcadores,
+    obtener_marcadores_y_etiquetas,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
@@ -33,7 +33,8 @@ def index():
 
     # Si el usuario logueado es NORMAL
     else:
-        marcadores = obtener_marcadores(usuario.id)
+        marcadores = obtener_marcadores_y_etiquetas(usuario.id)
+        print(marcadores[0])
         return render_template(
             "index.html",
             foto_perfil=usuario.foto_perfil,
@@ -74,7 +75,10 @@ def acceso():
             )
 
             usuario_actual = obtener_usuario_completo(email)
-            crear_marcadores_y_etiquetas_por_defecto(usuario_actual.id)  # type: ignore
+            if not isinstance(usuario_actual, UsuarioBD):
+                flash("Error al registrar el usuario, por favor inténtelo de nuevo.", "error")
+                return redirect(url_for("acceso"))
+            crear_marcadores_y_etiquetas_por_defecto(usuario_actual.id) 
 
             session["email"] = email
             return redirect(url_for("index"))

@@ -8,7 +8,7 @@
 </div>
 
 <div class="bookmarks">
-    {% if marcadores %} {% for marcador in marcadores %}
+    {% if marcadores %} {% for marcador,etiqueta in *marcadores %}
     <div class="bookmark-card">
         <div class="bookmark-header">
             <h3 class="bookmark-title">{{ marcador.nombre }}</h3>

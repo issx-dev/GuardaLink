@@ -55,7 +55,7 @@ def obtener_marcadores_y_etiquetas(usuario_id):
     )
     if resultado and isinstance(resultado, list):
         return [
-            (MarcadorBD(*marcador[0]), EtiquetaBD(*marcador[1]))
+            (MarcadorBD(*marcador[:-3]), EtiquetaBD(marcador[-1], marcador[-2], marcador[-3]))
             for marcador in resultado
         ]
     else:
