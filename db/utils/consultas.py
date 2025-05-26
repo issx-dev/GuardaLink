@@ -1,7 +1,8 @@
 from db.BaseDatos import gestor_bd
-from db.models.Usuario import UsuarioBD, Usuario  # noqa: F401
+from db.models.Usuario import UsuarioBD
 from db.models.Marcador import MarcadorInsert, MarcadorBD
-from settings import CONSULTA_USUARIO, CONSULTA_USUARIO_COMPLETO  # noqa: F401
+from db.models.Etiqueta import EtiquetaBD
+from settings import CONSULTA_USUARIO_COMPLETO, CONSULTAR_MARCADORES_ETIQUETAS
 from settings import (
     CONSULTA_MARCADORES,
     ETIQUETAS_PREDEFINIDAS,
@@ -47,11 +48,16 @@ def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
         )
 
 
-def obtener_marcadores(usuario_id):
+def obtener_marcadores_y_etiquetas(usuario_id):
     """Obtiene los marcadores de un usuario."""
-    resultado = gestor_bd.ejecutar_consulta(CONSULTA_MARCADORES, (usuario_id,))
+    resultado = gestor_bd.ejecutar_consulta(
+        CONSULTAR_MARCADORES_ETIQUETAS, (usuario_id,)
+    )
     if resultado and isinstance(resultado, list):
-        return [MarcadorBD(*marcador) for marcador in resultado]
+        return [
+            (MarcadorBD(*marcador[0]), EtiquetaBD(*marcador[1]))
+            for marcador in resultado
+        ]
     else:
         return []
 

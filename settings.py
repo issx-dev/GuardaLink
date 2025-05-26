@@ -74,6 +74,13 @@ INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descrip
 CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
 CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
 
+CONSULTAR_MARCADORES_ETIQUETAS = """
+            SELECT * 
+            FROM marcadores m 
+            JOIN etiquetas e ON m.id = e.id_marcador 
+            WHERE m.id_usuario = ?
+"""
+
 # Script Insertar Etiqueta y Consulta
 INSERTAR_ETIQUETA = "INSERT INTO etiquetas (nombre, id_marcador) VALUES (?, ?)"
 CONSULTA_ETIQUETAS = "SELECT * FROM etiquetas WHERE id_marcador = ?"
