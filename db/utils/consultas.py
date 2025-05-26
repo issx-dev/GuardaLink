@@ -1,7 +1,6 @@
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from db.models.Marcador import MarcadorInsert, MarcadorBD
-from db.models.Etiqueta import EtiquetaBD
 from settings import CONSULTA_USUARIO_COMPLETO, CONSULTAR_MARCADORES_ETIQUETAS
 from settings import (
     CONSULTA_MARCADORES,

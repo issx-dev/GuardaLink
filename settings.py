@@ -76,7 +76,7 @@ CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario =
 
 CONSULTAR_MARCADORES_ETIQUETAS = """
             SELECT  
-                m.id, m.id_usuario, m.nombre, m.descripcion, m.enlace,
+                m.id, m.id_usuario, m.nombre, m.enlace, m.descripcion,
                 GROUP_CONCAT(e.nombre, ',') AS etiquetas
             FROM marcadores m 
             JOIN etiquetas e ON m.id = e.id_marcador 
