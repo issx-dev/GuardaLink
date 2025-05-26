@@ -1,31 +1,22 @@
-{% extends "base.html" %} {% block title %}Perfil{% endblock %} {% block
-extra_css %}
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/perfil.css') }}"
-/>
-
+<!DOCTYPE html>
+{% extends "base.html" %} {% block title %}Perfil{% endblock %} {% block icon %}
+<link rel="icon" href="{{ url_for('static', filename='images/icono_perfil.png') }}" />
+{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}" />
 {% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
 <!-- BLOQUE FLASH -->
-{% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes
-%}
+{% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes %}
 <div class="mensajes-flash">
     {% for categoria, mensaje in mensajes %}
     <div class="{{ categoria }}">
         <!-- Icono de alerta -->
         <!-- Se utiliza un icono diferente según la categoría -->
-        <i
-            data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"
-        ></i>
+        <i data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"></i>
         {{ mensaje }}
         <!-- Barra de progreso -->
         <div class="progress-bar"></div>
         <!-- Botón para cerrar el mensaje -->
-        <i
-            class="close-flash"
-            data-lucide="x"
-            onclick="this.parentElement.remove()"
-        ></i>
+        <i class="close-flash" data-lucide="x" onclick="this.parentElement.remove()"></i>
     </div>
     {% endfor %}
 </div>
@@ -44,13 +35,9 @@ extra_css %}
             <div id="caja-textos">
                 <div class="texto-nombre">{{ nombre_completo }}</div>
                 <!-- nombre_completo -->
-                <div class="texto-email">
-                    <b>Correo electrónico:</b> {{ email }}
-                </div>
+                <div class="texto-email"><b>Correo electrónico:</b> {{ email }}</div>
                 <!-- email -->
-                <div class="texto-registro">
-                    <b>Alta de cuenta:</b> {{ fecha_registro }}
-                </div>
+                <div class="texto-registro"><b>Alta de cuenta:</b> {{ fecha_registro }}</div>
                 <!-- registro -->
                 <div class="texto-marcadores">
                     <b>Número de marcadores:</b> {{ num_marcadores }}
@@ -71,11 +58,7 @@ extra_css %}
 <div id="popupContrasena" class="fondo-popup">
     <div class="contenido-popup">
         <h2>Editar Perfil</h2>
-        <form
-            method="POST"
-            action="{{url_for('editar_perfil')}}"
-            id="formEditarPerfil"
-        >
+        <form method="POST" action="{{url_for('editar_perfil')}}" id="formEditarPerfil">
             <div class="campo-formulario">
                 <label for="nombre">Nombre completo</label>
                 <input
@@ -100,13 +83,7 @@ extra_css %}
             </div>
             <div class="campo-formulario">
                 <label for="correo">Correo electrónico</label>
-                <input
-                    type="email"
-                    id="correo"
-                    name="email"
-                    value=""
-                    placeholder="{{ email }}"
-                />
+                <input type="email" id="correo" name="email" value="" placeholder="{{ email }}" />
                 <!-- email -->
             </div>
             <div class="campo-formulario">

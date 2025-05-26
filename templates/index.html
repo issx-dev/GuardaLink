@@ -1,9 +1,6 @@
-<!DOCTYPE html> {% extends "base.html" %} {% block title %} Inicio {% endblock
-%} {% block extra_css %}
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/index.css') }}"
-/>
+<!DOCTYPE html> {% extends "base.html" %} {% block title %} Inicio {% endblock%} 
+{% block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
 {%endblock%} {% block h1 %} Inicio {% endblock %} {% block main %}
 <div class="page-header">
     <h2>Bienvenido,</h2>
@@ -21,9 +18,7 @@
         <p class="bookmark-url">{{ marcador.enlace }}</p>
 
         <div class="bookmark-footer">
-            <a href="{{ marcador.enlace }}" target="_blank" class="visit-button"
-                >Visit</a
-            >
+            <a href="{{ marcador.enlace }}" target="_blank" class="visit-button">Visit</a>
         </div>
     </div>
     {% endfor %}
