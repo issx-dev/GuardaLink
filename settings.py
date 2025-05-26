@@ -66,6 +66,9 @@ INSERTAR_USUARIO = (
 CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
 CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
 
+# Actualizar Usuario
+ACTUALIZAR_USUARIO = " UPDATE usuarios SET nombre_completo = ?, foto_perfil = ?, email = ?, contraseña = ? WHERE id = ? "
+
 # Script Insertar Marcador y Consulta
 INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
 CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
