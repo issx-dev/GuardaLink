@@ -16,32 +16,33 @@
 }
 
 #contenedor-izq {
-    background-color: #3a4b61;
     display: flex;
     flex-direction: column;
     width: 25%;
-    justify-content: space-between;
-    padding: 3rem;
     border-radius: 10px;
 }
 
 #caja-textos {
+    box-shadow: 0 0 2px #34495e84;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
 #contenedor-der {
-    background-color: rgb(233, 233, 233);
     display: flex;
     flex-direction: column;
     width: 75%;
-    padding: 3rem;
-    border-radius: 10px;
+    padding-left: 3rem;
+    border-left: 2px solid #d4d4d4;
 }
 
 .contenedor-imagen {
-    width: 100%;
+    width: 70%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
@@ -55,17 +56,24 @@
 }
 
 .texto-nombre {
-    font-size: 49px;
+    font-size: 35px;
     font-weight: 700;
-    color: #2e3e51;
-    margin-bottom: 1.2rem;
+    color: #000000;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .texto-email,
 .texto-registro,
 .texto-marcadores {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 500;
+    color: #444444;
+}
+
+.texto-registro,
+.texto-marcadores {
+    color: #181818;
 }
 
 .contenedor-config {
@@ -89,14 +97,94 @@
     transition: background 0.3s;
 }
 
+/* ventana emergente */
+
+#formEditarPerfil {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.3rem;
+}
+
+.campo-formulario {
+    background-color: rgb(255, 255, 255);
+    padding: 1.5rem;
+    box-shadow: 0 0 2px #707070;
+    border-radius: 10px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 21px;
+    font-weight: 300;
+}
+
+.campo-formulario input {
+    background-color: none;
+    border: none;
+    width: 100%;
+    padding: 1px;
+    font-size: 17px;
+}
+
+.campo-formulario input:focus {
+    outline: none;
+}
+
+.botones-popup {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    height: 100%;
+}
+
+.botones-popup button {
+    padding: 14px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 50%;
+    font-size: 18px;
+}
+
+#btnAceptar {
+    background-color: #34495e;
+    color: white;
+}
+
+#btnCancelar {
+    background-color: #777777;
+    color: white;
+}
+
+/* Responsive */
 @media (max-width: 1400px) {
     .tarjeta-perfil {
         justify-content: flex-start;
         flex-direction: column;
+        padding: 2rem;
     }
 
     #contenedor-izq {
         width: 100%;
+        align-items: center;
+    }
+
+    #caja-textos {
+        width: 100%;
+        text-align: center;
+    }
+
+    #contenedor-der {
+        border: none;
+        padding: 0;
+        margin-top: 1.3rem;
+    }
+
+    #formEditarPerfil {
+        gap: 1.3rem;
     }
 
     .contenedor-imagen {
@@ -107,26 +195,29 @@
         width: 100%;
     }
 
-    .texto-nombre {
-        font-size: 42px;
+    .botones-popup {
+        margin-top: 1rem;
+        gap: 2rem;
     }
 }
 
 @media (max-width: 1024px) {
     .tarjeta-perfil {
-        padding: 1rem;
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     .texto-nombre {
-        font-size: 35px;
+        font-size: 32px;
     }
 }
 
 @media (max-width: 768px) {
+    .tarjeta-perfil {
+        padding: 1rem;
+    }
+
     .texto-nombre {
-        font-size: 30px;
-        margin-bottom: 0.6rem;
+        font-size: 29px;
     }
 
     .texto-email,
@@ -135,80 +226,7 @@
         font-size: 20px;
     }
 
-    #contenedor-izq {
-        align-items: center;
+    .botones-popup {
+        gap: 1rem;
     }
-}
-
-/* ventana emergente */
-.fondo-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.contenido-popup {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    min-width: 390px;
-    text-align: left;
-}
-
-.contenido-popup h2 {
-    margin-bottom: 25px;
-    background-color: #2e3e51;
-    border-radius: 10px;
-    text-align: center;
-    padding: 0.5rem 1rem;
-    color: white;
-}
-
-.campo-formulario {
-    margin-bottom: 15px;
-}
-
-.campo-formulario label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.campo-formulario input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.botones-popup {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.botones-popup button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 44%;
-}
-
-#btnAceptar {
-    background-color: #2e3e51;
-    color: white;
-}
-
-#btnCancelar {
-    background-color: #3d3d3d;
-    color: white;
 }
