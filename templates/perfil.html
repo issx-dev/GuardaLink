@@ -4,6 +4,7 @@
 {% endblock %} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}" />
 {% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
+
 <!-- BLOQUE FLASH -->
 {% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes %}
 <div class="mensajes-flash">
@@ -21,6 +22,7 @@
     {% endfor %}
 </div>
 {% endif %} {% endwith %}
+
 <!-- BLOQUE PERFIL -->
 <div class="contenedor-perfil">
     <div class="tarjeta-perfil js-tarjeta-perfil">
@@ -29,84 +31,75 @@
                 <!-- foto_perfil -->
                 <img src="{{ foto_perfil }}" alt="profile" />
             </div>
+
+            <div class="texto-nombre">{{ nombre_completo }}</div>
+            <!-- nombre_completo -->
+
+            <div class="texto-email">{{ email }}</div>
+            <!-- email -->
+
+            <div id="caja-textos">
+                <div class="texto-registro">Miembro desde el<br><b><i>{{ fecha_registro }}</i></b></div>
+                <!-- registro -->
+                <div class="texto-marcadores"><b>{{ num_marcadores }}</b> marcadores</div>
+                <!-- num_marcadores -->
+            </div>
         </div>
 
         <div id="contenedor-der">
-            <div id="caja-textos">
-                <div class="texto-nombre">{{ nombre_completo }}</div>
-                <!-- nombre_completo -->
-                <div class="texto-email"><b>Correo electrónico:</b> {{ email }}</div>
-                <!-- email -->
-                <div class="texto-registro"><b>Alta de cuenta:</b> {{ fecha_registro }}</div>
-                <!-- registro -->
-                <div class="texto-marcadores">
-                    <b>Número de marcadores:</b> {{ num_marcadores }}
+            <form method="POST" action="{{url_for('perfil')}}" id="formEditarPerfil">
+                <div class="campo-formulario">
+                    <label for="nombre">Nombre completo</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre-completo"
+                        value=""
+                        placeholder="{{ nombre_completo }}"
+                        minlength="5"
+                    maxlength="30"
+                />
+                    <!-- nombre_completo -->
                 </div>
-                <!-- num_marcadores -->
-            </div>
+                <div class="campo-formulario">
+                    <label for="imagen">Imagen url</label>
+                    <input
+                        type="text"
+                        id="imagen"
+                        name="foto-perfil"
+                        value=""
+                        placeholder="{{ foto_perfil }}"
+                    />
+                    <!-- imagen -->
+                </div>
+                <div class="campo-formulario">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="email" value="" placeholder="{{ email }}" />
+                    <!-- email -->
+                </div>
+                <div class="campo-formulario">
+                    <label for="contrasena">Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        name="contraseña"
+                        value=""
+                        placeholder="********"
+                        minlength="8"
+                    maxlength="20"
+                />
+                </div>
 
-            <div class="contenedor-config">
-                <button class="boton-config" id="abrirPopup">
-                    <i data-lucide="square-pen"></i>Editar Perfil
-                </button>
-            </div>
+                <div class="botones-popup">
+                    <button type="submit" name="editar" id="btnAceptar">Guardar</button>
+                    <button type="reset" id="btnCancelar">Deshacer</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Ventana emergente -->
-<div id="popupContrasena" class="fondo-popup">
-    <div class="contenido-popup">
-        <h2>Editar Perfil</h2>
-        <form method="POST" action="{{url_for('perfil')}}" id="formEditarPerfil">
-            <div class="campo-formulario">
-                <label for="nombre">Nombre completo</label>
-                <input
-                    type="text"
-                    id="nombre"
-                    name="nombre-completo"
-                    value=""
-                    placeholder="{{ nombre_completo }}"
-                    minlength="5"
-                    maxlength="30"
-                />
-                <!-- nombre_completo -->
-            </div>
-            <div class="campo-formulario">
-                <label for="imagen">Imagen url</label>
-                <input
-                    type="text"
-                    id="imagen"
-                    name="foto-perfil"
-                    value=""
-                    placeholder="{{ foto_perfil }}"
-                />
-                <!-- imagen -->
-            </div>
-            <div class="campo-formulario">
-                <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo" name="email" value="" placeholder="{{ email }}" />
-                <!-- email -->
-            </div>
-            <div class="campo-formulario">
-                <label for="contrasena">Contraseña</label>
-                <input
-                    type="password"
-                    id="contrasena"
-                    name="contraseña"
-                    value=""
-                    placeholder="********"
-                    minlength="8"
-                    maxlength="20"
-                />
-            </div>
-            <div class="botones-popup">
-                <button type="submit" name="editar" id="btnAceptar">Aceptar</button>
-                <button type="button" id="btnCancelar">Cancelar</button>
-            </div>
-        </form>
-    </div>
-</div>
+
 {% endblock %} {% block extra_js %}
 <script src="https://unpkg.com/lucide@latest" defer></script>
 <script src="{{ url_for('static', filename='js/login.js') }}" defer></script>
