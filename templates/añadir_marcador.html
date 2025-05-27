@@ -1,1 +1,23 @@
-test
+{%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/añadir_marcador.css') }}" />
+{%endblock%} {%block h1%} Añadir Marcador {%endblock%} {%block main%}
+
+<form method="post" action="{{url_for('añadir_marcador')}}">
+    <div class="form-container">
+        <label for="nombre">Nombre del marcador:</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="enlace">Enlace:</label>
+        <input type="url" id="enlace" name="enlace" required />
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion"></textarea>
+
+        <label for="etiquetas">Etiquetas (separadas por comas):</label>
+        <input type="text" id="etiquetas" name="etiquetas" />
+
+        <button type="submit">Añadir Marcador</button>
+    </div>
+</form>
+
+{% endblock %}

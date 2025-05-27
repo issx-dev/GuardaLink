@@ -204,7 +204,7 @@ def añadir_marcador():
 
         return redirect(url_for("index"))
 
-    return render_template("añadir_marcador.html")
+    return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil)
 
 
 # Buscador marcadores
