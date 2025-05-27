@@ -51,10 +51,18 @@
 }
 
 .bookmark-footer {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    
 }
 
 .visit-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    font-weight: bold;
     background-color: #525ca1;
     color: #fff;
     padding: 0.5rem 1rem;
@@ -81,6 +89,7 @@
     border-radius: 12px;
     font-size: 0.85em;
     margin: 2px;
+    margin-bottom: 6px;
     text-decoration: none;
 }
 
