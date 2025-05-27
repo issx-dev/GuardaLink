@@ -168,6 +168,27 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
+# Obtenemos el usuario logueado y su rol
+@app.route("/añadir-marcador", methods=["GET", "POST"])
+def añadir_marcador():
+    # Obtiene el usuario logueado y su rol
+    email_sesion = session.get("email")
+    usuario = obtener_usuario_completo(email_sesion)
+
+    # Si NO hay un usuario logueado
+    if not isinstance(usuario, UsuarioBD):
+        return redirect(url_for("acceso"))
+
+    # Si el usuario logueado es ADMIN
+    elif usuario.rol == "admin":
+        return "Eres admin"
+
+
+    # Si el usuario logueado es NORMAL
+    return render_template("añadir_marcador.html")
+
+
+
 ##
 @app.route("/cerrar-sesion")
 def cerrar_sesion():
