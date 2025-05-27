@@ -3,6 +3,10 @@
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 0 2px rgba(52, 73, 94, 0.27);
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Layout principal */
@@ -38,7 +42,8 @@
 
 /* Estilo del formulario */
 .formulario {
-    max-width: 500px;
+    max-width: 90vw;
+    width: 540px;
     margin: 2rem auto;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.15);

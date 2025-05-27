@@ -1,4 +1,3 @@
-
 {%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block
 extra_css%}
 <link
@@ -14,16 +13,43 @@ extra_css%}
             <form method="post" action="{{ url_for('añadir_marcador') }}">
                 <div class="formulario">
                     <label for="nombre">Nombre del marcador:</label>
-                    <input type="text" id="nombre" name="nombre" maxlength="70" required />
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Añade un nombre al marcador."
+                        maxlength="70"
+                        required
+                    />
 
                     <label for="enlace">Enlace:</label>
-                    <input type="url" id="enlace" name="enlace" maxlength="160" required />
+                    <input
+                        type="url"
+                        id="enlace"
+                        name="enlace"
+                        placeholder="https://enlace-del-marcador.com"
+                        maxlength="160"
+                        required
+                    />
 
                     <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" name="descripcion" maxlength="160"></textarea>
+                    <textarea
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Añade una descripción al marcador."
+                        maxlength="160"
+                    ></textarea>
 
-                    <label for="etiquetas">Etiquetas (separadas por comas):</label>
-                    <input type="text" id="etiquetas" name="etiquetas" maxlength="70" />
+                    <label for="etiquetas"
+                        >Etiquetas (separadas por comas):</label
+                    >
+                    <input
+                        type="text"
+                        id="etiquetas"
+                        name="etiquetas"
+                        placeholder="Etiqueta1, Etiqueta2, Etiqueta3"
+                        maxlength="70"
+                    />
 
                     <button type="submit">Añadir Marcador</button>
                 </div>
@@ -31,10 +57,12 @@ extra_css%}
         </div>
 
         <div class="lado-derecho">
-            <img src="{{ url_for('static', filename='images/imagen_marcadores.png') }}" alt="Imagen decorativa">
+            <img
+                src="{{ url_for('static', filename='images/imagen_marcadores.png') }}"
+                alt="Imagen decorativa"
+            />
         </div>
     </div>
 </div>
-
 
 {% endblock %}
