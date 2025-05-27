@@ -19,6 +19,7 @@ from settings import (
     INSERTAR_ETIQUETA,
 )
 from db.models.Marcador import MarcadorInsert
+from db.models.Etiqueta import EtiquetaInsert
 from modules.utils import usr_sesion
 
 
@@ -188,8 +189,11 @@ def añadir_marcador():
 
     # Si el usuario logueado es NORMAL
     if request.method == "POST":
+        # Convertimos los datos del formulario en una lista para separar las etiquetas
         datos = list(request.form.values())
+        # Obtenemos las etiquetas
         etiquetas = datos.pop(-1).strip()
+        # Eliminamos espacios y capitalizamos las etiquetas
         etiquetas = [
             etiqueta.strip().capitalize()
             for etiqueta in etiquetas.split(",")
@@ -206,14 +210,18 @@ def añadir_marcador():
             retornar_id=True,
         )
 
+        # Si no se ha insertado el marcador, mostramos un mensaje de error
         if not marcador_id:
             flash("Error al añadir el marcador.", "error")
             return redirect(url_for("añadir_marcador"))
 
-        # Insertar etiquetas asociadas
+        # Insertar las etiquetas del marcador
         for etiqueta in etiquetas:
-            gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta, marcador_id))
+            gestor_bd.ejecutar_consulta(
+                INSERTAR_ETIQUETA, (EtiquetaInsert(etiqueta, marcador_id).obtener_datos)
+            )
 
+        # Mensaje de éxito y redirección
         flash("Marcador añadido correctamente.", "success")
         return redirect(url_for("index"))
 

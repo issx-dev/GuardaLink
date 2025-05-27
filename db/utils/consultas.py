@@ -1,6 +1,7 @@
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from db.models.Marcador import MarcadorBD
+from db.models.Etiqueta import EtiquetaInsert
 from settings import (
     INSERTAR_ETIQUETA,
     INSERTAR_MARCADOR,
@@ -42,7 +43,9 @@ def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
 
         # Insertar etiquetas asociadas
         for etiqueta in marcador["etiquetas"]:
-            gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta, marcador_id))
+            gestor_bd.ejecutar_consulta(
+                INSERTAR_ETIQUETA, EtiquetaInsert(etiqueta, marcador_id).obtener_datos
+            )
 
 
 def obtener_marcadores_y_etiquetas(usuario_id):

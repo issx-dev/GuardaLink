@@ -14,6 +14,10 @@ class EtiquetaInsert:
     @property
     def id_marcador(self):
         return self.__id_marcador
+    
+    @property
+    def obtener_datos(self):
+        return (self.__nombre, self.__id_marcador)
 
 
 class EtiquetaBD(EtiquetaInsert):
