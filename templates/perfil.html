@@ -5,24 +5,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}" />
 {% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
 
-<!-- BLOQUE FLASH -->
-{% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes %}
-<div class="mensajes-flash">
-    {% for categoria, mensaje in mensajes %}
-    <div class="{{ categoria }}">
-        <!-- Icono de alerta -->
-        <!-- Se utiliza un icono diferente según la categoría -->
-        <i data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"></i>
-        {{ mensaje }}
-        <!-- Barra de progreso -->
-        <div class="progress-bar"></div>
-        <!-- Botón para cerrar el mensaje -->
-        <i class="close-flash" data-lucide="x" onclick="this.parentElement.remove()"></i>
-    </div>
-    {% endfor %}
-</div>
-{% endif %} {% endwith %}
-
 <!-- BLOQUE PERFIL -->
 <div class="contenedor-perfil">
     <div class="tarjeta-perfil js-tarjeta-perfil">
