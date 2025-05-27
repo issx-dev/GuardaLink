@@ -11,6 +11,7 @@ from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
 from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO, INSERTAR_MARCADOR
 from db.models.Marcador import MarcadorInsert
+from modules.utils import usr_sesion
 
 
 app = Flask(__name__)
@@ -20,26 +21,23 @@ app.secret_key = SECRET_KEY
 ##
 @app.route("/")
 def index():
-    # Obtiene el usuario logueado y su rol
-    email_sesion = session.get("email")
-    usuario = obtener_usuario_completo(email_sesion)
+    usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("acceso"))
 
     # Si el usuario logueado es ADMIN
-    elif usuario.rol == "admin":
+    if usuario.rol == "admin":
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
-    else:
-        marcadores = obtener_marcadores_y_etiquetas(usuario.id)
-        return render_template(
-            "index.html",
-            foto_perfil=usuario.foto_perfil,
-            marcadores=marcadores,
-        )
+    marcadores = obtener_marcadores_y_etiquetas(usuario.id)
+    return render_template(
+        "index.html",
+        foto_perfil=usuario.foto_perfil,
+        marcadores=marcadores,
+    )
 
 
 # CRUD DE USUARIOS
@@ -104,9 +102,7 @@ def acceso():
 # Obtenemos el usuario logueado y su rol
 @app.route("/perfil", methods=["GET", "POST"])
 def perfil():
-    # Obtiene el usuario logueado y su rol
-    email_sesion = session.get("email")
-    usuario = obtener_usuario_completo(email_sesion)
+    usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
@@ -116,6 +112,7 @@ def perfil():
     elif usuario.rol == "admin":
         return "Eres admin"
 
+    # Si el usuario logueado es NORMAL
     if request.method == "POST":
         if "editar" in request.form:
             # Si el usuario logueado es NORMAL obtenemos los datos del formulario
@@ -157,7 +154,6 @@ def perfil():
 
         return redirect(url_for("perfil"))
 
-    # Si el usuario logueado es NORMAL
     kwargs = {
         "nombre_completo": usuario.nombre_completo,
         "email": usuario.email,
@@ -172,9 +168,7 @@ def perfil():
 # Obtenemos el usuario logueado y su rol
 @app.route("/añadir-marcador", methods=["GET", "POST"])
 def añadir_marcador():
-    # Obtiene el usuario logueado y su rol
-    email_sesion = session.get("email")
-    usuario = obtener_usuario_completo(email_sesion)
+    usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
@@ -187,7 +181,7 @@ def añadir_marcador():
     # Si el usuario logueado es NORMAL
     if request.method == "POST":
         # Crea el objeto marcador
-        marcador = MarcadorInsert(usuario.id, **request.form)
+        marcador = MarcadorInsert(usuario.id, **request.form)  # TODO Mismos atributos
 
         # Sube el marcador a la bd
         gestor_bd.ejecutar_consulta(
@@ -197,19 +191,13 @@ def añadir_marcador():
 
         # Mensaje
         if isinstance(marcador, MarcadorInsert):
-            flash(
-                "Marcador añadido correctamente.", "success"
-            )
+            flash("Marcador añadido correctamente.", "success")
         else:
-            flash(
-                "El marcador no ha podido añadirse.", "error"
-            )
+            flash("El marcador no ha podido añadirse.", "error")
 
         return redirect(url_for("index"))
-        
+
     return render_template("añadir_marcador.html")
-
-
 
 
 ##
