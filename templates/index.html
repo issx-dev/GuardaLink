@@ -1,31 +1,19 @@
-{% extends "base.html" %} {% block title %} Inicio {% endblock%} {% block
-extra_css%}
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/index.css') }}"
-/>
+{% extends "base.html" %} {% block title %} Inicio {% endblock%} {% block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
 {%endblock%} {% block h1 %} Inicio {% endblock %} {% block main %}
 <div class="page-header">
     <h2>Bienvenido,</h2>
     <p>Gestiona tu colección de marcadores.</p>
 </div>
 
-
-<div class="search-and-filter">
+<div class="buscador">
     <form action="{{ url_for('buscar_marcador') }}" method="post" class="search-form">
         <div class="search-container">
-            <input type="text" name="buscador_marcadores" placeholder="Buscar marcadores...">
+            <input type="text" name="buscador_marcadores" placeholder="Buscar marcadores..." />
             <button type="submit">Buscar</button>
-            
         </div>
     </form>
-
-    {% if resultado_busqueda %}
-        {{ resultado_busqueda }}
-    {% endif %}
-
 </div>
-
 
 <div class="bookmarks">
     {% if marcadores %} {% for marcador, etiquetas in marcadores %}
@@ -45,9 +33,7 @@ extra_css%}
         <p class="bookmark-url">{{ marcador.enlace }}</p>
 
         <div class="bookmark-footer">
-            <a href="{{ marcador.enlace }}" target="_blank" class="visit-button"
-                >Visit</a
-            >
+            <a href="{{ marcador.enlace }}" target="_blank" class="visit-button">Visit</a>
         </div>
     </div>
     {% endfor %}

@@ -16,7 +16,7 @@ body {
 
 .sidebar {
     width: 240px;
-    background-color: #34495e;
+    background-color: #202a4a;
     color: white;
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: #2e3e51;
+    background-color: #162145;
 }
 
 .sidebar-header h2 {
