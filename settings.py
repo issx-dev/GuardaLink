@@ -112,3 +112,10 @@ ETIQUETAS_PREDEFINIDAS = [
     {"nombre": "Educación"},
     {"nombre": "Desarrollo"},
 ]
+
+# BÚSQUEDAS
+BUSCADOR_MARCADORES = """
+SELECT * FROM marcadores 
+    WHERE id_usuario = ? AND (LOWER(nombre) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(enlace) LIKE ?)
+    ORDER BY id ASC
+"""
