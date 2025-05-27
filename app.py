@@ -6,10 +6,11 @@ from db.utils.consultas import (
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
     obtener_marcadores_y_etiquetas,
+    obtener_marcadores_especificos
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
-from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO
+from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO, BUSCADOR_MARCADORES
 
 
 app = Flask(__name__)
@@ -187,7 +188,36 @@ def añadir_marcador():
     # Si el usuario logueado es NORMAL
     return render_template("añadir_marcador.html")
 
+# Buscador marcadores
+@app.route("/buscar-marcador", methods=["GET", "POST"])
+def buscar_marcador():
+    # Obtiene el usuario logueado y su rol
+    email_sesion = session.get("email")
+    usuario = obtener_usuario_completo(email_sesion)
 
+    # Si NO hay un usuario logueado
+    if not isinstance(usuario, UsuarioBD):
+        return redirect(url_for("acceso"))
+
+    # Si el usuario logueado es ADMIN
+    elif usuario.rol == "admin":
+        return "Eres admin"
+    
+    # Busqueda de marcadores
+    busqueda = request.form.get("buscador_marcadores", "").strip()
+    # Formateo busqueda para SQL
+    busqueda = f"%{ busqueda }%"
+    # Ejecutamos la consulta para buscar marcadores
+    resultado = gestor_bd.ejecutar_consulta(BUSCADOR_MARCADORES,(usuario.id,busqueda,busqueda,busqueda))
+    
+    lista_IDs = [
+        marcador[0] for marcador in resultado
+    ]
+
+    # Marcadores de la búsqueda
+    marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
+
+    return render_template("index.html", marcadores=marcadores,foto_perfil=usuario.foto_perfil)
 
 ##
 @app.route("/cerrar-sesion")
