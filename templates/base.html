@@ -23,7 +23,7 @@
     <body>
         <div class="dashboard">
             <!-- Sidebar -->
-            <aside class="sidebar" id="sidebar">
+            <aside class="sidebar collapsed" id="sidebar">
                 <div class="sidebar-header">
                     <h2>Menú</h2>
                     <button id="toggle-sidebar">☰</button>
@@ -31,19 +31,16 @@
                 <ul class="menu">
                     <li>
                         <a href="{{ url_for('index') }}">
-                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
                             <i data-lucide="home"></i><span>Inicio</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
                             <i data-lucide="bookmark-plus"></i><span>Añadir marcador</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url_for('perfil') }}">
-                            <!-- ICONO DE LA LIBRERÍA LUCIDE -->
                             <i data-lucide="user"></i><span>Perfil</span>
                         </a>
                     </li>
