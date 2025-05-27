@@ -6,11 +6,17 @@ from db.utils.consultas import (
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
     obtener_marcadores_y_etiquetas,
-    obtener_marcadores_especificos
+    obtener_marcadores_especificos,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
-from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO, BUSCADOR_MARCADORES, INSERTAR_MARCADOR
+from settings import (
+    SECRET_KEY,
+    INSERTAR_USUARIO,
+    ACTUALIZAR_USUARIO,
+    BUSCADOR_MARCADORES,
+    INSERTAR_MARCADOR,
+)
 from db.models.Marcador import MarcadorInsert
 from modules.utils import usr_sesion
 
@@ -200,6 +206,7 @@ def añadir_marcador():
 
     return render_template("añadir_marcador.html")
 
+
 # Buscador marcadores
 @app.route("/buscar-marcador", methods=["GET", "POST"])
 def buscar_marcador():
@@ -214,22 +221,31 @@ def buscar_marcador():
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
         return "Eres admin"
-    
+
     # Busqueda de marcadores
     busqueda = request.form.get("buscador_marcadores", "").strip()
     # Formateo busqueda para SQL
-    busqueda = f"%{ busqueda }%"
+    busqueda = f"%{busqueda}%"
     # Ejecutamos la consulta para buscar marcadores
-    resultado = gestor_bd.ejecutar_consulta(BUSCADOR_MARCADORES,(usuario.id,busqueda,busqueda,busqueda))
-    
-    lista_IDs = [
-        marcador[0] for marcador in resultado
-    ]
+    resultado = gestor_bd.ejecutar_consulta(
+        BUSCADOR_MARCADORES, (usuario.id, busqueda, busqueda, busqueda)
+    )
+
+    lista_IDs = []
+    if isinstance(resultado, list):
+        lista_IDs = [marcador[0] for marcador in resultado]
+    else:
+        flash(
+            "No se ha encotrado ningún resultado que coincida con las búsqueda.", "info"
+        )
 
     # Marcadores de la búsqueda
     marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
 
-    return render_template("index.html", marcadores=marcadores,foto_perfil=usuario.foto_perfil)
+    return render_template(
+        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil
+    )
+
 
 ##
 @app.route("/cerrar-sesion")
