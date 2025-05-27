@@ -5,16 +5,16 @@
 <form method="post" action="{{url_for('añadir_marcador')}}">
     <div class="form-container">
         <label for="nombre">Nombre del marcador:</label>
-        <input type="text" id="nombre" name="nombre" required />
+        <input type="text" id="nombre" name="nombre" maxlength="70" required />
 
         <label for="enlace">Enlace:</label>
-        <input type="url" id="enlace" name="enlace" required />
+        <input type="url" id="enlace" name="enlace" maxlength="160" required />
 
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion"></textarea>
+        <textarea id="descripcion" name="descripcion" maxlength="160"></textarea>
 
         <label for="etiquetas">Etiquetas (separadas por comas):</label>
-        <input type="text" id="etiquetas" name="etiquetas" />
+        <input type="text" id="etiquetas" name="etiquetas" maxlength="70" />
 
         <button type="submit">Añadir Marcador</button>
     </div>

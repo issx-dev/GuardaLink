@@ -46,7 +46,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
-    border: 8px solid rgb(220, 220, 220);
+    border: 6px solid rgb(220, 220, 220);
 }
 
 .contenedor-imagen img {
@@ -150,7 +150,7 @@
 }
 
 #btnAceptar {
-    background-color: #34495e;
+    background-color: #525ca1;
     color: white;
 }
 

@@ -6,12 +6,14 @@
 
 .bookmarks {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     padding: 2rem;
 }
 
 .bookmark-card {
+    display: flex;
+    flex-direction: column;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     border-radius: 1rem;
@@ -47,12 +49,14 @@
 .bookmark-description {
     font-size: 1rem;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 0.3rem;
 }
 
 .bookmark-footer {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-end;
+    flex: 1;
     
 }
 
@@ -124,6 +128,13 @@
     color: #2c3e50;
 }
 
+.search-container input:focus {
+    outline: none;
+    box-shadow: inset 0 -2.5px 0 #525ca1;
+    caret-color: #525ca1;
+}
+
+
 .search-container input::placeholder {
     color: #7f8c8d;
 }
@@ -140,5 +151,24 @@
 }
 
 .search-container button:hover {
-    background-color: #525ca1;
+    background-color: #3730a3;
+}
+
+
+@media (max-width: 1500px) {
+    .bookmarks {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1124px) {
+    .bookmarks {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .bookmarks {
+        grid-template-columns: 1fr;
+    }
 }
