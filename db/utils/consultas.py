@@ -1,9 +1,7 @@
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
-from db.models.Marcador import MarcadorInsert, MarcadorBD
+from db.models.Marcador import MarcadorBD
 from settings import (
-    CONSULTA_MARCADORES,
-    ETIQUETAS_PREDEFINIDAS,
     INSERTAR_ETIQUETA,
     INSERTAR_MARCADOR,
     MARCADORES_PREDETERMINADOS,
@@ -23,29 +21,28 @@ def obtener_usuario_completo(email):
 
 
 def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
-    marcadores_predeterminados = [
-        MarcadorInsert(usuario_id, **marcador)
-        for marcador in MARCADORES_PREDETERMINADOS
-    ]
-
-    """Inserta marcadores y etiquetas predeterminadas al registrarse."""
-    for marcador in marcadores_predeterminados:
-        gestor_bd.ejecutar_consulta(
+    """Inserta marcadores y etiquetas predeterminadas para un usuario."""
+    # Insertar todos los marcadores primero
+    for marcador in MARCADORES_PREDETERMINADOS:
+        # Insertar marcador
+        marcador_id = gestor_bd.ejecutar_consulta(
             INSERTAR_MARCADOR,
-            (marcador.obtener_info_marcador),
+            (
+                usuario_id,
+                marcador["nombre"],
+                marcador["enlace"],
+                marcador["descripcion"],
+            ),
+            retornar_id=True,
         )
 
-    resultado = gestor_bd.ejecutar_consulta(CONSULTA_MARCADORES, (usuario_id,))
-    if resultado and isinstance(resultado, list):
-        marcadores = [MarcadorBD(*marcador) for marcador in resultado]
-    else:
-        marcadores = []
+        # Extraer el ID del resultado de la consulta
+        if not marcador_id:
+            raise ValueError("Error al obtener ID del marcador insertado")
 
-    for marcador, etiqueta in zip(marcadores, ETIQUETAS_PREDEFINIDAS):
-        gestor_bd.ejecutar_consulta(
-            INSERTAR_ETIQUETA,
-            (etiqueta["nombre"], marcador.id),
-        )
+        # Insertar etiquetas asociadas
+        for etiqueta in marcador["etiquetas"]:
+            gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta, marcador_id))
 
 
 def obtener_marcadores_y_etiquetas(usuario_id):

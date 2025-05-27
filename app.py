@@ -16,6 +16,7 @@ from settings import (
     ACTUALIZAR_USUARIO,
     BUSCADOR_MARCADORES,
     INSERTAR_MARCADOR,
+    INSERTAR_ETIQUETA,
 )
 from db.models.Marcador import MarcadorInsert
 from modules.utils import usr_sesion
@@ -187,21 +188,33 @@ def añadir_marcador():
 
     # Si el usuario logueado es NORMAL
     if request.method == "POST":
+        datos = list(request.form.values())
+        etiquetas = datos.pop(-1).strip()
+        etiquetas = [
+            etiqueta.strip().capitalize()
+            for etiqueta in etiquetas.split(",")
+            if etiqueta.strip()
+        ]
+
         # Crea el objeto marcador
-        marcador = MarcadorInsert(usuario.id, **request.form)  # TODO Mismos atributos
+        marcador = MarcadorInsert(usuario.id, *datos)
 
         # Sube el marcador a la bd
-        gestor_bd.ejecutar_consulta(
+        marcador_id = gestor_bd.ejecutar_consulta(
             INSERTAR_MARCADOR,
             (marcador.obtener_info_marcador),
+            retornar_id=True,
         )
 
-        # Mensaje
-        if isinstance(marcador, MarcadorInsert):
-            flash("Marcador añadido correctamente.", "success")
-        else:
-            flash("El marcador no ha podido añadirse.", "error")
+        if not marcador_id:
+            flash("Error al añadir el marcador.", "error")
+            return redirect(url_for("añadir_marcador"))
 
+        # Insertar etiquetas asociadas
+        for etiqueta in etiquetas:
+            gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta, marcador_id))
+
+        flash("Marcador añadido correctamente.", "success")
         return redirect(url_for("index"))
 
     return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil)

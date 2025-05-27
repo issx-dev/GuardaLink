@@ -94,23 +94,20 @@ MARCADORES_PREDETERMINADOS = [
         "nombre": "Google",
         "enlace": "https://www.google.com",
         "descripcion": "El buscador más utilizado del mundo.",
+        "etiquetas": ["Tecnología", "Buscador"],
     },
     {
         "nombre": "Wikipedia",
         "enlace": "https://www.wikipedia.org",
         "descripcion": "La enciclopedia libre y colaborativa.",
+        "etiquetas": ["Educación", "Referencia"],
     },
     {
         "nombre": "GitHub",
         "enlace": "https://github.com",
         "descripcion": "Plataforma de desarrollo colaborativo de software.",
+        "etiquetas": ["Tecnología", "Desarrollo"],
     },
-]
-# Etiquetas predefinidas para los marcadores
-ETIQUETAS_PREDEFINIDAS = [
-    {"nombre": "Tecnología"},
-    {"nombre": "Educación"},
-    {"nombre": "Desarrollo"},
 ]
 
 # BÚSQUEDAS

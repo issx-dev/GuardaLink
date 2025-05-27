@@ -21,7 +21,7 @@ class BaseDeDatos:
             error_logs(f" !-> Error al conectar con la base de datos: {e}")
             raise
 
-    def ejecutar_consulta(self, consulta, parametros=None, many=False):
+    def ejecutar_consulta(self, consulta, parametros=None, many=False, retornar_id=False):
         if parametros is None:
             parametros = []
 
@@ -32,15 +32,16 @@ class BaseDeDatos:
 
                 if many:
                     cursor.executemany(consulta, parametros)
+                    conexion.commit()
+                    return cursor.fetchall()
                 else:
                     cursor.execute(consulta, parametros)
+                    last_id = cursor.lastrowid if retornar_id else None
+                    conexion.commit()
+                    return last_id if retornar_id else cursor.fetchall()
 
-                conexion.commit()
-                return cursor.fetchall()
         except sq.Error as e:
-            error_logs(
-                f" !-> Error al ejecutar la consulta de base de datos. DETALLES: {e}"
-            )
+            error_logs(f" !-> Error al ejecutar la consulta de base de datos. DETALLES: {e}")
             return False
 
 

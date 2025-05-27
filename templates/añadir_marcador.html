@@ -2,6 +2,25 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/añadir_marcador.css') }}" />
 {%endblock%} {%block h1%} Añadir Marcador {%endblock%} {%block main%}
 
+<!-- BLOQUE FLASH -->
+{% with mensajes = get_flashed_messages(with_categories=true) %} {% if mensajes %}
+<div class="mensajes-flash">
+    {% for categoria, mensaje in mensajes %}
+    <div class="{{ categoria }}">
+        <!-- Icono de alerta -->
+        <!-- Se utiliza un icono diferente según la categoría -->
+        <i data-lucide="{{ 'alert-circle' if categoria == 'error' else 'check-circle' }}"></i>
+        {{ mensaje }}
+        <!-- Barra de progreso -->
+        <div class="progress-bar"></div>
+        <!-- Botón para cerrar el mensaje -->
+        <i class="close-flash" data-lucide="x" onclick="this.parentElement.remove()"></i>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% endwith %}
+
+
 <form method="post" action="{{url_for('añadir_marcador')}}">
     <div class="form-container">
         <label for="nombre">Nombre del marcador:</label>
