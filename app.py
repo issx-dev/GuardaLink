@@ -9,7 +9,8 @@ from db.utils.consultas import (
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
-from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO
+from settings import SECRET_KEY, INSERTAR_USUARIO, ACTUALIZAR_USUARIO, INSERTAR_MARCADOR
+from db.models.Marcador import MarcadorInsert
 
 
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def index():
         return redirect(url_for("acceso"))
 
     # Si el usuario logueado es ADMIN
-    elif usuario == "admin":
+    elif usuario.rol == "admin":
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
@@ -183,9 +184,31 @@ def añadir_marcador():
     elif usuario.rol == "admin":
         return "Eres admin"
 
-
     # Si el usuario logueado es NORMAL
+    if request.method == "POST":
+        # Crea el objeto marcador
+        marcador = MarcadorInsert(usuario.id, **request.form)
+
+        # Sube el marcador a la bd
+        gestor_bd.ejecutar_consulta(
+            INSERTAR_MARCADOR,
+            (marcador.obtener_info_marcador),
+        )
+
+        # Mensaje
+        if isinstance(marcador, MarcadorInsert):
+            flash(
+                "Marcador añadido correctamente.", "success"
+            )
+        else:
+            flash(
+                "El marcador no ha podido añadirse.", "error"
+            )
+
+        return redirect(url_for("index"))
+        
     return render_template("añadir_marcador.html")
+
 
 
 
