@@ -59,7 +59,14 @@ def obtener_marcadores_y_etiquetas(usuario_id):
         ]
     else:
         return []
-
+    
+def obtener_marcadores_especificos(usuario_id, lista_marcadores):
+    lista = []
+    for marcador in obtener_marcadores_y_etiquetas(usuario_id):
+        if marcador[0].id in lista_marcadores:
+            lista.append(marcador)
+    
+    return lista
 
 def obtener_numero_marcadores(usuario_id):
     """Obtiene el número de marcadores de un usuario."""
