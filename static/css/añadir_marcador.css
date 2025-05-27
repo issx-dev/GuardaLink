@@ -1,0 +1,55 @@
+.form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.form-container label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.form-container input[type="text"],
+.form-container input[type="url"],
+.form-container textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-container textarea {
+    resize: vertical;
+    min-height: 50px;
+    max-height: 100px;
+}
+
+.form-container button {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0.75rem;
+    background: #525ca1;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-container button:hover {
+    background: #3730a3;
+}
