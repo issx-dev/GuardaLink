@@ -22,7 +22,7 @@ from settings import (
     FILTRAR_MARCADORES_POR_ETIQUETAS,
     CONSULTA_MARCADOR,
     CONSULTA_NOMBRES_ETIQUETAS,
-    ACTUALIZAR_MARCADOR,,
+    ACTUALIZAR_MARCADOR,
     BORRAR_ETIQUETA,
 )
 from db.models.Marcador import MarcadorInsert, MarcadorBD
