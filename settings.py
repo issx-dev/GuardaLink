@@ -72,8 +72,10 @@ ACTUALIZAR_USUARIO = " UPDATE usuarios SET nombre_completo = ?, foto_perfil = ?,
 
 # Script Insertar Marcador y Consulta
 INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
+CONSULTA_MARCADOR = "SELECT * FROM marcadores WHERE id = ?"
 CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
 CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
+
 
 CONSULTAR_MARCADORES_ETIQUETAS = """
             SELECT  
@@ -137,3 +139,5 @@ WHERE m.id_usuario = ?
 AND e.nombre LIKE ?
 GROUP BY m.id
 """
+
+
