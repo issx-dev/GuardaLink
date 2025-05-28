@@ -17,6 +17,8 @@ from settings import (
     BUSCADOR_MARCADORES,
     INSERTAR_MARCADOR,
     INSERTAR_ETIQUETA,
+    ETIQUETAS_MAS_USADAS,
+    FILTRAR_MARCADORES_POR_ETIQUETAS
 )
 from db.models.Marcador import MarcadorInsert
 from db.models.Etiqueta import EtiquetaInsert
@@ -42,10 +44,12 @@ def index():
 
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
+    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(ETIQUETAS_MAS_USADAS, (usuario.id,))
     return render_template(
         "index.html",
         foto_perfil=usuario.foto_perfil,
         marcadores=marcadores,
+        etiquetas_mas_usadas = etiquetas_mas_usadas
     )
 
 
@@ -226,11 +230,12 @@ def añadir_marcador():
         return redirect(url_for("index"))
 
     return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil)
-
+  
 
 # Buscador marcadores
-@app.route("/buscar-marcador", methods=["GET", "POST"])
-def buscar_marcador():
+@app.route("/buscador/<filtro_etiqueta>")
+@app.route("/buscador", methods=["GET", "POST"])
+def buscar_marcador(filtro_etiqueta=None):
     # Obtiene el usuario logueado y su rol
     email_sesion = session.get("email")
     usuario = obtener_usuario_completo(email_sesion)
@@ -243,6 +248,28 @@ def buscar_marcador():
     elif usuario.rol == "admin":
         return "Eres admin"
 
+    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(ETIQUETAS_MAS_USADAS, (usuario.id,))
+
+    if filtro_etiqueta:
+        resultado = gestor_bd.ejecutar_consulta(
+            FILTRAR_MARCADORES_POR_ETIQUETAS, (usuario.id, f'%{filtro_etiqueta}%')
+        )
+
+        lista_IDs = []
+        if isinstance(resultado, list):
+            lista_IDs = [marcador[0] for marcador in resultado]
+        else:
+            flash(
+                "No se ha encotrado ningún resultado que coincida con las búsqueda.", "info"
+            )
+
+        # Marcadores de la búsqueda
+        marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
+
+        return render_template(
+        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil, etiquetas_mas_usadas=etiquetas_mas_usadas
+    )
+    
     # Busqueda de marcadores
     busqueda = request.form.get("buscador_marcadores", "").strip()
     # Formateo busqueda para SQL
@@ -264,7 +291,7 @@ def buscar_marcador():
     marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
 
     return render_template(
-        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil
+        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil, etiquetas_mas_usadas=etiquetas_mas_usadas
     )
 
 
