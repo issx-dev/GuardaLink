@@ -21,7 +21,8 @@ from settings import (
     FILTRAR_MARCADORES_POR_ETIQUETAS,
     CONSULTA_MARCADOR,
     CONSULTA_NOMBRES_ETIQUETAS,
-    ACTUALIZAR_MARCADOR
+    ACTUALIZAR_MARCADOR,
+    BORRAR_ETIQUETA,
 )
 from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
@@ -253,7 +254,18 @@ def marcador(id_marcador=None, accion=None):
                 ),
             )
 
+            # Borrar etiquetas antiguas
+            gestor_bd.ejecutar_consulta(BORRAR_ETIQUETA, (id_marcador,))
+
+            # Insertar nuevas etiquetas
+            for etiqueta in etiquetas:
+                gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta[0].strip(), id_marcador))
+            
+            # Mensaje de éxito
+            flash("Marcador actualizado correctamente.", "success")
+
             etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])  # type: ignore
+
             return render_template(
                 "marcador.html",
                 foto_perfil=usuario.foto_perfil,
