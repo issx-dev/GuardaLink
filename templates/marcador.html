@@ -7,7 +7,10 @@
 <div class="contenedor-marcador">
     <div class="formulario-marcador">
         <div class="lado-izquierdo">
-            <form method="post" action="{{ url_for('marcador') }}">
+            <form
+                method="post"
+                action="{{ url_for('marcador', action='editar', id_marcador=marcador.id) if editar else url_for('marcador') }}"
+            >
                 <div class="formulario">
                     <label for="nombre">Nombre del marcador:</label>
                     <input
@@ -38,7 +41,8 @@
                         placeholder="Añade una descripción al marcador."
                         maxlength="160"
                         required
-                    >{{ marcador.descripcion if editar else '' }}
+                    >
+{{ marcador.descripcion if editar else '' }}
                     </textarea>
 
                     <label for="etiquetas">Etiquetas (separadas por comas):</label>
@@ -52,7 +56,7 @@
                         required
                     />
 
-                    <button type="submit">
+                    <button type="submit" name="{{ 'editar' if editar else 'añadir' }}">
                         {{ "Editar Marcador" if editar else "Añadir Marcador" }}
                     </button>
                 </div>

@@ -186,7 +186,7 @@ def perfil():
 
 
 @app.route("/mod-marcador/<accion>/<id_marcador>")
-@app.route("/añadir-marcador", methods=["GET", "POST"])
+@app.route("/marcador", methods=["GET", "POST"])
 def marcador(id_marcador=None, accion=None):
     usuario = usr_sesion()
 
@@ -234,7 +234,7 @@ def marcador(id_marcador=None, accion=None):
         case "eliminar":
             return "eliminar id " + id_marcador  # type: ignore
 
-    if request.method == "POST":
+    if request.method == "POST" and "añadir" in request.form:
         # Convertimos los datos del formulario en una lista para separar las etiquetas
         datos = list(request.form.values())
         # Obtenemos las etiquetas
@@ -264,7 +264,8 @@ def marcador(id_marcador=None, accion=None):
         # Insertar las etiquetas del marcador
         for etiqueta in etiquetas:
             gestor_bd.ejecutar_consulta(
-                INSERTAR_ETIQUETA, (EtiquetaInsert(etiqueta, marcador_id).obtener_datos)
+                INSERTAR_ETIQUETA,
+                (EtiquetaInsert(etiqueta, marcador_id).obtener_datos),
             )
 
         # Mensaje de éxito y redirección
