@@ -76,6 +76,11 @@ CONSULTA_MARCADOR = "SELECT * FROM marcadores WHERE id = ?"
 CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
 CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
 
+ACTUALIZAR_MARCADOR = """
+UPDATE marcadores
+SET nombre = ?, enlace = ?, descripcion = ?
+WHERE id = ? 
+"""
 
 CONSULTAR_MARCADORES_ETIQUETAS = """
             SELECT  
