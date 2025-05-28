@@ -180,9 +180,10 @@ def perfil():
 
 
 # Obtenemos el usuario logueado y su rol
+@app.route("/eliminar-marcador/<accion>/<id_marcador>")
 @app.route("/editar-marcador/<id_marcador>")
 @app.route("/añadir-marcador", methods=["GET", "POST"])
-def añadir_marcador(id_marcador=None):
+def añadir_marcador(id_marcador=None, accion=None):
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -194,12 +195,18 @@ def añadir_marcador(id_marcador=None):
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
-    # Editar marcador
-    if id_marcador:
-        marcador = gestor_bd.ejecutar_consulta(
-            CONSULTA_MARCADOR, (id_marcador,)
-        )
-        return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador)
+
+    # Acciones de marcador
+    match accion:
+        case "editar":
+            marcador = gestor_bd.ejecutar_consulta(
+                CONSULTA_MARCADOR, (id_marcador,)
+            )
+            return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador)
+        
+        case "eliminar":
+            return "eliminar id " + id_marcador
+        
     
     if request.method == "POST":
         # Convertimos los datos del formulario en una lista para separar las etiquetas
