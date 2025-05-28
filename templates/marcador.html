@@ -16,7 +16,7 @@ extra_css%}
                 action="{{ url_for('marcador', accion='editar', id_marcador=marcador.id) if editar else url_for('marcador', accion='añadir') }}"
             >
                 <div class="formulario">
-                    <label for="nombre">Nombre del marcador:</label>
+                    <label for="nombre">Nombre del marcador</label>
                     <input
                         type="text"
                         id="nombre"
@@ -27,7 +27,7 @@ extra_css%}
                         required
                     />
 
-                    <label for="enlace">Enlace:</label>
+                    <label for="enlace">Enlace</label>
                     <input
                         type="url"
                         id="enlace"
@@ -38,7 +38,7 @@ extra_css%}
                         required
                     />
 
-                    <label for="descripcion">Descripción:</label>
+                    <label for="descripcion">Descripción</label>
                     <textarea
                         id="descripcion"
                         name="descripcion"
@@ -48,7 +48,7 @@ extra_css%}
                     >{{ marcador.descripcion if editar else '' }}</textarea>
 
                     <label for="etiquetas"
-                        >Etiquetas (separadas por comas):</label
+                        >Etiquetas (separadas por comas)</label
                     >
                     <input
                         type="text"
