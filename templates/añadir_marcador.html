@@ -1,10 +1,7 @@
-{%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block
-extra_css%}
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/añadir_marcador.css') }}"
-/>
-{%endblock%} {%block h1%} Añadir Marcador {%endblock%} {%block main%}
+{%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/añadir_marcador.css') }}" />
+{%endblock%} {%block h1%} {{ "Editar Marcador" if editar else "Añadir Marcador" }} {%endblock%}
+{%block main%}
 
 <!-- BLOQUE PERFIL -->
 <div class="contenedor-marcador">
@@ -19,6 +16,7 @@ extra_css%}
                         name="nombre"
                         placeholder="Añade un nombre al marcador."
                         maxlength="70"
+                        value="{{ marcador.nombre if editar else '' }}"
                         required
                     />
 
@@ -29,6 +27,7 @@ extra_css%}
                         name="enlace"
                         placeholder="https://enlace-del-marcador.com"
                         maxlength="160"
+                        value="{{ marcador.enlace if editar else '' }}"
                         required
                     />
 
@@ -38,27 +37,32 @@ extra_css%}
                         name="descripcion"
                         placeholder="Añade una descripción al marcador."
                         maxlength="160"
-                    ></textarea>
-
-                    <label for="etiquetas"
-                        >Etiquetas (separadas por comas):</label
+                        required
                     >
+                        {{ marcador.descripcion if editar else '' }}
+                    </textarea>
+
+                    <label for="etiquetas">Etiquetas (separadas por comas):</label>
                     <input
                         type="text"
                         id="etiquetas"
                         name="etiquetas"
                         placeholder="Etiqueta1, Etiqueta2, Etiqueta3"
                         maxlength="70"
+                        value="{{ etiquetas if etiquetas else '' }}"
+                        required
                     />
 
-                    <button type="submit">Añadir Marcador</button>
+                    <button type="submit">
+                        {{ "Editar Marcador" if editar else "Añadir Marcador" }}
+                    </button>
                 </div>
             </form>
         </div>
 
         <div class="lado-derecho">
             <img
-                src="{{ url_for('static', filename='images/imagen_marcadores.png') }}"
+                src="{{ url_for('static', filename='images/imagen_actializar_marcador.png' if editar else'images/imagen_marcadores.png') }}"
                 alt="Imagen decorativa"
             />
         </div>
