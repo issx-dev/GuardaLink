@@ -185,8 +185,9 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
-@app.route("/mod-marcador/<accion>/<id_marcador>", methods=["GET", "POST"])
-@app.route("/marcador", methods=["GET", "POST"])
+@app.route("/marcador/<accion>/<id_marcador>", methods=["GET", "POST"])
+@app.route("/marcador/<accion>", methods=["GET", "POST"])
+@app.route("/marcador")
 def marcador(accion=None, id_marcador=None):
     usuario = usr_sesion()
 
@@ -199,7 +200,6 @@ def marcador(accion=None, id_marcador=None):
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
-
     # Acciones de marcador
     match accion:
         case "editar":
