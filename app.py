@@ -21,6 +21,7 @@ from settings import (
     FILTRAR_MARCADORES_POR_ETIQUETAS,
     CONSULTA_MARCADOR,
     CONSULTA_NOMBRES_ETIQUETAS,
+    ACTUALIZAR_MARCADOR
 )
 from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
@@ -218,8 +219,38 @@ def marcador(id_marcador=None, accion=None):
                 flash("Marcador no encontrado.", "error")
                 return redirect(url_for("index"))
 
+            # Obtenemos las etiquetas del marcador
             etiquetas = gestor_bd.ejecutar_consulta(
                 CONSULTA_NOMBRES_ETIQUETAS, (id_marcador,)
+            )
+
+            # Si el usuario logueado es NORMAL obtenemos los datos del formulario
+            nombre = request.form.get("nombre", "").strip()
+            enlace = request.form.get("enlace", "").strip()
+            descripcion = request.form.get("descripcion", "").strip()
+            etiquetas_nuevas = request.form.get("etiquetas", "").strip().split(",")
+
+            # Si no se han realizado cambios en el perfil mandamos un mensaje
+            # y redirigimos al perfil
+            if not nombre and not enlace and not descripcion and not etiquetas:
+                flash("No se han realizado cambios en el marcador.", "info")
+                return redirect(url_for("index"))
+
+            # Validación de los campos para actualizar solo los que se han modificado
+            nombre = nombre or marcador.nombre
+            enlace = enlace or marcador.enlace
+            descripcion = descripcion or marcador.descripcion
+            etiquetas = etiquetas or etiquetas_nuevas
+
+            # Actualizamos el marcador
+            gestor_bd.ejecutar_consulta(
+                ACTUALIZAR_MARCADOR,
+                (
+                    nombre,
+                    enlace,
+                    descripcion,
+                    id_marcador,
+                ),
             )
 
             etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])  # type: ignore
@@ -230,6 +261,9 @@ def marcador(id_marcador=None, accion=None):
                 marcador=marcador,
                 etiquetas=etiquetas_str,
             )
+
+
+
 
         case "eliminar":
             return "eliminar id " + id_marcador  # type: ignore
