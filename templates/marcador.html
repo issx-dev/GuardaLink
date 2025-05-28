@@ -1,7 +1,11 @@
-{%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block extra_css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/marcador.css') }}" />
-{%endblock%} {%block h1%} {{ "Editar Marcador" if editar else "Añadir Marcador" }} {%endblock%}
-{%block main%}
+{%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block
+extra_css%}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/marcador.css') }}"
+/>
+{%endblock%} {%block h1%} {{ "Editar Marcador" if editar else "Añadir Marcador"
+}} {%endblock%} {%block main%}
 
 <!-- BLOQUE PERFIL -->
 <div class="contenedor-marcador">
@@ -9,7 +13,7 @@
         <div class="lado-izquierdo">
             <form
                 method="post"
-                action="{{ url_for('marcador', action='editar', id_marcador=marcador.id) if editar else url_for('marcador') }}"
+                action="{{ url_for('marcador', accion='editar', id_marcador=marcador.id) if editar else url_for('marcador', accion='añadir') }}"
             >
                 <div class="formulario">
                     <label for="nombre">Nombre del marcador:</label>
@@ -41,11 +45,11 @@
                         placeholder="Añade una descripción al marcador."
                         maxlength="160"
                         required
-                    >
-{{ marcador.descripcion if editar else '' }}
-                    </textarea>
+                    >{{ marcador.descripcion if editar else '' }}</textarea>
 
-                    <label for="etiquetas">Etiquetas (separadas por comas):</label>
+                    <label for="etiquetas"
+                        >Etiquetas (separadas por comas):</label
+                    >
                     <input
                         type="text"
                         id="etiquetas"
@@ -56,7 +60,7 @@
                         required
                     />
 
-                    <button type="submit" name="{{ 'editar' if editar else 'añadir' }}">
+                    <button type="submit">
                         {{ "Editar Marcador" if editar else "Añadir Marcador" }}
                     </button>
                 </div>

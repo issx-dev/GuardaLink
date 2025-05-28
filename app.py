@@ -185,9 +185,9 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
-@app.route("/mod-marcador/<accion>/<id_marcador>")
+@app.route("/mod-marcador/<accion>/<id_marcador>", methods=["GET", "POST"])
 @app.route("/marcador", methods=["GET", "POST"])
-def marcador(id_marcador=None, accion=None):
+def marcador(accion=None, id_marcador=None):
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -223,44 +223,48 @@ def marcador(id_marcador=None, accion=None):
                 CONSULTA_NOMBRES_ETIQUETAS, (id_marcador,)
             )
 
-            # Si el usuario logueado es NORMAL obtenemos los datos del formulario
-            nombre = request.form.get("nombre", "").strip()
-            enlace = request.form.get("enlace", "").strip()
-            descripcion = request.form.get("descripcion", "").strip()
-            etiquetas_nuevas = request.form.get("etiquetas", "").strip().split(",")
+            if request.method == "POST":
+                # Si el usuario logueado es NORMAL obtenemos los datos del formulario
+                nombre = request.form.get("nombre", "").strip()
+                enlace = request.form.get("enlace", "").strip()
+                descripcion = request.form.get("descripcion", "").strip()
+                etiquetas_nuevas = request.form.get("etiquetas", "").strip().split(",")
 
-            # Si no se han realizado cambios en el perfil mandamos un mensaje
-            # y redirigimos al perfil
-            if not nombre and not enlace and not descripcion and not etiquetas:
-                flash("No se han realizado cambios en el marcador.", "info")
+                # Si no se han realizado cambios en el perfil mandamos un mensaje
+                # y redirigimos al perfil
+                if not nombre and not enlace and not descripcion and not etiquetas:
+                    flash("No se han realizado cambios en el marcador.", "info")
+                    return redirect(url_for("index"))
+
+                # Validación de los campos para actualizar solo los que se han modificado
+                nombre = nombre or marcador.nombre
+                enlace = enlace or marcador.enlace
+                descripcion = descripcion or marcador.descripcion
+                etiquetas = etiquetas_nuevas or etiquetas
+
+                # Actualizamos el marcador
+                gestor_bd.ejecutar_consulta(
+                    ACTUALIZAR_MARCADOR,
+                    (
+                        nombre,
+                        enlace,
+                        descripcion,
+                        id_marcador,
+                    ),
+                )
+
+                # Borrar etiquetas antiguas
+                gestor_bd.ejecutar_consulta(BORRAR_ETIQUETA, (id_marcador,))
+
+                # Insertar nuevas etiquetas
+                for etiqueta in etiquetas:
+                    gestor_bd.ejecutar_consulta(
+                        INSERTAR_ETIQUETA, (etiqueta.strip(), id_marcador)
+                    )
+
+                # Mensaje de éxito
+                flash("Marcador actualizado correctamente.", "success")
                 return redirect(url_for("index"))
-
-            # Validación de los campos para actualizar solo los que se han modificado
-            nombre = nombre or marcador.nombre
-            enlace = enlace or marcador.enlace
-            descripcion = descripcion or marcador.descripcion
-            etiquetas = etiquetas or etiquetas_nuevas
-
-            # Actualizamos el marcador
-            gestor_bd.ejecutar_consulta(
-                ACTUALIZAR_MARCADOR,
-                (
-                    nombre,
-                    enlace,
-                    descripcion,
-                    id_marcador,
-                ),
-            )
-
-            # Borrar etiquetas antiguas
-            gestor_bd.ejecutar_consulta(BORRAR_ETIQUETA, (id_marcador,))
-
-            # Insertar nuevas etiquetas
-            for etiqueta in etiquetas:
-                gestor_bd.ejecutar_consulta(INSERTAR_ETIQUETA, (etiqueta[0].strip(), id_marcador))
-            
-            # Mensaje de éxito
-            flash("Marcador actualizado correctamente.", "success")
 
             etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])  # type: ignore
 
@@ -278,44 +282,45 @@ def marcador(id_marcador=None, accion=None):
 
             return redirect(url_for("index"))
 
-    if request.method == "POST" and "añadir" in request.form:
-        # Convertimos los datos del formulario en una lista para separar las etiquetas
-        datos = list(request.form.values())
-        del datos[-1]  # Eliminamos el último elemento (añadir/editar del if)
-        # Obtenemos las etiquetas
-        etiquetas = datos.pop(-1).strip()
-        # Eliminamos espacios y capitalizamos las etiquetas
-        etiquetas = [
-            etiqueta.strip().capitalize()
-            for etiqueta in etiquetas.split(",")
-            if etiqueta.strip()
-        ]
+        case "añadir":
+            if request.method == "POST":
+                # Convertimos los datos del formulario en una lista para separar las etiquetas
+                datos = list(request.form.values())
+                # Obtenemos las etiquetas
+                etiquetas = datos.pop(-1).strip()
+                # Eliminamos espacios y capitalizamos las etiquetas
+                etiquetas = [
+                    etiqueta.strip().capitalize()
+                    for etiqueta in etiquetas.split(",")
+                    if etiqueta.strip()
+                ]
 
-        # Crea el objeto marcador
-        marcador = MarcadorInsert(usuario.id, *datos)
+                # Crea el objeto marcador
+                marcador = MarcadorInsert(usuario.id, *datos)
 
-        # Sube el marcador a la bd
-        marcador_id = gestor_bd.ejecutar_consulta(
-            INSERTAR_MARCADOR,
-            (marcador.obtener_info_marcador),
-            retornar_id=True,
-        )
+                # Sube el marcador a la bd
+                marcador_id = gestor_bd.ejecutar_consulta(
+                    INSERTAR_MARCADOR,
+                    (marcador.obtener_info_marcador),
+                    retornar_id=True,
+                )
 
-        # Si no se ha insertado el marcador, mostramos un mensaje de error
-        if not marcador_id:
-            flash("Error al añadir el marcador.", "error")
-            return redirect(url_for("marcador"))
+                # Si no se ha insertado el marcador, mostramos un mensaje de error
+                if not marcador_id:
+                    flash("Error al añadir el marcador.", "error")
+                    return redirect(url_for("marcador"))
 
-        # Insertar las etiquetas del marcador
-        for etiqueta in etiquetas:
-            gestor_bd.ejecutar_consulta(
-                INSERTAR_ETIQUETA,
-                (EtiquetaInsert(etiqueta, marcador_id).obtener_datos),
-            )
+                # Insertar las etiquetas del marcador
+                for etiqueta in etiquetas:
+                    gestor_bd.ejecutar_consulta(
+                        INSERTAR_ETIQUETA,
+                        (EtiquetaInsert(etiqueta, marcador_id).obtener_datos),
+                    )
 
-        # Mensaje de éxito y redirección
-        flash("Marcador añadido correctamente.", "success")
-        return redirect(url_for("index"))
+                # Mensaje de éxito y redirección
+                flash("Marcador añadido correctamente.", "success")
+
+                return redirect(url_for("index"))
 
     return render_template("marcador.html", foto_perfil=usuario.foto_perfil)
 
