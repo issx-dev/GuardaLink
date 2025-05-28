@@ -100,3 +100,12 @@
 .formulario button:hover {
     background-color: #3730a3;
 }
+
+
+@media (max-width: 1300px) {
+    .lado-derecho {
+        display: none;
+    }
+
+
+}
