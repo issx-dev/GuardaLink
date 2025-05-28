@@ -38,8 +38,7 @@
                         placeholder="Añade una descripción al marcador."
                         maxlength="160"
                         required
-                    >
-                        {{ marcador.descripcion if editar else '' }}
+                    >{{ marcador.descripcion if editar else '' }}
                     </textarea>
 
                     <label for="etiquetas">Etiquetas (separadas por comas):</label>
@@ -62,7 +61,7 @@
 
         <div class="lado-derecho">
             <img
-                src="{{ url_for('static', filename='images/imagen_actializar_marcador.png' if editar else'images/imagen_marcadores.png') }}"
+                src="{{ url_for('static', filename='images/imagen_actualizar_marcador.png' if editar else'images/imagen_marcadores.png') }}"
                 alt="Imagen decorativa"
             />
         </div>

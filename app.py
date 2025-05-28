@@ -22,7 +22,7 @@ from settings import (
     CONSULTA_MARCADOR,
     CONSULTA_NOMBRES_ETIQUETAS
 )
-from db.models.Marcador import MarcadorInsert
+from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
 from modules.utils import usr_sesion
 
@@ -182,7 +182,7 @@ def perfil():
 
 # Obtenemos el usuario logueado y su rol
 @app.route("/eliminar-marcador/<accion>/<id_marcador>")
-@app.route("/editar-marcador/<id_marcador>")
+@app.route("/editar-marcador/<accion>/<id_marcador>")
 @app.route("/añadir-marcador", methods=["GET", "POST"])
 def añadir_marcador(id_marcador=None, accion=None):
     usuario = usr_sesion()
@@ -201,8 +201,10 @@ def añadir_marcador(id_marcador=None, accion=None):
     match accion:
         case "editar":
             marcador = gestor_bd.ejecutar_consulta(
-                CONSULTA_MARCADOR, (id_marcador,)
+                CONSULTA_MARCADOR, (id_marcador,),
             )
+
+            marcador = MarcadorBD(*marcador[0])
 
             etiquetas = gestor_bd.ejecutar_consulta(
                 CONSULTA_NOMBRES_ETIQUETAS, (id_marcador,)
