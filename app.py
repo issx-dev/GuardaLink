@@ -11,6 +11,7 @@ from db.utils.consultas import (
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
 from settings import (
+    ELIMINAR_MARCADOR,
     SECRET_KEY,
     INSERTAR_USUARIO,
     ACTUALIZAR_USUARIO,
@@ -21,7 +22,7 @@ from settings import (
     FILTRAR_MARCADORES_POR_ETIQUETAS,
     CONSULTA_MARCADOR,
     CONSULTA_NOMBRES_ETIQUETAS,
-    ACTUALIZAR_MARCADOR
+    ACTUALIZAR_MARCADOR,
 )
 from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
@@ -183,9 +184,6 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
-# Obtenemos el usuario logueado y su rol
-
-
 @app.route("/mod-marcador/<accion>/<id_marcador>")
 @app.route("/marcador", methods=["GET", "POST"])
 def marcador(id_marcador=None, accion=None):
@@ -262,15 +260,16 @@ def marcador(id_marcador=None, accion=None):
                 etiquetas=etiquetas_str,
             )
 
-
-
-
         case "eliminar":
-            return "eliminar id " + id_marcador  # type: ignore
+            gestor_bd.ejecutar_consulta(ELIMINAR_MARCADOR, (id_marcador,))
+            flash("Marcador eliminado correctamente.", "success")
+
+            return redirect(url_for("index"))
 
     if request.method == "POST" and "añadir" in request.form:
         # Convertimos los datos del formulario en una lista para separar las etiquetas
         datos = list(request.form.values())
+        del datos[-1]  # Eliminamos el último elemento (añadir/editar del if)
         # Obtenemos las etiquetas
         etiquetas = datos.pop(-1).strip()
         # Eliminamos espacios y capitalizamos las etiquetas
