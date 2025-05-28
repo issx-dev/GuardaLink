@@ -27,6 +27,15 @@ extra_css%}
             <button type="submit">Buscar</button>
         </div>
     </form>
+
+    <div class="etiquetas-usadas">
+        <div class="filtro-etiquetas">
+            <span class="etiquetas-label"><i data-lucide="funnel"></i> <strong>Filtrar por etiqueta:</strong></span>
+            {% for etiqueta in etiquetas_mas_usadas %}
+            <a href="{{ url_for('buscar_marcador',filtro_etiqueta=etiqueta[0]) }}" class="tag-link">{{ etiqueta[0] }}</a>
+            {% endfor %} 
+        </div>
+    </div>
 </div>
 
 <div class="bookmarks">
@@ -40,7 +49,7 @@ extra_css%}
 
         <div class="bookmark-tags">
             {% for etiqueta in etiquetas %}
-            <a href="#" class="bookmark-tag">{{ etiqueta }}</a>
+            <a href="{{ url_for('buscar_marcador',filtro_etiqueta=etiqueta) }}" class="bookmark-tag">{{ etiqueta }}</a>
             {% endfor %}
         </div>
 
