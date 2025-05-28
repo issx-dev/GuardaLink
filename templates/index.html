@@ -41,6 +41,10 @@ extra_css%}
 <div class="bookmarks">
     {% if marcadores %} {% for marcador, etiquetas in marcadores %}
     <div class="bookmark-card">
+        <div>
+            <a href="{{ url_for('añadir_marcador',id_marcador=marcador.id) }}" class="tag-link">Editar</a>
+        </div>
+
         <div class="bookmark-header">
             <h3 class="bookmark-title">{{ marcador.nombre }}</h3>
         </div>

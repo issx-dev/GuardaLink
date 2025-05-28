@@ -18,7 +18,8 @@ from settings import (
     INSERTAR_MARCADOR,
     INSERTAR_ETIQUETA,
     ETIQUETAS_MAS_USADAS,
-    FILTRAR_MARCADORES_POR_ETIQUETAS
+    FILTRAR_MARCADORES_POR_ETIQUETAS,
+    CONSULTA_MARCADOR
 )
 from db.models.Marcador import MarcadorInsert
 from db.models.Etiqueta import EtiquetaInsert
@@ -179,8 +180,9 @@ def perfil():
 
 
 # Obtenemos el usuario logueado y su rol
+@app.route("/editar-marcador/<id_marcador>")
 @app.route("/añadir-marcador", methods=["GET", "POST"])
-def añadir_marcador():
+def añadir_marcador(id_marcador=None):
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -192,6 +194,13 @@ def añadir_marcador():
         return "Eres admin"
 
     # Si el usuario logueado es NORMAL
+    # Editar marcador
+    if id_marcador:
+        marcador = gestor_bd.ejecutar_consulta(
+            CONSULTA_MARCADOR, (id_marcador,)
+        )
+        return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador)
+    
     if request.method == "POST":
         # Convertimos los datos del formulario en una lista para separar las etiquetas
         datos = list(request.form.values())
