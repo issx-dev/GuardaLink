@@ -90,6 +90,7 @@ CONSULTAR_MARCADORES_ETIQUETAS = """
 # Script Insertar Etiqueta y Consulta
 INSERTAR_ETIQUETA = "INSERT OR IGNORE INTO etiquetas (nombre, id_marcador) VALUES (?, ?)"
 CONSULTA_ETIQUETAS = "SELECT * FROM etiquetas WHERE id_marcador = ?"
+CONSULTA_NOMBRES_ETIQUETAS = "SELECT nombre FROM etiquetas WHERE id_marcador = ?"
 
 # MARCADORES PREDETERMINADOS
 MARCADORES_PREDETERMINADOS = [

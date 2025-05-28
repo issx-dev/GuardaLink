@@ -19,7 +19,8 @@ from settings import (
     INSERTAR_ETIQUETA,
     ETIQUETAS_MAS_USADAS,
     FILTRAR_MARCADORES_POR_ETIQUETAS,
-    CONSULTA_MARCADOR
+    CONSULTA_MARCADOR,
+    CONSULTA_NOMBRES_ETIQUETAS
 )
 from db.models.Marcador import MarcadorInsert
 from db.models.Etiqueta import EtiquetaInsert
@@ -202,7 +203,13 @@ def añadir_marcador(id_marcador=None, accion=None):
             marcador = gestor_bd.ejecutar_consulta(
                 CONSULTA_MARCADOR, (id_marcador,)
             )
-            return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador)
+
+            etiquetas = gestor_bd.ejecutar_consulta(
+                CONSULTA_NOMBRES_ETIQUETAS, (id_marcador,)
+            )
+
+            etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])
+            return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador, etiquetas=etiquetas_str)
         
         case "eliminar":
             return "eliminar id " + id_marcador
