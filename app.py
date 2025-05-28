@@ -181,8 +181,8 @@ def perfil():
 
 
 # Obtenemos el usuario logueado y su rol
-@app.route("/eliminar-marcador/<accion>/<id_marcador>")
-@app.route("/editar-marcador/<accion>/<id_marcador>")
+
+@app.route("/mod-marcador/<accion>/<id_marcador>")
 @app.route("/añadir-marcador", methods=["GET", "POST"])
 def añadir_marcador(id_marcador=None, accion=None):
     usuario = usr_sesion()
