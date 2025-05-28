@@ -20,7 +20,7 @@ from settings import (
     ETIQUETAS_MAS_USADAS,
     FILTRAR_MARCADORES_POR_ETIQUETAS,
     CONSULTA_MARCADOR,
-    CONSULTA_NOMBRES_ETIQUETAS
+    CONSULTA_NOMBRES_ETIQUETAS,
 )
 from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
@@ -46,12 +46,14 @@ def index():
 
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
-    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(ETIQUETAS_MAS_USADAS, (usuario.id,))
+    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
+        ETIQUETAS_MAS_USADAS, (usuario.id,)
+    )
     return render_template(
         "index.html",
         foto_perfil=usuario.foto_perfil,
         marcadores=marcadores,
-        etiquetas_mas_usadas = etiquetas_mas_usadas
+        etiquetas_mas_usadas=etiquetas_mas_usadas,
     )
 
 
@@ -182,9 +184,10 @@ def perfil():
 
 # Obtenemos el usuario logueado y su rol
 
+
 @app.route("/mod-marcador/<accion>/<id_marcador>")
 @app.route("/añadir-marcador", methods=["GET", "POST"])
-def añadir_marcador(id_marcador=None, accion=None):
+def marcador(id_marcador=None, accion=None):
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -201,22 +204,36 @@ def añadir_marcador(id_marcador=None, accion=None):
     match accion:
         case "editar":
             marcador = gestor_bd.ejecutar_consulta(
-                CONSULTA_MARCADOR, (id_marcador,),
+                CONSULTA_MARCADOR,
+                (id_marcador,),
             )
 
-            marcador = MarcadorBD(*marcador[0])
+            if isinstance(marcador, list) and marcador:
+                marcador = MarcadorBD(*marcador[0])
+            else:
+                flash("Marcador no encontrado.", "error")
+                return redirect(url_for("index"))
+
+            if not isinstance(marcador, MarcadorBD):
+                flash("Marcador no encontrado.", "error")
+                return redirect(url_for("index"))
 
             etiquetas = gestor_bd.ejecutar_consulta(
                 CONSULTA_NOMBRES_ETIQUETAS, (id_marcador,)
             )
 
-            etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])
-            return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil, editar=True, marcador=marcador, etiquetas=etiquetas_str)
-        
+            etiquetas_str = ", ".join([etiqueta[0] for etiqueta in etiquetas])  # type: ignore
+            return render_template(
+                "marcador.html",
+                foto_perfil=usuario.foto_perfil,
+                editar=True,
+                marcador=marcador,
+                etiquetas=etiquetas_str,
+            )
+
         case "eliminar":
-            return "eliminar id " + id_marcador
-        
-    
+            return "eliminar id " + id_marcador  # type: ignore
+
     if request.method == "POST":
         # Convertimos los datos del formulario en una lista para separar las etiquetas
         datos = list(request.form.values())
@@ -242,7 +259,7 @@ def añadir_marcador(id_marcador=None, accion=None):
         # Si no se ha insertado el marcador, mostramos un mensaje de error
         if not marcador_id:
             flash("Error al añadir el marcador.", "error")
-            return redirect(url_for("añadir_marcador"))
+            return redirect(url_for("marcador"))
 
         # Insertar las etiquetas del marcador
         for etiqueta in etiquetas:
@@ -254,8 +271,8 @@ def añadir_marcador(id_marcador=None, accion=None):
         flash("Marcador añadido correctamente.", "success")
         return redirect(url_for("index"))
 
-    return render_template("añadir_marcador.html", foto_perfil=usuario.foto_perfil)
-  
+    return render_template("marcador.html", foto_perfil=usuario.foto_perfil)
+
 
 # Buscador marcadores
 @app.route("/buscador/<filtro_etiqueta>")
@@ -273,11 +290,13 @@ def buscar_marcador(filtro_etiqueta=None):
     elif usuario.rol == "admin":
         return "Eres admin"
 
-    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(ETIQUETAS_MAS_USADAS, (usuario.id,))
+    etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
+        ETIQUETAS_MAS_USADAS, (usuario.id,)
+    )
 
     if filtro_etiqueta:
         resultado = gestor_bd.ejecutar_consulta(
-            FILTRAR_MARCADORES_POR_ETIQUETAS, (usuario.id, f'%{filtro_etiqueta}%')
+            FILTRAR_MARCADORES_POR_ETIQUETAS, (usuario.id, f"%{filtro_etiqueta}%")
         )
 
         lista_IDs = []
@@ -285,16 +304,20 @@ def buscar_marcador(filtro_etiqueta=None):
             lista_IDs = [marcador[0] for marcador in resultado]
         else:
             flash(
-                "No se ha encotrado ningún resultado que coincida con las búsqueda.", "info"
+                "No se ha encotrado ningún resultado que coincida con las búsqueda.",
+                "info",
             )
 
         # Marcadores de la búsqueda
         marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
 
         return render_template(
-        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil, etiquetas_mas_usadas=etiquetas_mas_usadas
-    )
-    
+            "index.html",
+            marcadores=marcadores,
+            foto_perfil=usuario.foto_perfil,
+            etiquetas_mas_usadas=etiquetas_mas_usadas,
+        )
+
     # Busqueda de marcadores
     busqueda = request.form.get("buscador_marcadores", "").strip()
     # Formateo busqueda para SQL
@@ -316,7 +339,10 @@ def buscar_marcador(filtro_etiqueta=None):
     marcadores = obtener_marcadores_especificos(usuario.id, lista_IDs)
 
     return render_template(
-        "index.html", marcadores=marcadores, foto_perfil=usuario.foto_perfil, etiquetas_mas_usadas=etiquetas_mas_usadas
+        "index.html",
+        marcadores=marcadores,
+        foto_perfil=usuario.foto_perfil,
+        etiquetas_mas_usadas=etiquetas_mas_usadas,
     )
 
 

@@ -42,8 +42,8 @@ extra_css%}
     {% if marcadores %} {% for marcador, etiquetas in marcadores %}
     <div class="bookmark-card">
         <div class="caja-editar-link">
-            <a href="{{ url_for('añadir_marcador', accion='editar', id_marcador=marcador.id) }}" class="editar-link"><i data-lucide="square-pen"></i></a>
-            <a href="{{ url_for('añadir_marcador', accion='eliminar', id_marcador=marcador.id) }}" class="eliminar-link"><i data-lucide="trash-2"></i></a>
+            <a href="{{ url_for('marcador', accion='editar', id_marcador=marcador.id) }}" class="editar-link"><i data-lucide="square-pen"></i></a>
+            <a href="{{ url_for('marcador', accion='eliminar', id_marcador=marcador.id) }}" class="eliminar-link"><i data-lucide="trash-2"></i></a>
         </div>
 
         <div class="bookmark-header">

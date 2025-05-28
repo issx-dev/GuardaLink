@@ -1,5 +1,5 @@
 {%extends "base.html"%} {%block title%} Añadir Marcador {%endblock%} {%block extra_css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/añadir_marcador.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/marcador.css') }}" />
 {%endblock%} {%block h1%} {{ "Editar Marcador" if editar else "Añadir Marcador" }} {%endblock%}
 {%block main%}
 
@@ -7,7 +7,7 @@
 <div class="contenedor-marcador">
     <div class="formulario-marcador">
         <div class="lado-izquierdo">
-            <form method="post" action="{{ url_for('añadir_marcador') }}">
+            <form method="post" action="{{ url_for('marcador') }}">
                 <div class="formulario">
                     <label for="nombre">Nombre del marcador:</label>
                     <input
