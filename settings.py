@@ -98,6 +98,9 @@ CONSULTA_ETIQUETAS = "SELECT * FROM etiquetas WHERE id_marcador = ?"
 CONSULTA_NOMBRES_ETIQUETAS = "SELECT nombre FROM etiquetas WHERE id_marcador = ?"
 # Eliminar Marcador
 ELIMINAR_MARCADOR = "DELETE FROM marcadores WHERE id = ?"
+
+BORRAR_ETIQUETA = "DELETE FROM etiquetas WHERE id_marcador = ?"
+
 # MARCADORES PREDETERMINADOS
 MARCADORES_PREDETERMINADOS = [
     {
