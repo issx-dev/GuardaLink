@@ -3,7 +3,7 @@ from flask import Blueprint, request, session, render_template, redirect, url_fo
 from passlib.hash import pbkdf2_sha256
 
 # Configuración y consultas necesarias
-from db.queries.usuarios import ACTUALIZAR_USUARIO, INSERTAR_USUARIO
+from db.queries.usuarios import ACTUALIZAR_USUARIO, BORRAR_USUARIO, INSERTAR_USUARIO
 from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
@@ -87,7 +87,11 @@ def perfil():
 
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
-        return "Eres admin"
+        flash(
+            "Los administradores no pueden acceder a la funcionalidad de perfil.",
+            "error",
+        )
+        return redirect(url_for("index"))
 
     # Si el usuario logueado es NORMAL
     if request.method == "POST":
@@ -140,3 +144,36 @@ def perfil():
     }
 
     return render_template("perfil.html", **kwargs)
+
+
+@usuario_bp.route("mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
+def eliminar_cuenta(accion, id_usuario):
+    usuario = obtener_usuario_completo(id_usuario)
+
+    # Si NO hay un usuario logueado
+    if not isinstance(usuario, UsuarioBD):
+        return redirect(url_for("usuarios.acceso"))
+
+    # Si el usuario logueado es ADMIN
+    elif usuario.rol != "admin":
+        flash(
+            "Los usuarios normales no pueden eliminar una cuentas.",
+            "error",
+        )
+        return redirect(url_for("index"))
+
+    match accion:
+        case "eliminar":
+            try:
+                gestor_bd.ejecutar_consulta(BORRAR_USUARIO, (usuario.id,))
+                session.pop("email", usuario.email)
+                flash("Cuenta eliminada correctamente.", "success")
+                return redirect(url_for("index"))
+            except Exception as e:
+                flash(f"Error al eliminar la cuenta: {str(e)}", "error")
+                return redirect(url_for("index"))
+        case "bloquear":
+            pass
+
+    flash("Acción no válida.", "error")
+    return redirect(url_for("index"))

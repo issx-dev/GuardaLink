@@ -19,6 +19,14 @@ def obtener_usuario_completo(email):
         return UsuarioBD(*usuario_completo[0])
     else:
         return []
+    
+def obtener_usuario_por_id(id_usuario):
+    # Recupercion de los usuarios como instancias de la clase UsuarioBD
+    usuario_completo = gestor_bd.ejecutar_consulta(CONSULTA_USUARIO_COMPLETO, (id_usuario,))
+    if usuario_completo and isinstance(usuario_completo, list):
+        return UsuarioBD(*usuario_completo[0])
+    else:
+        return []
 
 
 def crear_marcadores_y_etiquetas_por_defecto(usuario_id):
