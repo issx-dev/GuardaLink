@@ -21,7 +21,9 @@
             <!-- email -->
 
             <div id="caja-textos">
-                <div class="texto-registro">Miembro desde el<br><b><i>{{ fecha_registro }}</i></b></div>
+                <div class="texto-registro">
+                    Miembro desde el<br /><b><i>{{ fecha_registro }}</i></b>
+                </div>
                 <!-- registro -->
                 <div class="texto-marcadores"><b>{{ num_marcadores }}</b> marcadores</div>
                 <!-- num_marcadores -->
@@ -29,7 +31,7 @@
         </div>
 
         <div id="contenedor-der">
-            <form method="POST" action="{{url_for('perfil')}}" id="formEditarPerfil">
+            <form method="POST" action="{{url_for('usuarios.perfil')}}" id="formEditarPerfil">
                 <div class="campo-formulario">
                     <label for="nombre">Nombre completo</label>
                     <input
@@ -39,8 +41,8 @@
                         value=""
                         placeholder="{{ nombre_completo }}"
                         minlength="5"
-                    maxlength="30"
-                />
+                        maxlength="30"
+                    />
                     <!-- nombre_completo -->
                 </div>
                 <div class="campo-formulario">
@@ -56,7 +58,13 @@
                 </div>
                 <div class="campo-formulario">
                     <label for="correo">Correo electrónico</label>
-                    <input type="email" id="correo" name="email" value="" placeholder="{{ email }}" />
+                    <input
+                        type="email"
+                        id="correo"
+                        name="email"
+                        value=""
+                        placeholder="{{ email }}"
+                    />
                     <!-- email -->
                 </div>
                 <div class="campo-formulario">
@@ -69,7 +77,7 @@
                         placeholder="********"
                         minlength="8"
                         maxlength="20"
-                />
+                    />
                 </div>
 
                 <div class="botones-popup">
@@ -80,7 +88,6 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %} {% block extra_js %}
 <script src="https://unpkg.com/lucide@latest" defer></script>
