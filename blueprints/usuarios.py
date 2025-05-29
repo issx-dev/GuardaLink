@@ -13,7 +13,7 @@ from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
-    obtener_usuario_por_id
+    obtener_usuario_por_id,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD

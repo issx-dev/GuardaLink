@@ -1,5 +1,5 @@
 # Importa las librerías necesarias
-from flask import Flask, render_template, redirect, session, url_for
+from flask import Flask, render_template, redirect, session, url_for, flash
 
 # Blueprints (Rutas de la aplicación)
 from blueprints.usuarios import usuario_bp
@@ -29,11 +29,16 @@ app.register_blueprint(buscador_bp)
 @app.route("/")
 def index():
     usuario = usr_sesion()
-
+    
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
+    if not usuario.estado:
+        flash("Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.", "error")
+        session.pop("email", None)
+        return redirect(url_for("usuarios.acceso"))
+    
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
     etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
