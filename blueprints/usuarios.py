@@ -146,7 +146,7 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
-@usuario_bp.route("mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
+@usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
 def eliminar_cuenta(accion, id_usuario):
     usuario = obtener_usuario_completo(id_usuario)
 
