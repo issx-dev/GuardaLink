@@ -63,6 +63,7 @@ def acceso():
                     "Error al registrar el usuario, por favor inténtelo de nuevo.",
                     "error",
                 )
+                gestor_bd._inicializar_base()
                 return redirect(url_for("usuarios.acceso"))
             crear_marcadores_y_etiquetas_por_defecto(usuario_actual.id)
 
@@ -162,7 +163,7 @@ def perfil():
 
 
 @usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
-def eliminar_cuenta(accion, id_usuario):
+def modificar_cuenta(accion, id_usuario):
     """Permite a los administradores eliminar o bloquear/desbloquear cuentas de usuario."""
 
     usuario = obtener_usuario_por_id(id_usuario)
