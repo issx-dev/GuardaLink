@@ -162,7 +162,7 @@ def perfil():
     return render_template("perfil.html", **kwargs)
 
 
-@usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
+@usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>")
 def modificar_cuenta(accion, id_usuario):
     """Permite a los administradores eliminar o bloquear/desbloquear cuentas de usuario."""
 
