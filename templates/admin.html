@@ -35,15 +35,23 @@ Panel de Control
                 <td>{{ usuario.nombre_completo }}</td>
                 <td>{{ usuario.email }}</td>
                 <td>{{ usuario.fecha_registro }}</td>
-                <td>{{ usuario.estado }}</td>
+                <td>
+                    <div>
+                        {% if usuario.estado %}
+                        Activo
+                        {% else %}
+                        Bloqueado
+                        {% endif %}
+                    </div>
+                </td>
                 <td>
                     <div class="btns">
                         {% if usuario.estado %}
-                        <a href="" class="btn-block rojo"><i data-lucide="lock-keyhole"></i></a>
+                        <a href="" class="rojo"><i data-lucide="lock-keyhole"></i></a>
                         {% else %}
-                        <a href="" class="btn-block verde"><i data-lucide="lock-keyhole"></i></a>
+                        <a href="" class="verde"><i data-lucide="lock-keyhole-open"></i></a>
                         {% endif %}
-                        <a href="" class="btn-block"><i data-lucide="trash-2"></i></a>
+                        <a href="{{ url_for('marcadores.marcador', accion='eliminar', id_marcador=marcador.id) }}" class="eliminar"><i data-lucide="trash-2"></i></a>
                     </div>
                 </td>
             </tr>

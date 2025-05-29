@@ -10,12 +10,12 @@
 } 
 
 table th, td {
-    border-radius: 6px;
+    border-radius: 6px;  
 }
 
 table {
-    min-width: 100%;
-    border-radius: 10px;
+    width: 100%;
+    table-layout: auto;
     border-collapse: separate;
     border-spacing: 0.4rem;
 }
@@ -30,11 +30,6 @@ table thead tr th {
     font-size: 22px;
 }
 
-
-
-
-
-
 tbody {
     background-color: #e4eaff;
 }
@@ -48,7 +43,6 @@ table tbody tr td {
 
 table tbody tr:hover {
     background-color: rgb(195, 205, 240);
-
 }
 
 
@@ -62,13 +56,16 @@ table tbody tr:hover {
 }
 
 table a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
-    color: #000000;
-    background-color: #ffb0b0;
-    padding: 0.5rem 2.2rem;
+    color: #202a4a;
     border-radius: 10px;
-    border: 1.5px solid black;
+    border: 2px solid #202a4a;
     transition: transform 0.2s;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
 table a:hover {
@@ -76,10 +73,7 @@ table a:hover {
 }
 
 
-table .btn-block {
-    background-color: #d0ffbd;
 
-}
 
 .rojo {
     background-color: #ffb0b0;
@@ -88,3 +82,43 @@ table .btn-block {
 .verde {
     background-color: #d0ffbd;
 }
+
+.eliminar {
+    background-color: #202a4a;
+    color: white;
+}
+
+
+table th:nth-child(1),
+table td:nth-child(1) {
+  min-width: 5rem;
+  width: 5rem;
+}
+
+
+
+table th:nth-child(4),
+table td:nth-child(4) {
+  min-width: 13rem;
+  width: 13rem;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+  min-width: 8.5rem;
+  width: 8.5rem;
+}
+
+table th:nth-child(6),
+table td:nth-child(6) {
+  min-width: 9rem;
+  width: 9rem;
+}
+
+
+
+
+
+
+
+/* La columna de acciones NO se define: se ajusta al contenido */
