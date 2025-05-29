@@ -8,12 +8,11 @@ from blueprints.buscador import buscador_bp
 
 # Importa las consultas y funciones necesarias
 from db.queries.etiquetas import ETIQUETAS_MAS_USADAS
-from db.queries.usuarios import CONSULTA_USUARIOS
 from settings import SECRET_KEY
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from modules.utils import usr_sesion
-from db.utils.consultas import obtener_marcadores_y_etiquetas
+from db.utils.consultas import obtener_lista_objetos_usuarios, obtener_marcadores_y_etiquetas
 
 
 # Inicializa la aplicación Flask
@@ -60,7 +59,7 @@ def index():
     }
 
     if usuario.rol == "admin":
-        kwargs["usuarios"] = gestor_bd.ejecutar_consulta(CONSULTA_USUARIOS)
+        kwargs["usuarios"] = obtener_lista_objetos_usuarios()
 
     return render_template(pagina, **kwargs)
 
