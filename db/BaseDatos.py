@@ -6,9 +6,9 @@ from settings import DATABASE_NAME, CREAR_TABLAS, CREAR_ROOT, INFO_ROOT
 
 class BaseDeDatos:
     def __init__(self):
-        self.__inicializar_base()
+        self._inicializar_base()
 
-    def __inicializar_base(self):
+    def _inicializar_base(self):
         try:
             with sq.connect(DATABASE_NAME) as conexion:
                 cursor = conexion.cursor()

@@ -63,6 +63,7 @@ def acceso():
                     "Error al registrar el usuario, por favor inténtelo de nuevo.",
                     "error",
                 )
+                gestor_bd._inicializar_base()
                 return redirect(url_for("usuarios.acceso"))
             crear_marcadores_y_etiquetas_por_defecto(usuario_actual.id)
 
