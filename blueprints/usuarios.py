@@ -150,7 +150,7 @@ def eliminar_cuenta(accion, id_usuario):
     # Si el usuario logueado es ADMIN
     elif usuario.rol != "admin":
         flash(
-            "Los usuarios normales no pueden eliminar una cuentas.",
+            "Los usuarios normales no pueden eliminar una cuenta.",
             "error",
         )
         return redirect(url_for("index"))
