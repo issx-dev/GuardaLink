@@ -3,7 +3,12 @@ from flask import Blueprint, request, session, render_template, redirect, url_fo
 from passlib.hash import pbkdf2_sha256
 
 # Configuración y consultas necesarias
-from db.queries.usuarios import ACTUALIZAR_USUARIO, BORRAR_USUARIO, INSERTAR_USUARIO
+from db.queries.usuarios import (
+    ACTUALIZAR_USUARIO,
+    BORRAR_USUARIO,
+    INSERTAR_USUARIO,
+    ACTUALIZAR_ROL_USUARIO,
+)
 from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
@@ -165,8 +170,23 @@ def eliminar_cuenta(accion, id_usuario):
             except Exception as e:
                 flash(f"Error al eliminar la cuenta: {str(e)}", "error")
                 return redirect(url_for("index"))
-        case "bloquear":
-            pass
+        case "invertir_estado":
+            if usuario.estado:
+                mensaje = "Cuenta bloqueada correctamente."
+            else:
+                mensaje = "Cuenta desbloqueada correctamente."
+
+            try:
+                gestor_bd.ejecutar_consulta(
+                    ACTUALIZAR_ROL_USUARIO, (not usuario.estado, usuario.id)
+                )
+
+                flash(mensaje, "success")
+
+                return redirect(url_for("index"))
+            except Exception as e:
+                flash(f"Error al actualizar el estado de la cuenta: {str(e)}", "error")
+                return redirect(url_for("index"))
 
     flash("Acción no válida.", "error")
     return redirect(url_for("index"))
