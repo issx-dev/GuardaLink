@@ -1,6 +1,6 @@
 #   QUERIES DE MARCADORES
 
-# Script Insertar Marcador 
+# Script Insertar Marcador
 INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
 
 # Consultas de Marcadores

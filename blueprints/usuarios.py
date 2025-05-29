@@ -73,6 +73,13 @@ def acceso():
                 contraseña,
                 usuario_actual.contraseña,
             ):
+                if not usuario_actual.estado:
+                    flash(
+                        "Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.",
+                        "error",
+                    )
+                    return redirect(url_for("usuarios.acceso"))
+
                 session["email"] = email
                 return redirect(url_for("index"))
 
@@ -91,10 +98,15 @@ def perfil():
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
-    # Si el usuario logueado es NORMAL
+    if not usuario.estado:
+        flash(
+            "Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.",
+            "error",
+        )
+        return redirect(url_for("usuarios.acceso"))
+
     if request.method == "POST":
         if "editar" in request.form:
-            # Si el usuario logueado es NORMAL obtenemos los datos del formulario
             nombre_completo = request.form.get("nombre-completo", "").strip()
             foto_perfil = request.form.get("foto-perfil", "").strip()
             email = request.form.get("email", "").strip().lower()
@@ -171,7 +183,7 @@ def eliminar_cuenta(accion, id_usuario):
             except Exception as e:
                 flash(f"Error al eliminar la cuenta: {str(e)}", "error")
                 return redirect(url_for("index"))
-            
+
         case "invertir_estado":
             if usuario.estado:
                 mensaje = "Cuenta bloqueada correctamente."
@@ -184,7 +196,9 @@ def eliminar_cuenta(accion, id_usuario):
                 )
 
                 flash(mensaje, "success")
-                session.pop(usuario.email, None) # Eliminar la sesión del usuario si se bloquea
+                session.pop(
+                    usuario.email, None
+                )  # Eliminar la sesión del usuario si se bloquea
 
                 return redirect(url_for("index"))
             except Exception as e:

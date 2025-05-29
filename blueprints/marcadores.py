@@ -33,6 +33,14 @@ def marcador(accion=None, id_marcador=None):
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
+    # Si el usuario logueado no está activo
+    if not usuario.estado:
+        flash(
+            "Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.",
+            "error",
+        )
+        return redirect(url_for("usuarios.acceso"))
+
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
         flash("Los administradores no pueden gestionar marcadores.", "error")
