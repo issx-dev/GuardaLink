@@ -35,7 +35,8 @@ def marcador(accion=None, id_marcador=None):
 
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
-        return "Eres admin"
+        flash("Los administradores no pueden gestionar marcadores.", "error")
+        return redirect(url_for("index"))
 
     # Si el usuario logueado es NORMAL
     # Acciones de marcador

@@ -26,7 +26,8 @@ def buscar_marcador(filtro_etiqueta=None):
 
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
-        return "Eres admin"
+        flash("Los administradores no tienen acceso al buscador.", "error")
+        return redirect(url_for("index"))
 
     etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
         ETIQUETAS_MAS_USADAS, (usuario.id,)
