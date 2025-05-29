@@ -25,8 +25,10 @@
                     Miembro desde el<br /><b><i>{{ fecha_registro }}</i></b>
                 </div>
                 <!-- registro -->
+                 {% if rol != "admin" %}
                 <div class="texto-marcadores"><b>{{ num_marcadores }}</b> marcadores</div>
                 <!-- num_marcadores -->
+                {% endif %}
             </div>
         </div>
 

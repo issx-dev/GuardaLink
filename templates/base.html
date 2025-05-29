@@ -36,11 +36,13 @@
                             <i data-lucide="home"></i><span>Inicio</span>
                         </a>
                     </li>
+                    {% if rol != "admin" %}
                     <li>
                         <a href="{{ url_for('marcadores.marcador') }}">
                             <i data-lucide="bookmark-plus"></i><span>Añadir marcador</span>
                         </a>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="{{ url_for('usuarios.perfil') }}">
                             <i data-lucide="user"></i><span>Perfil</span>

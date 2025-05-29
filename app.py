@@ -34,18 +34,17 @@ def index():
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
-    # Si el usuario logueado es ADMIN
-    if usuario.rol == "admin":
-        return render_template("admin.html", foto_perfil=usuario.foto_perfil)
-
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
     etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
         ETIQUETAS_MAS_USADAS, (usuario.id,)
     )
+
+    pagina = "admin.html" if usuario.rol == "admin" else "index.html"
+
     return render_template(
-        "index.html",
-        foto_perfil=usuario.foto_perfil,
+        pagina,
+        foto_perfil= usuario.foto_perfil,
         marcadores=marcadores,
         etiquetas_mas_usadas=etiquetas_mas_usadas,
         rol=usuario.rol,
