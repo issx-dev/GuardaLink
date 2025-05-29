@@ -7,7 +7,8 @@ from blueprints.marcadores import marcador_bp
 from blueprints.buscador import buscador_bp
 
 # Importa las consultas y funciones necesarias
-from settings import SECRET_KEY, ETIQUETAS_MAS_USADAS
+from db.queries.etiquetas import ETIQUETAS_MAS_USADAS
+from settings import SECRET_KEY
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from modules.utils import usr_sesion

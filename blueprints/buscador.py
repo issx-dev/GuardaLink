@@ -4,12 +4,9 @@ from flask import Blueprint, request, session, render_template, redirect, url_fo
 # Modulos necesarios
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
+from db.queries.etiquetas import ETIQUETAS_MAS_USADAS
+from db.queries.marcadores import BUSCADOR_MARCADORES, FILTRAR_MARCADORES_POR_ETIQUETAS
 from db.utils.consultas import obtener_marcadores_especificos, obtener_usuario_completo
-from settings import (
-    BUSCADOR_MARCADORES,
-    ETIQUETAS_MAS_USADAS,
-    FILTRAR_MARCADORES_POR_ETIQUETAS,
-)
 
 # Inicializa el blueprint para marcadores
 buscador_bp = Blueprint("buscador", __name__, url_prefix="/buscador")

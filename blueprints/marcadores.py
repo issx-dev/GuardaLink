@@ -2,19 +2,21 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 
 # Módulos necesarios
-from settings import (
-    ELIMINAR_MARCADOR,
-    INSERTAR_MARCADOR,
-    INSERTAR_ETIQUETA,
-    CONSULTA_MARCADOR,
-    CONSULTA_NOMBRES_ETIQUETAS,
-    ACTUALIZAR_MARCADOR,
-    BORRAR_ETIQUETA,
-)
 from db.BaseDatos import gestor_bd
 from db.models.Marcador import MarcadorInsert, MarcadorBD
 from db.models.Usuario import UsuarioBD
 from db.models.Etiqueta import EtiquetaInsert
+from db.queries.etiquetas import (
+    BORRAR_ETIQUETA,
+    CONSULTA_NOMBRES_ETIQUETAS,
+    INSERTAR_ETIQUETA,
+)
+from db.queries.marcadores import (
+    ACTUALIZAR_MARCADOR,
+    CONSULTA_MARCADOR,
+    ELIMINAR_MARCADOR,
+    INSERTAR_MARCADOR,
+)
 from modules.utils import usr_sesion
 
 # Inicializa el blueprint para marcadores

@@ -2,14 +2,14 @@ from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from db.models.Marcador import MarcadorBD
 from db.models.Etiqueta import EtiquetaInsert
-from settings import (
-    INSERTAR_ETIQUETA,
-    INSERTAR_MARCADOR,
-    MARCADORES_PREDETERMINADOS,
+from db.queries.etiquetas import INSERTAR_ETIQUETA
+from db.queries.marcadores import (
     CONSULTA_NUMERO_MARCADORES,
-    CONSULTA_USUARIO_COMPLETO,
     CONSULTAR_MARCADORES_ETIQUETAS,
+    INSERTAR_MARCADOR,
 )
+from db.queries.usuarios import CONSULTA_USUARIO_COMPLETO
+from settings import MARCADORES_PREDETERMINADOS
 
 
 def obtener_usuario_completo(email):

@@ -3,6 +3,7 @@ from flask import Blueprint, request, session, render_template, redirect, url_fo
 from passlib.hash import pbkdf2_sha256
 
 # Configuración y consultas necesarias
+from db.queries.usuarios import ACTUALIZAR_USUARIO, INSERTAR_USUARIO
 from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
@@ -10,7 +11,6 @@ from db.utils.consultas import (
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
-from settings import INSERTAR_USUARIO, ACTUALIZAR_USUARIO
 from modules.utils import usr_sesion
 
 # Inicializa el blueprint para usuarios
