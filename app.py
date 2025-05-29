@@ -12,7 +12,10 @@ from settings import SECRET_KEY
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from modules.utils import usr_sesion
-from db.utils.consultas import obtener_lista_objetos_usuarios, obtener_marcadores_y_etiquetas
+from db.utils.consultas import (
+    obtener_lista_objetos_usuarios,
+    obtener_marcadores_y_etiquetas,
+)
 
 
 # Inicializa la aplicación Flask
@@ -81,4 +84,4 @@ def cerrar_sesion():
 
 # Ejecuta la aplicación Flask
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
