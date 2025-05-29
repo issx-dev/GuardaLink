@@ -24,6 +24,14 @@ def buscar_marcador(filtro_etiqueta=None):
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
+    # Si el usuario logueado no está activo
+    if not usuario.estado:
+        flash(
+            "Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.",
+            "error",
+        )
+        return redirect(url_for("usuarios.acceso"))
+
     # Si el usuario logueado es ADMIN
     elif usuario.rol == "admin":
         flash("Los administradores no tienen acceso al buscador.", "error")
