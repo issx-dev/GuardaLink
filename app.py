@@ -8,6 +8,7 @@ from blueprints.buscador import buscador_bp
 
 # Importa las consultas y funciones necesarias
 from db.queries.etiquetas import ETIQUETAS_MAS_USADAS
+from db.queries.usuarios import CONSULTA_USUARIOS
 from settings import SECRET_KEY
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
@@ -30,16 +31,19 @@ app.register_blueprint(buscador_bp)
 def index():
     """Muestra la página de inicio con los marcadores del usuario logueado."""
     usuario = usr_sesion()
-    
+
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
     if not usuario.estado:
-        flash("Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.", "error")
+        flash(
+            "Tu cuenta ha sido desactivada. Por favor, contacta con el administrador.",
+            "error",
+        )
         session.pop("email", None)
         return redirect(url_for("usuarios.acceso"))
-    
+
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
     etiquetas_mas_usadas = gestor_bd.ejecutar_consulta(
@@ -48,13 +52,17 @@ def index():
 
     pagina = "admin.html" if usuario.rol == "admin" else "index.html"
 
-    return render_template(
-        pagina,
-        foto_perfil=usuario.foto_perfil,
-        marcadores=marcadores,
-        etiquetas_mas_usadas=etiquetas_mas_usadas,
-        rol=usuario.rol,
-    )
+    kwargs = {
+        "foto_perfil": usuario.foto_perfil,
+        "marcadores": marcadores,
+        "etiquetas_mas_usadas": etiquetas_mas_usadas,
+        "rol": usuario.rol,
+    }
+
+    if usuario.rol == "admin":
+        kwargs["usuarios"] = gestor_bd.ejecutar_consulta(CONSULTA_USUARIOS)
+
+    return render_template(pagina, **kwargs)
 
 
 # Ruta error 404
