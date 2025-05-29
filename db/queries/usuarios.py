@@ -11,5 +11,8 @@ BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id = ?"
 # Actualizar Usuario
 ACTUALIZAR_USUARIO = " UPDATE usuarios SET nombre_completo = ?, foto_perfil = ?, email = ?, contraseña = ? WHERE id = ? "
 
+# Modificar Estado de Usuario
+MODIFICAR_ESTADO_USUARIO = "UPDATE usuarios SET estado = ? WHERE id = ?"
+
 # Eliminar Usuario
 BORRAR_USUARIO = "DELETE FROM usuarios WHERE id = ?"
