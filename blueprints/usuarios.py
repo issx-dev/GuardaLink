@@ -165,12 +165,13 @@ def eliminar_cuenta(accion, id_usuario):
         case "eliminar":
             try:
                 gestor_bd.ejecutar_consulta(BORRAR_USUARIO, (usuario.id,))
-                session.pop("email", usuario.email)
+                session.pop(usuario.email, None)  # Eliminar la sesión del usuario
                 flash("Cuenta eliminada correctamente.", "success")
                 return redirect(url_for("index"))
             except Exception as e:
                 flash(f"Error al eliminar la cuenta: {str(e)}", "error")
                 return redirect(url_for("index"))
+            
         case "invertir_estado":
             if usuario.estado:
                 mensaje = "Cuenta bloqueada correctamente."
@@ -183,6 +184,7 @@ def eliminar_cuenta(accion, id_usuario):
                 )
 
                 flash(mensaje, "success")
+                session.pop(usuario.email, None) # Eliminar la sesión del usuario si se bloquea
 
                 return redirect(url_for("index"))
             except Exception as e:
