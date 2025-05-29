@@ -36,7 +36,7 @@ def index():
 
     # Si el usuario logueado es ADMIN
     if usuario.rol == "admin":
-        return "Eres admin"
+        return render_template("admin.html")
 
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
