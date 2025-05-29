@@ -36,7 +36,7 @@ def index():
 
     # Si el usuario logueado es ADMIN
     if usuario.rol == "admin":
-        return render_template("admin.html")
+        return render_template("admin.html", foto_perfil=usuario.foto_perfil)
 
     # Si el usuario logueado es NORMAL
     marcadores = obtener_marcadores_y_etiquetas(usuario.id)
@@ -48,6 +48,7 @@ def index():
         foto_perfil=usuario.foto_perfil,
         marcadores=marcadores,
         etiquetas_mas_usadas=etiquetas_mas_usadas,
+        rol=usuario.rol,
     )
 
 

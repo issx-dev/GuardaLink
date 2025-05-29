@@ -85,14 +85,6 @@ def perfil():
     if not isinstance(usuario, UsuarioBD):
         return redirect(url_for("usuarios.acceso"))
 
-    # Si el usuario logueado es ADMIN
-    elif usuario.rol == "admin":
-        flash(
-            "Los administradores no pueden acceder a la funcionalidad de perfil.",
-            "error",
-        )
-        return redirect(url_for("index"))
-
     # Si el usuario logueado es NORMAL
     if request.method == "POST":
         if "editar" in request.form:
@@ -141,6 +133,7 @@ def perfil():
         "fecha_registro": usuario.fecha_registro,
         "num_marcadores": obtener_numero_marcadores(usuario.id),
         "foto_perfil": usuario.foto_perfil,
+        "rol": usuario.rol,
     }
 
     return render_template("perfil.html", **kwargs)
