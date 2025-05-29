@@ -1,0 +1,90 @@
+#contenedor-tablas {
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    min-height: 100%;
+    padding: 2rem;
+} 
+
+table th, td {
+    border-radius: 6px;
+}
+
+table {
+    min-width: 100%;
+    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0.4rem;
+}
+
+table thead {
+    background-color: #202a4a;
+    color: #fff;
+}
+
+table thead tr th {
+    padding: 1rem;
+    font-size: 22px;
+}
+
+
+
+
+
+
+tbody {
+    background-color: #e4eaff;
+}
+
+table tbody tr td {
+    text-align: center;
+    padding: 1rem;
+    font-size: 19px;
+    transition: background-color 0.3s;
+}
+
+table tbody tr:hover {
+    background-color: rgb(195, 205, 240);
+
+}
+
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+table a {
+    text-decoration: none;
+    color: #000000;
+    background-color: #ffb0b0;
+    padding: 0.5rem 2.2rem;
+    border-radius: 10px;
+    border: 1.5px solid black;
+    transition: transform 0.2s;
+}
+
+table a:hover {
+    transform: translateY(-4px);
+}
+
+
+table .btn-block {
+    background-color: #d0ffbd;
+
+}
+
+.rojo {
+    background-color: #ffb0b0;
+}
+
+.verde {
+    background-color: #d0ffbd;
+}

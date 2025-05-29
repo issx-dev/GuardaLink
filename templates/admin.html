@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
+{% endblock %}
+
 {% block title %}
 Panel Control Admin
 {% endblock %}
@@ -9,5 +13,47 @@ Panel de Control
 {% endblock %}
 
 {% block main %}
+
+<div id="contenedor-tablas">
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>E-mail</th>
+                <th>Fecha registro</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <th>{{ usuario.id }}</th>
+                <td>{{ usuario.nombre_completo }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.fecha_registro }}</td>
+                <td>{{ usuario.estado }}</td>
+                <td>
+                    <div class="btns">
+                        {% if usuario.estado %}
+                        <a href="" class="btn-block rojo"><i data-lucide="lock-keyhole"></i></a>
+                        {% else %}
+                        <a href="" class="btn-block verde"><i data-lucide="lock-keyhole"></i></a>
+                        {% endif %}
+                        <a href="" class="btn-block"><i data-lucide="trash-2"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+        <tfoot></tfoot>
+    </table>
+
+</div>
+
 
 {% endblock %}
