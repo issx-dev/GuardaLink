@@ -8,6 +8,7 @@ from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
+    obtener_usuario_por_id
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
@@ -141,7 +142,7 @@ def perfil():
 
 @usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
 def eliminar_cuenta(accion, id_usuario):
-    usuario = obtener_usuario_completo(id_usuario)
+    usuario = obtener_usuario_por_id(id_usuario)
 
     # Si NO hay un usuario logueado
     if not isinstance(usuario, UsuarioBD):
