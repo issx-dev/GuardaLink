@@ -47,9 +47,9 @@ Panel de Control
                 <td>
                     <div class="btns">
                         {% if usuario.estado %}
-                        <a href="" class="rojo"><i data-lucide="lock-keyhole"></i></a>
+                        <a href="{{ url_for('usuarios.modificar_cuenta', accion='invertir_estado', id_usuario=usuario.id) }}" class="rojo"><i data-lucide="lock-keyhole"></i></a>
                         {% else %}
-                        <a href="" class="verde"><i data-lucide="lock-keyhole-open"></i></a>
+                        <a href="{{ url_for('usuarios.modificar_cuenta', accion='invertir_estado', id_usuario=usuario.id) }}" class="verde"><i data-lucide="lock-keyhole-open"></i></a>
                         {% endif %}
                         <a href="{{ url_for('usuarios.modificar_cuenta', accion='eliminar', id_usuario=usuario.id) }}" class="eliminar"><i data-lucide="trash-2"></i></a>
                     </div>
