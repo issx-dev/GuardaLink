@@ -1,9 +1,5 @@
-{% extends "base.html" %} {% block title %} Inicio {% endblock%} {% block
-extra_css%}
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/index.css') }}"
-/>
+{% extends "base.html" %} {% block title %} Inicio {% endblock%} {% block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
 {%endblock%} {% block h1 %} Inicio {% endblock %} {% block main %}
 
 <div class="page-header">
@@ -12,11 +8,7 @@ extra_css%}
 </div>
 
 <div class="buscador">
-    <form
-        action="{{ url_for('buscar_marcador') }}"
-        method="post"
-        class="search-form"
-    >
+    <form action="{{ url_for('buscador.buscar_marcador') }}" method="post" class="search-form">
         <div class="search-container">
             <input
                 type="text"
@@ -30,10 +22,16 @@ extra_css%}
 
     <div class="etiquetas-usadas">
         <div class="filtro-etiquetas">
-            <span class="etiquetas-label"><i data-lucide="funnel"></i> <strong>Filtrar por etiqueta:</strong></span>
+            <span class="etiquetas-label"
+                ><i data-lucide="funnel"></i> <strong>Filtrar por etiqueta:</strong></span
+            >
             {% for etiqueta in etiquetas_mas_usadas %}
-            <a href="{{ url_for('buscar_marcador',filtro_etiqueta=etiqueta[0]) }}" class="tag-link">{{ etiqueta[0] }}</a>
-            {% endfor %} 
+            <a
+                href="{{ url_for('buscador.buscar_marcador',filtro_etiqueta=etiqueta[0]) }}"
+                class="tag-link"
+                >{{ etiqueta[0] }}</a
+            >
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -42,8 +40,16 @@ extra_css%}
     {% if marcadores %} {% for marcador, etiquetas in marcadores %}
     <div class="bookmark-card">
         <div class="caja-editar-link">
-            <a href="{{ url_for('marcador', accion='editar', id_marcador=marcador.id) }}" class="editar-link"><i data-lucide="square-pen"></i></a>
-            <a href="{{ url_for('marcador', accion='eliminar', id_marcador=marcador.id) }}" class="eliminar-link"><i data-lucide="trash-2"></i></a>
+            <a
+                href="{{ url_for('marcadores.marcador', accion='editar', id_marcador=marcador.id) }}"
+                class="editar-link"
+                ><i data-lucide="square-pen"></i
+            ></a>
+            <a
+                href="{{ url_for('marcadores.marcador', accion='eliminar', id_marcador=marcador.id) }}"
+                class="eliminar-link"
+                ><i data-lucide="trash-2"></i
+            ></a>
         </div>
 
         <div class="bookmark-header">
@@ -54,7 +60,11 @@ extra_css%}
 
         <div class="bookmark-tags">
             {% for etiqueta in etiquetas %}
-            <a href="{{ url_for('buscar_marcador',filtro_etiqueta=etiqueta) }}" class="bookmark-tag">{{ etiqueta }}</a>
+            <a
+                href="{{ url_for('buscador.buscar_marcador',filtro_etiqueta=etiqueta) }}"
+                class="bookmark-tag"
+                >{{ etiqueta }}</a
+            >
             {% endfor %}
         </div>
 

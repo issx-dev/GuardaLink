@@ -13,7 +13,7 @@ extra_css%}
         <div class="lado-izquierdo">
             <form
                 method="post"
-                action="{{ url_for('marcador', accion='editar', id_marcador=marcador.id) if editar else url_for('marcador', accion='añadir') }}"
+                action="{{ url_for('marcadores.marcador', accion='editar', id_marcador=marcador.id) if editar else url_for('marcadores.marcador', accion='añadir') }}"
             >
                 <div class="formulario">
                     <label for="nombre">Nombre del marcador</label>
