@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS marcadores (
 
 CREATE TABLE IF NOT EXISTS etiquetas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL,
+    nombre TEXT NOT NULL COLLATE NOCASE,
     id_marcador INTEGER NOT NULL,
     FOREIGN KEY (id_marcador) REFERENCES marcadores(id) ON DELETE CASCADE,
     UNIQUE(nombre, id_marcador) -- Evita etiquetas duplicadas para el mismo marcador
