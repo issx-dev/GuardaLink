@@ -51,7 +51,7 @@ Panel de Control
                         {% else %}
                         <a href="" class="verde"><i data-lucide="lock-keyhole-open"></i></a>
                         {% endif %}
-                        <a href="{{ url_for('marcadores.marcador', accion='eliminar', id_marcador=marcador.id) }}" class="eliminar"><i data-lucide="trash-2"></i></a>
+                        <a href="{{ url_for('usuarios.modificar_cuenta', accion='eliminar', id_usuario=usuario.id) }}" class="eliminar"><i data-lucide="trash-2"></i></a>
                     </div>
                 </td>
             </tr>
