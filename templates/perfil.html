@@ -3,7 +3,7 @@
 <link rel="icon" href="{{ url_for('static', filename='images/icono_perfil.png') }}" />
 {% endblock %} {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}" />
-{% endblock %} {% block h1 %}Perfil de usuario{% endblock %} {% block main %}
+{% endblock %} {% block h1 %}Perfil de {{ "usuario" if rol == "usuario" else "administrador" }} {% endblock %} {% block main %}
 
 <!-- BLOQUE PERFIL -->
 <div class="contenedor-perfil">
