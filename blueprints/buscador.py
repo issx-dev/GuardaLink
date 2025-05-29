@@ -16,7 +16,7 @@ buscador_bp = Blueprint("buscador", __name__, url_prefix="/buscador")
 @buscador_bp.route("/<filtro_etiqueta>")
 @buscador_bp.route("/", methods=["GET", "POST"])
 def buscar_marcador(filtro_etiqueta=None):
-    # Obtiene el usuario logueado y su rol
+    """Obtiene el usuario logueado y su rol"""
     email_sesion = session.get("email")
     usuario = obtener_usuario_completo(email_sesion)
 

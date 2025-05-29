@@ -28,6 +28,7 @@ app.register_blueprint(buscador_bp)
 # Ruta principal
 @app.route("/")
 def index():
+    """Muestra la página de inicio con los marcadores del usuario logueado."""
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -44,7 +45,7 @@ def index():
 
     return render_template(
         pagina,
-        foto_perfil= usuario.foto_perfil,
+        foto_perfil=usuario.foto_perfil,
         marcadores=marcadores,
         etiquetas_mas_usadas=etiquetas_mas_usadas,
         rol=usuario.rol,
@@ -54,11 +55,14 @@ def index():
 # Ruta error 404
 @app.errorhandler(404)
 def page_not_found(e):
+    """Muestra una página de error 404."""
     return render_template("404.html"), 404
+
 
 # Ruta para cerrar sesión
 @app.route("/cerrar-sesion")
 def cerrar_sesion():
+    """Cierra la sesión del usuario y redirige a la página de inicio."""
     session.pop("email", None)
     return redirect(url_for("index"))
 

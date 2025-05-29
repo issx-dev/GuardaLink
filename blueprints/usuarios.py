@@ -13,7 +13,7 @@ from db.utils.consultas import (
     obtener_usuario_completo,
     crear_marcadores_y_etiquetas_por_defecto,
     obtener_numero_marcadores,
-    obtener_usuario_por_id
+    obtener_usuario_por_id,
 )
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioInsert, UsuarioBD
@@ -27,6 +27,8 @@ usuario_bp = Blueprint("usuarios", __name__)
 # Inicio de sesión y registro de nuevos usuarios
 @usuario_bp.route("/acceso", methods=["GET", "POST"])
 def acceso():
+    """Permite a los usuarios iniciar sesión o registrarse."""
+
     if request.method == "POST":
         # Obtiene los datos del formulario html
         nombre_completo = request.form.get("nombre-completo", "").strip()
@@ -85,6 +87,8 @@ def acceso():
 # Obtenemos el usuario logueado y su rol
 @usuario_bp.route("/perfil", methods=["GET", "POST"])
 def perfil():
+    """Permite a los usuarios ver y editar su perfil."""
+
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado
@@ -147,6 +151,8 @@ def perfil():
 
 @usuario_bp.route("/mod-cuenta/<accion>/<id_usuario>", methods=["POST"])
 def eliminar_cuenta(accion, id_usuario):
+    """Permite a los administradores eliminar o bloquear/desbloquear cuentas de usuario."""
+
     usuario = obtener_usuario_por_id(id_usuario)
 
     # Si NO hay un usuario logueado
@@ -171,7 +177,7 @@ def eliminar_cuenta(accion, id_usuario):
             except Exception as e:
                 flash(f"Error al eliminar la cuenta: {str(e)}", "error")
                 return redirect(url_for("index"))
-            
+
         case "invertir_estado":
             if usuario.estado:
                 mensaje = "Cuenta bloqueada correctamente."
@@ -184,7 +190,9 @@ def eliminar_cuenta(accion, id_usuario):
                 )
 
                 flash(mensaje, "success")
-                session.pop(usuario.email, None) # Eliminar la sesión del usuario si se bloquea
+                session.pop(
+                    usuario.email, None
+                )  # Eliminar la sesión del usuario si se bloquea
 
                 return redirect(url_for("index"))
             except Exception as e:

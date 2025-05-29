@@ -22,11 +22,13 @@ from modules.utils import usr_sesion
 # Inicializa el blueprint para marcadores
 marcador_bp = Blueprint("marcadores", __name__, url_prefix="/marcador")
 
-
+# Endpoints para gestionar marcadores
 @marcador_bp.route("/<accion>/<id_marcador>", methods=["GET", "POST"])
 @marcador_bp.route("/<accion>", methods=["GET", "POST"])
 @marcador_bp.route("/")
 def marcador(accion=None, id_marcador=None):
+    """Obtiene el usuario logueado y su rol para gestionar marcadores."""
+
     usuario = usr_sesion()
 
     # Si NO hay un usuario logueado

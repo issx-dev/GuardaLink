@@ -1,3 +1,4 @@
+# Librerías necesarias
 from db.BaseDatos import gestor_bd
 from db.models.Usuario import UsuarioBD
 from db.models.Marcador import MarcadorBD
@@ -13,16 +14,19 @@ from settings import MARCADORES_PREDETERMINADOS
 
 
 def obtener_usuario_completo(email):
-    # Recupercion de los usuarios como instancias de la clase UsuarioBD
+    """Recupercion de los usuarios como instancias de la clase UsuarioBD"""
     usuario_completo = gestor_bd.ejecutar_consulta(CONSULTA_USUARIO_COMPLETO, (email,))
     if usuario_completo and isinstance(usuario_completo, list):
         return UsuarioBD(*usuario_completo[0])
     else:
         return []
-    
+
+
 def obtener_usuario_por_id(id_usuario):
-    # Recupercion de los usuarios como instancias de la clase UsuarioBD
-    usuario_completo = gestor_bd.ejecutar_consulta(CONSULTA_USUARIO_COMPLETO, (id_usuario,))
+    """Recupercion de los usuarios como instancias de la clase UsuarioBD"""
+    usuario_completo = gestor_bd.ejecutar_consulta(
+        CONSULTA_USUARIO_COMPLETO, (id_usuario,)
+    )
     if usuario_completo and isinstance(usuario_completo, list):
         return UsuarioBD(*usuario_completo[0])
     else:
@@ -71,6 +75,7 @@ def obtener_marcadores_y_etiquetas(usuario_id):
 
 
 def obtener_marcadores_especificos(usuario_id, lista_marcadores):
+    """Obtiene marcadores específicos de un usuario según una lista de IDs."""
     lista = []
     for marcador in obtener_marcadores_y_etiquetas(usuario_id):
         if marcador[0].id in lista_marcadores:
