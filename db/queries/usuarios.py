@@ -4,7 +4,7 @@
 INSERTAR_USUARIO = "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"
 
 # Consultas de Usuario
-CONSULTA_USUARIOS = "SELECT * FROM usuarios"
+CONSULTA_USUARIOS = "SELECT * FROM usuarios WHERE rol = 'usuario'"
 CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
 BUSCAR_USUARIO = "SELECT * FROM usuarios WHERE id = ?"
 
