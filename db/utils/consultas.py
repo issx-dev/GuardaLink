@@ -9,7 +9,11 @@ from db.queries.marcadores import (
     CONSULTAR_MARCADORES_ETIQUETAS,
     INSERTAR_MARCADOR,
 )
-from db.queries.usuarios import CONSULTA_USUARIO_COMPLETO, CONSULTA_USUARIOS
+from db.queries.usuarios import (
+    BUSCAR_USUARIO,
+    CONSULTA_USUARIO_COMPLETO,
+    CONSULTA_USUARIOS,
+)
 from settings import MARCADORES_PREDETERMINADOS
 
 
@@ -33,9 +37,7 @@ def obtener_lista_objetos_usuarios():
 
 def obtener_usuario_por_id(id_usuario):
     """Recupercion de los usuarios como instancias de la clase UsuarioBD"""
-    usuario_completo = gestor_bd.ejecutar_consulta(
-        CONSULTA_USUARIO_COMPLETO, (id_usuario,)
-    )
+    usuario_completo = gestor_bd.ejecutar_consulta(BUSCAR_USUARIO, (id_usuario,))
     if usuario_completo and isinstance(usuario_completo, list):
         return UsuarioBD(*usuario_completo[0])
     else:

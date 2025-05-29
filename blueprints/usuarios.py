@@ -7,7 +7,7 @@ from db.queries.usuarios import (
     ACTUALIZAR_USUARIO,
     BORRAR_USUARIO,
     INSERTAR_USUARIO,
-    ACTUALIZAR_ROL_USUARIO,
+    MODIFICAR_ESTADO_USUARIO,
 )
 from db.utils.consultas import (
     obtener_usuario_completo,
@@ -166,14 +166,23 @@ def perfil():
 def modificar_cuenta(accion, id_usuario):
     """Permite a los administradores eliminar o bloquear/desbloquear cuentas de usuario."""
 
-    usuario = obtener_usuario_por_id(id_usuario)
-
+    admin = usr_sesion()
     # Si NO hay un usuario logueado
-    if not isinstance(usuario, UsuarioBD):
+    if not isinstance(admin, UsuarioBD):
+        flash("Debes iniciar sesión para realizar esta acción.", "error")
         return redirect(url_for("usuarios.acceso"))
 
+    usuario = obtener_usuario_por_id(id_usuario)
+    # Si NO hay un usuario logueado
+    if not isinstance(usuario, UsuarioBD):
+        flash(
+            "El usuario que intentas modificar no existe o ha sido eliminado.",
+            "error",
+        )
+        return redirect(url_for("index"))
+
     # Si el usuario logueado es ADMIN
-    elif usuario.rol != "admin":
+    elif admin.rol != "admin":
         flash(
             "Los usuarios normales no pueden eliminar una cuenta.",
             "error",
@@ -199,7 +208,7 @@ def modificar_cuenta(accion, id_usuario):
 
             try:
                 gestor_bd.ejecutar_consulta(
-                    ACTUALIZAR_ROL_USUARIO, (not usuario.estado, usuario.id)
+                    MODIFICAR_ESTADO_USUARIO, (not usuario.estado, usuario.id)
                 )
 
                 flash(mensaje, "success")
