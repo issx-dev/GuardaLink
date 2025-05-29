@@ -58,49 +58,6 @@ INFO_ROOT = (
     ROOT_FOTO,
 )
 
-# Script Insertar Usuario
-INSERTAR_USUARIO = (
-    "INSERT INTO usuarios (nombre_completo, contraseña, email) VALUES (?, ?, ?)"
-)
-
-# Consultas de Usuario
-CONSULTA_USUARIO = "SELECT id, nombre_completo, rol, email, estado, foto_perfil, fecha_registro FROM usuarios"
-CONSULTA_USUARIO_COMPLETO = "SELECT * FROM usuarios WHERE email = ? "
-
-# Actualizar Usuario
-ACTUALIZAR_USUARIO = " UPDATE usuarios SET nombre_completo = ?, foto_perfil = ?, email = ?, contraseña = ? WHERE id = ? "
-
-# Script Insertar Marcador y Consulta
-INSERTAR_MARCADOR = "INSERT INTO marcadores (id_usuario, nombre, enlace, descripcion) VALUES (?, ?, ?, ?)"
-CONSULTA_MARCADOR = "SELECT * FROM marcadores WHERE id = ?"
-CONSULTA_MARCADORES = "SELECT * FROM marcadores WHERE id_usuario = ?"
-CONSULTA_NUMERO_MARCADORES = "SELECT COUNT(*) FROM marcadores WHERE id_usuario = ?"
-
-ACTUALIZAR_MARCADOR = """
-UPDATE marcadores
-SET nombre = ?, enlace = ?, descripcion = ?
-WHERE id = ? 
-"""
-
-CONSULTAR_MARCADORES_ETIQUETAS = """
-            SELECT  
-                m.id, m.id_usuario, m.nombre, m.enlace, m.descripcion,
-                GROUP_CONCAT(e.nombre, ',') AS etiquetas
-            FROM marcadores m 
-            JOIN etiquetas e ON m.id = e.id_marcador 
-            WHERE m.id_usuario = ?
-            GROUP BY m.id
-"""
-
-# Script Insertar Etiqueta y Consulta
-INSERTAR_ETIQUETA = "INSERT OR IGNORE INTO etiquetas (nombre, id_marcador) VALUES (?, ?)"
-CONSULTA_ETIQUETAS = "SELECT * FROM etiquetas WHERE id_marcador = ?"
-CONSULTA_NOMBRES_ETIQUETAS = "SELECT nombre FROM etiquetas WHERE id_marcador = ?"
-# Eliminar Marcador
-ELIMINAR_MARCADOR = "DELETE FROM marcadores WHERE id = ?"
-
-BORRAR_ETIQUETA = "DELETE FROM etiquetas WHERE id_marcador = ?"
-
 # MARCADORES PREDETERMINADOS
 MARCADORES_PREDETERMINADOS = [
     {
@@ -122,32 +79,3 @@ MARCADORES_PREDETERMINADOS = [
         "etiquetas": ["Tecnología", "Desarrollo"],
     },
 ]
-
-# BÚSQUEDAS
-BUSCADOR_MARCADORES = """
-SELECT * FROM marcadores 
-    WHERE id_usuario = ? AND (LOWER(nombre) LIKE ? OR LOWER(descripcion) LIKE ? OR LOWER(enlace) LIKE ?)
-    ORDER BY id ASC
-"""
-
-# ETIQUETAS MÁS USADAS
-ETIQUETAS_MAS_USADAS = """
-SELECT e.nombre
-FROM marcadores m
-JOIN etiquetas e ON m.id = e.id_marcador
-WHERE m.id_usuario = ?
-GROUP BY e.nombre
-ORDER BY COUNT(*) DESC LIMIT 5
-"""
-
-# BUSCAR MARCADORES POR ETIQUERAS
-FILTRAR_MARCADORES_POR_ETIQUETAS = """
-SELECT m.id, m.id_usuario, m.nombre, m.enlace, m.descripcion, GROUP_CONCAT(e.nombre, ',') AS etiquetas
-FROM marcadores m
-JOIN etiquetas e ON m.id = e.id_marcador
-WHERE m.id_usuario = ? 
-AND e.nombre LIKE ?
-GROUP BY m.id
-"""
-
-
