@@ -1,5 +1,3 @@
-MANUAL DE USUARIO PARTE 1 --> # Manual de Usuario - GuardaLink
-
 ## Introducción
 
 GuardaLink es una web diseñada para gestionar y organizar tus marcadores web. Con esta herramienta podrás guardar y buscar fácilmente todos tus enlaces favoritos.
@@ -108,3 +106,59 @@ En la página de perfil podrás ver:
 - Información personal actual
 
 **PD**: Si cambias tu email o contraseña, deberás iniciar sesión nuevamente.
+
+### Gestión de usuarios
+Los administradores tienen acceso a funciones especiales:
+
+#### Ver usuarios del sistema
+- Lista completa de usuarios registrados
+- Estado de cada cuenta (activa/inactiva)
+- Información básica de cada usuario
+
+#### Gestionar cuentas de usuario
+1. **Bloquear/Desbloquear usuarios**:
+   - Haz clic en "Bloquear" para desactivar una cuenta
+   - Haz clic en "Desbloquear" para reactivar una cuenta
+   
+2. **Eliminar usuarios**:
+   - Haz clic en "Eliminar" para borrar permanentemente una cuenta
+   - Esta acción eliminará también todos los marcadores del usuario
+
+## Preguntas Frecuentes (FAQ)
+
+### ¿Hay límite en el número de marcadores?
+No hay un límite establecido.
+
+### ¿Qué pasa si olvido mi contraseña?
+Actualmente no hay sistema de recuperación de contraseña implementado. Contacta al administrador.
+
+### ¿Puedo usar la aplicación en dispositivos móviles?
+Sí, la interfaz se adapta a diferentes tamaños de pantalla.
+
+### ¿Los marcadores se guardan automáticamente?
+Sí, todos los cambios se guardan inmediatamente en la base de datos.
+
+## Consejos y Advertencias
+
+### Buenas prácticas
+
+#### Para organizar marcadores:
+- **Descripciones útiles**: Añade descripciones que te ayuden a recordar el contenido
+- **URLs completas**: Siempre incluye http:// o https:// en las direcciones
+
+#### Para gestionar etiquetas:
+- **Categorías amplias**: Combina etiquetas específicas con generales ("python, programación")
+
+#### Para la seguridad:
+- **Contraseñas seguras**: Usa contraseñas robustas con letras, números y símbolos
+- **Cierra sesión**: Especialmente en dispositivos compartidos
+- **Actualiza tu información**: Mantén tu email actualizado para futuras funcionalidades
+
+### Errores a evitar
+
+#### Gestión de marcadores:
+- ❌ **URLs incompletas** que no funcionarán al hacer clic
+- ❌ **Eliminar marcadores sin confirmar** - La acción es irreversible
+
+#### Gestión de usuarios (administradores):
+- ❌ **Eliminar usuarios sin avisar** - Pueden perder trabajo importante
