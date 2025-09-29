@@ -180,3 +180,100 @@ def añadir_marcador():
         retornar_id=True,
     )
 ```
+
+### Modelo de Usuario
+```python
+class UsuarioBD(UsuarioInsert):
+    def __init__(
+        self,
+        id: int,
+        nombre_completo: str,
+        contraseña: str,
+        rol: str,
+        email: str,
+        estado: bool,
+        foto_perfil: str,
+        fecha_registro: str,
+    ):
+        super().__init__(nombre_completo, contraseña, email)
+        self.__id = id
+        self.__rol = rol
+        self.__estado = estado
+        self.__foto_perfil = foto_perfil
+        self.__fecha_registro = fecha_registro
+```
+
+### Consulta con JOINs
+
+```python 
+CONSULTAR_MARCADORES_ETIQUETAS = """
+    SELECT  
+        m.id, m.id_usuario, m.nombre, m.enlace, m.descripcion,
+        GROUP_CONCAT(e.nombre, ',') AS etiquetas
+    FROM marcadores m 
+    JOIN etiquetas e ON m.id = e.id_marcador 
+    WHERE m.id_usuario = ?
+    GROUP BY m.id
+"""
+```
+
+### Hash de Contraseñas
+
+```python 
+# Registro de usuario con hash de contraseña
+usr = UsuarioInsert(nombre_completo, pbkdf2_sha256.hash(contraseña), email)
+gestor_bd.ejecutar_consulta(
+    INSERTAR_USUARIO,
+    usr.obtener_datos,
+)
+
+# Verificación de contraseña en login
+if isinstance(usuario_actual, UsuarioBD) and pbkdf2_sha256.verify(
+    contraseña,
+    usuario_actual.contraseña,
+):
+    # Login exitoso
+    session["email"] = email
+    return redirect(url_for("index"))
+```
+
+## Notas Técnicas
+
+### Gestión de Estados
+- **Usuarios activos/inactivos**: Control de acceso mediante campo `estado`
+- **Roles diferenciados**: Los administradores no pueden crear marcadores
+- **Sesiones persistentes**: Mantenimiento de estado entre peticiones
+
+### Manejo de Errores
+```python 
+except sq.Error as e:
+    error_logs(
+        f" !-> Error al ejecutar la consulta de base de datos. DETALLES: {e}"
+    )
+    return False
+```
+
+### Logging del Sistema
+```python 
+def info_logs(mensaje):
+    """Registra mensajes informativos"""
+    print(f"[INFO] {mensaje}")
+
+def error_logs(mensaje):
+    """Registra mensajes de error"""
+    print(f"[ERROR] {mensaje}")
+```
+
+## Referencias
+
+### Documentación Técnica Externa
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [SQLite Documentation](https://www.sqlite.org/docs.html)
+- [Jinja2 Template Documentation](https://jinja.palletsprojects.com/)
+- [Passlib Documentation](https://passlib.readthedocs.io/)
+
+### Archivos de Configuración Importantes
+- `settings.py` - Configuración principal y variables de entorno
+- `requirements.txt` - Dependencias del proyecto
+- `.env.example` - Ejemplo de variables de entorno
+- `app.py` - Punto de entrada de la aplicación
