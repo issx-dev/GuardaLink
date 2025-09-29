@@ -83,3 +83,100 @@ CREATE TABLE IF NOT EXISTS etiquetas (
     UNIQUE(nombre, id_marcador)
 );
 ```
+
+### Configuración de Conexión
+
+```python
+class BaseDeDatos:
+    def __init__(self):
+        self._inicializar_base()
+
+    def _inicializar_base(self):
+        try:
+            with sq.connect(DATABASE_NAME) as conexion:
+                cursor = conexion.cursor()
+                cursor.execute("PRAGMA foreign_keys = ON")
+                cursor.executescript(CREAR_TABLAS)
+                cursor.execute(CREAR_ROOT, INFO_ROOT)
+                conexion.commit()
+                info_logs(" -> Conexión establecida correctamente")
+        except sq.Error as e:
+            error_logs(f" !-> Error al conectar con la base de datos: {e}")
+            raise
+```
+
+## Endpoints
+
+### Rutas de Usuarios (`/usuarios`)
+
+| Ruta | Método | Parámetros | Respuesta | Descripción |
+|------|--------|------------|-----------|-------------|
+| `/acceso` | GET | - | HTML | Página de login y registro |
+| `/acceso` | POST | `nombre-completo`, `email`, `contraseña` | Redirect | Procesa registro/login |
+| `/perfil` | GET | - | HTML | Página de perfil del usuario |
+| `/perfil` | POST | `nombre-completo`, `foto-perfil`, `email`, `contraseña` | Redirect | Actualiza perfil |
+| `/mod-cuenta/<accion>/<id_usuario>` | GET | `accion`, `id_usuario` | Redirect | Gestión de cuentas (admin) |
+
+### Rutas de Marcadores (`/marcador`)
+
+| Ruta | Método | Parámetros | Respuesta | Descripción |
+|------|--------|------------|-----------|-------------|
+| `/` | GET | - | HTML | Formulario nuevo marcador |
+| `/añadir` | POST | `nombre`, `enlace`, `descripcion`, `etiquetas` | Redirect | Crea nuevo marcador |
+| `/editar/<id_marcador>` | GET | `id_marcador` | HTML | Formulario edición |
+| `/editar/<id_marcador>` | POST | `nombre`, `enlace`, `descripcion`, `etiquetas` | Redirect | Actualiza marcador |
+| `/eliminar/<id_marcador>` | GET | `id_marcador` | Redirect | Elimina marcador |
+
+### Rutas de Búsqueda (`/buscador`)
+
+| Ruta | Método | Parámetros | Respuesta | Descripción |
+|------|--------|------------|-----------|-------------|
+| `/` | POST | `buscador_marcadores` | HTML | Búsqueda general |
+| `/<filtro_etiqueta>` | GET | `filtro_etiqueta` | HTML | Filtro por etiqueta |
+
+### Rutas Principales
+
+| Ruta | Método | Parámetros | Respuesta | Descripción |
+|------|--------|------------|-----------|-------------|
+| `/` | GET | - | HTML | Página principal |
+| `/cerrar-sesion` | GET | - | Redirect | Cierra sesión del usuario |
+
+## Fragmentos de Código de Ejemplo
+
+### Gestión de Sesión
+
+```python
+def usr_sesion():
+    """Obtiene el usuario de la sesión actual"""
+    email_sesion = session.get("email")
+    if email_sesion:
+        return obtener_usuario_completo(email_sesion)
+    return None
+```
+
+### CRUD de Marcadores
+
+```python
+@marcador_bp.route("/añadir", methods=["POST"])
+def añadir_marcador():
+    # Convertimos los datos del formulario en una lista para separar las etiquetas
+    datos = list(request.form.values())
+    # Obtenemos las etiquetas
+    etiquetas = datos.pop(-1).strip()
+    # Eliminamos espacios y capitalizamos las etiquetas
+    etiquetas = [
+        etiqueta.strip().capitalize()
+        for etiqueta in etiquetas.split(",")
+        if etiqueta.strip()
+    ]
+    
+    # Crea el objeto marcador
+    marcador = MarcadorInsert(usuario.id, *datos)
+    
+    # Sube el marcador a la bd
+    marcador_id = gestor_bd.ejecutar_consulta(
+        INSERTAR_MARCADOR,
+        (marcador.obtener_info_marcador),
+        retornar_id=True,
+    )
+```
