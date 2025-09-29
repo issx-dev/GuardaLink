@@ -8,11 +8,10 @@ GuardaLink es una aplicación web desarrollada con Flask que permite a los usuar
 ## Tecnologías Usadas
 - [Python 3](https://www.python.org/) - Lenguaje de programación principal
 - [Flask 3.1.1](https://flask.palletsprojects.com/) - Framework web para Python
-- [SQLite](https://www.sqlite.org/) - Base de datos ligera integrada
-- [Jinja2 3.1.6](https://jinja.palletsprojects.com/) - Motor de plantillas para Flask
+- [SQLite](https://www.sqlite.org/) - Base de datos ligera
+- [Jinja2 3.1.6](https://jinja.palletsprojects.com/) - Plantillas para Flask
 - [Passlib 1.7.4](https://passlib.readthedocs.io/) - Librería para hash de contraseñas
 - [Python-decouple 3.8](https://pypi.org/project/python-decouple/) - Gestión de variables de entorno
-- [Gunicorn 21.2.0](https://gunicorn.org/) - Servidor WSGI para producción
 
 ## Estructura del Proyecto
 ```
@@ -117,6 +116,6 @@ Desarrollado como proyecto educativo para el módulo de Desarrollo de Aplicacion
 - Issa El Mokadem
 
 **Tecnologías y Frameworks utilizados:**
-- Flask Framework y ecosistema Python
+- Flask Framework y Python
 - SQLite para almacenamiento de datos
 - HTML5, CSS3 y JavaScript para la interfaz de usuario
